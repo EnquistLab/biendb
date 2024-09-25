@@ -1,0 +1,14 @@
+Executing module 'nsr_3_update'
+- Creating NSR results table...done (.15 sec)
+- Importing NSR validation results...done (.08 sec)
+- Updating NSR results table...done (.21 sec)
+- Checking candidate pkeys unique for NSR tables:
+-- table=nsr, cpkey=taxon_poldiv...done (.43 sec)
+-- table=nsr_submitted_raw, cpkey=tbl_id, fktable=vfoi...done (.09 sec)
+-- table=nsr_submitted_raw, cpkey=tbl_id, fktable=agg_traits...done (.09 sec)
+- Updating NSR results columns in table:
+-- view_full_occurrence_individual_dev...done (.25 sec)
+-- agg_traits...done (.21 sec)
+
+------ Process 'pname_1' completed in 1.61 seconds ------
+

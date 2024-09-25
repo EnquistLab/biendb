@@ -1,0 +1,11 @@
+Executing module 'query_adb'
+ 
+Table: view_full_occurrence_individual_dev
+Filter: [All rows]:
+- Rows returned: 285513809
+- Rows filtered: -285513809
+Filter: 'WHERE'
+- Rows returned: 
+
+------ Process 'query_adb' completed in 1887.55 seconds ------
+

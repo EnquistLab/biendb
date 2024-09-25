@@ -1,0 +1,42 @@
+Executing module 'query_adb'
+ 
+Table: view_full_occurrence_individual
+  Filter: [All rows]:
+  - Rows returned: 285513809
+  - Rows filtered: 0
+  Filter: 'WHERE scrubbed_species_binomial IS NOT NULL'
+  - Rows returned: 270613217
+  - Rows filtered: 14900592
+  Filter: 'WHERE observation_type IN ('plot','specimen','literature','checklist')'
+  - Rows returned: 92715483
+  - Rows filtered: 192798326
+  Filter: 'WHERE is_geovalid = 1'
+  - Rows returned: 222683572
+  - Rows filtered: 62830237
+  Filter: 'WHERE (georef_protocol is NULL OR georef_protocol<>'county centroid')'
+  - Rows returned: 285188792
+  - Rows filtered: 325017
+  Filter: 'WHERE (is_centroid IS NULL OR is_centroid=0)'
+  - Rows returned: 284677088
+  - Rows filtered: 836721
+  Filter: 'WHERE higher_plant_group IN ('bryophytes', 'ferns and allies','flowering plants','gymnosperms (conifers)', 'gymnosperms (non-conifer)')'
+  - Rows returned: 281925427
+  - Rows filtered: 3588382
+  Filter: 'WHERE (is_introduced=0 OR is_introduced IS NULL)'
+  - Rows returned: 211070474
+  - Rows filtered: 74443335
+  Filter: 'WHERE is_location_cultivated IS NULL'
+  - Rows returned: 284511561
+  - Rows filtered: 1002248
+  Filter: 'WHERE (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)'
+  - Rows returned: 282774760
+  - Rows filtered: 2739049
+  Filter: 'WHERE scrubbed_species_binomial IS NOT NULL AND observation_type IN ('plot','specimen','literature','checklist') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND higher_plant_group IN ('bryophytes', 'ferns and allies','flowering plants','gymnosperms (conifers)', 'gymnosperms (non-conifer)') AND (is_introduced=0 OR is_introduced IS NULL) AND is_location_cultivated IS NULL'
+  - Rows returned: 31608056
+  - Rows filtered: 253905753
+  Filter: 'WHERE scrubbed_species_binomial IS NOT NULL AND observation_type IN ('plot','specimen','literature','checklist') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) AND higher_plant_group IN ('bryophytes', 'ferns and allies','flowering plants','gymnosperms (conifers)', 'gymnosperms (non-conifer)') AND (is_introduced=0 OR is_introduced IS NULL) AND is_location_cultivated IS NULL AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)'
+  - Rows returned: 31135370
+  - Rows filtered: 254378439
+
+------ Process 'query_adb' completed in 45809.82 seconds ------
+

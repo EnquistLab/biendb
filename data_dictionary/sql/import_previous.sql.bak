@@ -1,0 +1,63 @@
+-- ---------------------------------------------------------------------
+-- Copies definitions for all tables & columns from previous analytical 
+-- schema to temp tables in dev schema and updates tables for current
+-- schema.
+-- ---------------------------------------------------------------------
+
+SET search_path TO :sch;
+
+-- 
+-- Table names and comments
+-- 
+
+DROP TABLE IF EXISTS dd_tables_temp;
+CREATE TABLE dd_tables_temp AS
+SELECT * FROM :src_sch.data_dictionary_tables
+ORDER BY table_name
+;
+CREATE INDEX ON dd_tables_temp (table_name);
+
+UPDATE data_dictionary_tables a
+SET description=b.description
+FROM dd_tables_temp b
+WHERE a.table_name=b.table_name
+AND b.description IS NOT NULL 
+AND a.description IS NULL
+;
+
+-- Drop the temporary table
+DROP TABLE dd_tables_temp;
+
+-- 
+-- Columns names and definitions
+-- 
+
+DROP TABLE IF EXISTS dd_cols_temp;
+CREATE TABLE dd_cols_temp AS
+SELECT * FROM :src_sch.data_dictionary_columns
+ORDER BY table_name, ordinal_position
+;
+CREATE INDEX ON dd_cols_temp (table_name);
+CREATE INDEX ON dd_cols_temp (column_name);
+
+UPDATE data_dictionary_columns a
+SET description=b.description
+FROM dd_cols_temp b
+WHERE a.table_name=b.table_name
+AND a.column_name=b.column_name
+AND b.description IS NOT NULL 
+AND a.description IS NULL
+;
+
+-- Drop the temporary table
+DROP TABLE dd_cols_temp;
+
+
+-- 
+-- Columns values and definitions
+-- 
+
+-- Append contents of previous table
+INSERT INTO data_dictionary_values
+SELECT * FROM :src_sch.data_dictionary_values
+;

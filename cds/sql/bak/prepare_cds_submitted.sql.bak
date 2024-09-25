@@ -1,0 +1,88 @@
+-- ---------------------------------------------------------
+-- Extract table of all unique geocoordinates from
+-- vfoi and agg_traits in preparation for scrubbing with
+-- CDS
+-- ---------------------------------------------------------
+
+SET search_path TO :sch;
+
+DROP TABLE IF EXISTS cds_submitted;
+CREATE TABLE cds_submitted (
+latlong_verbatim TEXT DEFAULT '',
+latitude_verbatim TEXT DEFAULT '',
+longitude_verbatim TEXT DEFAULT ''
+);
+
+INSERT INTO cds_submitted (
+latlong_verbatim
+)
+SELECT DISTINCT
+latlong_verbatim
+FROM view_full_occurrence_individual_dev
+;
+
+INSERT INTO cds_submitted (
+latlong_verbatim
+)
+SELECT DISTINCT
+latlong_verbatim
+FROM agg_traits
+;
+
+INSERT INTO cds_submitted (
+latlong_verbatim
+)
+SELECT DISTINCT
+latlong_verbatim
+FROM ih
+;
+
+DROP TABLE IF EXISTS cds_submitted_temp;
+CREATE TABLE cds_submitted_temp (LIKE cds_submitted);
+
+-- Just insert PK to eliminate duplicates due to slight differences
+-- in padding whitespace. This is faster than trimming extract
+-- from each table. Critical to avoid PK anomalies on update!
+INSERT INTO cds_submitted_temp (latlong_verbatim) 
+SELECT DISTINCT latlong_verbatim FROM cds_submitted;
+
+ALTER TABLE cds_submitted_temp ADD PRIMARY KEY (latlong_verbatim);
+
+DROP TABLE cds_submitted;
+ALTER TABLE cds_submitted_temp RENAME TO cds_submitted;
+
+--
+-- Now populate the separate verbatim fields used as input for CDS
+--
+
+-- Well-formed coordinates
+UPDATE cds_submitted
+SET 
+latitude_verbatim=TRIM(split_part(latlong_verbatim, ',', 1)),
+longitude_verbatim=TRIM(split_part(latlong_verbatim, ',', 2))
+WHERE latlong_verbatim LIKE '%,%'
+AND latlong_verbatim NOT LIKE '%,%,%'
+;
+
+-- Mis-formed coordinates
+-- >1 delimiter
+UPDATE cds_submitted
+SET 
+latitude_verbatim=TRIM(split_part(latlong_verbatim, ',', 1))
+WHERE latlong_verbatim LIKE '%,%,%'
+;
+UPDATE cds_submitted
+SET 
+longitude_verbatim=TRIM(REPLACE(latlong_verbatim, latitude_verbatim, '' ))
+WHERE latlong_verbatim LIKE '%,%,%'
+;
+
+-- Mis-formed coordinates
+-- No delimiter
+UPDATE cds_submitted
+SET 
+latitude_verbatim=latlong_verbatim,
+longitude_verbatim=''
+WHERE latlong_verbatim NOT LIKE '%,%'
+;
+

@@ -1,0 +1,11 @@
+
+------ Begin operation '' ------
+
+-----------------------------------
+- Checking database 'vegbien'...
+- Checking schema 'analytical_db_dev2' in db 'vegbien'...
+- Checking table 'country' in schema 'analytical_db_dev2' of db 'vegbien'...
+Next steps: Nada!
+
+------ Operation '' completed in .23 seconds ------
+

@@ -1,0 +1,165 @@
+-- ---------------------------------------------------------
+-- Copy table from core schema to development schema,
+-- omitting unused columns, adding new columns & reordering
+-- existing columns. New columns are empty placeholders; they 
+-- will be re-created and populated in later "CREATE TABLE AS"
+-- operations
+-- ---------------------------------------------------------
+
+BEGIN;
+
+SET search_path TO :target_schema;
+
+LOCK TABLE :src_schema.analytical_stem IN SHARE MODE;
+
+-- Adjust work_mem, but research carefully
+-- SET LOCAL work_mem = '500 MB';  -- just for this transaction
+
+-- Generate the first temp table, adding and populating the
+-- new columns in position desired. Be sure to copy ALL 
+-- existing columns in source table, unless you want to remove
+-- one or more columns
+DROP TABLE IF EXISTS analytical_stem_dev;
+CREATE TABLE analytical_stem_dev AS 
+SELECT 
+CAST(NULL AS TEXT) AS analytical_stem_id,
+CAST(NULL AS BIGINT) AS datasource_id,
+datasource,
+CAST(NULL AS TEXT) AS dataset,
+CAST(NULL AS BIGINT) AS plot_metadata_id,
+plot_name,
+plantobservation_id,
+taxonobservation_id,
+country AS country_verbatim,
+state_province AS state_province_verbatim,
+county AS county_verbatim,
+country,
+state_province,
+county,
+locality,
+CAST(CONCAT_WS(', ',latitude,longitude) AS TEXT) AS latlong_verbatim,
+CAST(latitude AS NUMERIC) AS latitude,
+CAST(longitude AS NUMERIC) AS longitude,
+coord_uncertainty_m,
+CAST(NULL AS TEXT) AS coord_uncertainty_verbatim,
+CAST(NULL AS NUMERIC) AS coord_max_uncertainty_km,
+CAST(georef_sources AS TEXT) AS georef_sources,
+georef_protocol,
+CAST(NULL AS NUMERIC) AS centroid_likelihood,
+CAST(NULL AS NUMERIC) AS centroid_max_uncertainty_km,
+CAST(NULL AS text) AS centroid_type,
+CAST(NULL AS SMALLINT) AS is_in_country,
+CAST(NULL AS SMALLINT) AS is_in_state_province,
+CAST(NULL AS SMALLINT) AS is_in_county,
+CAST(is_geovalid AS SMALLINT) AS is_geovalid,
+CAST(is_new_world AS SMALLINT) AS is_new_world,
+project_id,
+project_contributors,
+location_id,
+subplot,
+is_location_cultivated,
+locationevent_id,
+event_date,
+CAST(NULL AS TEXT) AS event_date_accuracy,
+CAST(NULL AS TEXT) AS elevation_verbatim,
+elevation_m,
+CAST(NULL AS double precision) AS elevation_min_m,
+CAST(NULL AS double precision) AS elevation_max_m,
+slope_aspect_deg,
+slope_gradient_deg,
+plot_area_ha,
+sampling_protocol,
+temperature_c,
+precip_mm,
+stratum_name,
+CAST(NULL AS TEXT) AS vegetation_verbatim,
+community_concept_name,
+observation_contributors,
+custodial_institution_codes,
+collection_code,
+catalog_number,
+occurrence_id,
+recorded_by,
+record_number,
+date_collected,
+CAST(NULL AS TEXT) AS date_collected_accuracy,
+identified_by,
+date_identified,
+CAST(NULL AS TEXT) AS date_identified_accuracy,
+identification_remarks,
+CAST(NULL AS BIGINT) AS bien_taxonomy_id,
+CAST(NULL AS BIGINT) AS taxon_id,
+CAST(NULL AS BIGINT) AS family_taxon_id,
+CAST(NULL AS BIGINT) AS genus_taxon_id,
+CAST(NULL AS BIGINT) AS species_taxon_id,
+verbatim_family,
+verbatim_scientific_name,
+TRIM(CONCAT_WS(' ',verbatim_family, verbatim_scientific_name)) AS name_submitted,
+CAST(NULL AS BIGINT) AS fk_tnrs_user_id,
+family_matched,
+name_matched,
+name_matched_author,
+CAST(NULL AS NUMERIC) AS tnrs_name_matched_score,
+CAST(NULL AS TEXT) AS tnrs_warning,
+taxonomic_status AS matched_taxonomic_status,
+taxonomic_status,
+CAST(higher_plant_group AS TEXT) AS higher_plant_group,
+scrubbed_family,
+scrubbed_genus,
+scrubbed_specific_epithet,
+scrubbed_species_binomial,
+scrubbed_taxon_name_no_author,
+CAST(NULL AS TEXT) AS scrubbed_taxon_canonical,
+scrubbed_author,
+scrubbed_taxon_name_with_author,
+scrubbed_species_binomial_with_morphospecies,
+CAST(NULL AS TEXT) AS scrubbed_taxonomic_status,
+CAST(growth_form AS TEXT) AS growth_form,
+reproductive_condition,
+occurrence_remarks,
+cover_percent,
+taxon_observation_id,
+taxon_name_usage_concept_author_code,
+aggregate_organism_observation_id,
+individual_organism_observation_id,
+individual_id,
+individual_count,
+tag,
+relative_x_m,
+relative_y_m,
+stem_code,
+CAST(stem_dbh_cm AS TEXT) AS stem_dbh_cm_verbatim,
+CASE
+WHEN stem_dbh_cm>=1000 THEN NULL
+WHEN stem_dbh_cm=0 OR stem_dbh_cm IS NULL THEN NULL
+ELSE CAST(stem_dbh_cm AS NUMERIC(5,1))
+END
+AS stem_dbh_cm,
+CAST(stem_height_m AS TEXT) AS stem_height_m_verbatim,
+CASE
+WHEN stem_height_m>=150 THEN NULL
+WHEN stem_height_m=0 OR stem_dbh_cm IS NULL THEN NULL
+ELSE CAST(stem_height_m AS NUMERIC(5,2))
+END AS stem_height_m,
+CAST(NULL AS SMALLINT) AS is_embargoed_observation,
+CAST(NULL AS BIGINT) AS nsr_id,
+CAST(NULL AS TEXT) AS native_status_country,
+CAST(NULL AS TEXT) AS native_status_state_province,
+CAST(NULL AS TEXT) AS native_status_county_parish,
+CAST(NULL AS TEXT) AS native_status,
+CAST(NULL AS TEXT) AS native_status_reason,
+CAST(NULL AS TEXT) AS native_status_sources,
+CAST(NULL AS SMALLINT) AS isintroduced,
+CAST(NULL AS SMALLINT) AS is_cultivated_in_region,
+CAST(NULL AS SMALLINT) AS is_cultivated_taxon,
+CAST(NULL AS SMALLINT) AS is_cultivated_observation,
+CAST(NULL AS TEXT) AS is_cultivated_observation_basis,
+CAST(NULL AS TEXT) AS citation_verbatim,
+CAST(NULL AS TEXT) AS citation
+FROM :src_schema.analytical_stem
+:where 
+:limit
+;
+
+-- Commit & release share lock on original table
+COMMIT;

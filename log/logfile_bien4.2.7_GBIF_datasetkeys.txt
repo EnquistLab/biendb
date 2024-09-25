@@ -1,0 +1,4 @@
+Executing update 'bien4.2.7_GBIF_datasetkeys'
+ 
+Processing 208334733 records in batches of 10000:
+- 1 of 20834 - 1 of 20834 (4333.57 sec; avg: 4333.57 sec/batch)        

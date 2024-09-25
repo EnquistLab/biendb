@@ -1,0 +1,18 @@
+Executing module 'cods_1_prepare'
+- Creating cods_submitted tables...done (.26 sec)
+- Clearing indexes from tables:
+-- view_full_occurrence_individual...done
+-- agg_traits...done
+- Preparing tables...done (.97 sec)
+- Extracting proximity data from tables...done (.21 sec)
+- Extracting description data from tables...done (.14 sec)
+- Exporting CSV files to application data directory:
+-- cods_prox_submitted...done (.09 sec)
+-- cods_desc_submitted...done (.08 sec)
+-- Files:
+--- bien_cods_prox_2021-02-21.csv
+--- bien_cods_desc_2021-02-21.csv
+-- Destination directory: /home/boyle/bien/cods/data/adb_test
+
+------ Process 'CULTOBS Step 1 - extract observations' completed in 1.84 seconds ------
+

@@ -1,0 +1,19 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_2_validations'' ------
+
+Start: Fri Jan 29 12:53:40 PST 2021
+ 
+-----------------------------------
+Importing results of GNRS validations:
+Executing module 'gnrs_3_update'
+- Creating GNRS results table...done (.49 sec)
+- Importing GNRS validation results...done (2.59 sec)
+- Removing duplicate values from GNRS results table...done (3.34 sec)
+- Indexing GNRS results table...done (14.41 sec)
+- Updating GNRS results columns in table:
+-- view_full_occurrence_individual_dev...done (7395.52 sec)
+-- agg_traits...done (769.71 sec)
+-- ih...done (3.17 sec)
+-- plot_metadata...done (40.02 sec)
+-----------------------------------
+Checking primary keys...view_full_occurrence_individual_dev...agg_traits...

@@ -1,0 +1,9 @@
+Executing module 'data_contributors'
+- Creating table data_contributors...done (.22 sec)
+- Inserting providers...done (5411.06 sec)
+- Populating additional metadata for herbaria...done (.80 sec)
+- Populatingproximate providers...done (.12 sec)
+- Indexing table...done (.44 sec)
+
+------ Process 'Data contributors' completed in 5412.70 seconds ------
+

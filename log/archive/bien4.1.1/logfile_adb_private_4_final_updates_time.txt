@@ -1,0 +1,14 @@
+Module	Task	Sec
+data_dictionary_2_update	Creating revised results tables	.42
+data_dictionary_2_update	Updating table definitions: Importing revision file	.06
+data_dictionary_2_update	Updating table definitions: Applying revisions	.07
+data_dictionary_2_update	Updating column definitions: Importing revision file	.08
+data_dictionary_2_update	Updating column definitions: Applying revisions	.09
+data_dictionary_2_update	Updating constrained value definitions: Importing revision file	.07
+data_dictionary_2_update	Updating constrained value definitions: Applying revisions	.09
+data_dictionary_2_update	Adding comments to schema: Tables	5.28
+data_dictionary_2_update	Adding comments to schema: Columns	111.12
+datasource_3_update	Backing up table datasource as datasource_bak in schema analytical_db_dev	.54
+datasource_3_update	Creating table datasource_update	.17
+datasource_3_update	Importing datasource revisions file	.14
+datasource_3_update	Updating datasource	.32

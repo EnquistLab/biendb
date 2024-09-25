@@ -1,0 +1,1 @@
+REVOKE :rol FROM :usr;

@@ -1,0 +1,536 @@
+-- --------------------------------------------------------------------
+-- Find cause of duplicate PK (taxonobservation_id) for table vfoi
+-- in NSR input file.
+-- --------------------------------------------------------------------
+
+-- 1. Is agg_traits also affected?
+-- Should return 0
+SELECT count(*) FROM (
+SELECT tbl_id, count(*)
+FROM nsr_submitted_raw
+WHERE tbl_name='agg_traits'
+GROUP BY tbl_id
+HAVING count(*)>1
+) AS a
+;
+-- RESULT: 0 (PASS)
+
+-- 2. Problem traces back to post-processing of TNRS results?
+-- Check for duplicate name_id in TNRS table
+-- Should return 0
+SELECT count(*) FROM (
+SELECT name_id, count(*)
+FROM tnrs
+GROUP BY name_id
+HAVING count(*)>1
+) AS a
+;
+-- RESULT: 0 (PASS)
+
+-- 3. Problem is result of duplicate PK in vfoi
+-- Should return 0
+SELECT count(*) FROM (
+SELECT taxonobservation_id, count(*)
+FROM view_full_occurrence_individual_dev
+GROUP BY taxonobservation_id
+HAVING count(*)>1
+) AS a
+;
+-- RESULT: 223036 (FAIL)
+
+-- Check if >2 records
+SELECT count(*) FROM (
+SELECT taxonobservation_id, count(*)
+FROM view_full_occurrence_individual_dev
+GROUP BY taxonobservation_id
+HAVING count(*)>2
+) AS a
+;
+-- RESULT: 0 (PASS), duplicates only
+
+-- Question: where are duplicate PK values introduced?
+
+-- 4. Duplicates are introduced by bien_taxonomy/sql/udpate_vfoi.sql
+-- 4a. Duplicates are result of left join on name_submitted_verbatim: 
+-- view_full_occurrence_individual_temp a LEFT JOIN tnrs b 
+-- ON a.name_submitted=b.name_submitted_verbatim
+-- 4a(i): name_submitted_verbatim not unique in table tnrs
+-- Should return 0
+SELECT count(*) FROM (
+SELECT name_submitted_verbatim, count(*)
+FROM tnrs
+GROUP BY name_submitted_verbatim
+HAVING count(*)>1
+) AS a
+;
+-- RESULT: 0 (PASS)
+
+-- 4a(ii): name_submitted_verbatim not unique in table tnrs_submitted
+-- Should return 0
+SELECT count(*) FROM (
+SELECT name_submitted_verbatim, count(*)
+FROM tnrs_submitted
+GROUP BY name_submitted_verbatim
+HAVING count(*)>1
+) AS a
+;
+-- RESULT: 0 (PASS)
+
+-- RESULTS for 4a: PASS. Left join to table tnrs is not the problem
+
+-- 4b. LEFT join to bien_taxonomy on bien_taxonomy_id is the problem
+-- RESULT: PASS. Cannot be because uniqueness of bien_taxonomy.bien_taxonomy_id  
+-- is already enforced as PK constraint.
+
+
+-- 
+-- Inspect duplicated records in vfoi  
+-- 
+
+-- Make temp table of IDs
+DROP TABLE IF EXISTS vfoi_dup;
+CREATE TABLE vfoi_dup AS
+SELECT taxonobservation_id FROM (
+SELECT taxonobservation_id, count(*)
+FROM view_full_occurrence_individual_dev
+GROUP BY taxonobservation_id
+HAVING count(*)>1
+) AS a
+ORDER BY taxonobservation_id;
+ALTER TABLE vfoi_dup ADD PRIMARY KEY (taxonobservation_id);
+
+-- Add constraint to vfoi (can remove later)
+CREATE INDEX vfoi_taxonobservation_id_idx 
+ON view_full_occurrence_individual_dev (taxonobservation_id);
+
+-- Get sample of records
+SELECT
+a.taxonobservation_id,
+observation_type,
+datasource,
+country,
+plot_name,
+scrubbed_family,
+scrubbed_taxon_name_no_author
+FROM view_full_occurrence_individual_dev a JOIN vfoi_dup b
+ON a.taxonobservation_id=b.taxonobservation_id
+LIMIT 25;
+
+-- Check observation_type
+SELECT
+observation_type,
+count(*)
+FROM view_full_occurrence_individual_dev a JOIN vfoi_dup b
+ON a.taxonobservation_id=b.taxonobservation_id
+GROUP BY observation_type
+;
+-- RESULT: mostly specimens, a few traits, no plots
+
+SELECT
+observation_type, datasource,
+count(*)
+FROM view_full_occurrence_individual_dev a JOIN vfoi_dup b
+ON a.taxonobservation_id=b.taxonobservation_id
+GROUP BY observation_type, datasource
+;
+-- RESULT: mix of one new (rainbio) and several old sources
+
+-- Check if duplicate records identical
+-- First, using a sample
+-- Result should be exactly 1/2 of LIMIT value
+SELECT count(*) AS distinct_records FROM (
+SELECT DISTINCT * FROM (
+SELECT
+a.*
+FROM view_full_occurrence_individual_dev a JOIN vfoi_dup b
+ON a.taxonobservation_id=b.taxonobservation_id
+ORDER BY taxonobservation_id
+LIMIT 50
+) AS a
+) AS b
+;
+-- RESULT: FAIL. distinct_records=LIMIT
+
+-- Discovery: only difference in small sample of records examined visually 
+-- is fk_gnrs_id
+
+-- Check if gnrs_id is responsible
+-- Only field omitted below is fk_gnrs_id
+-- Result should be exactly 1/2 of LIMIT value
+SELECT count(*) AS distinct_records FROM (
+SELECT DISTINCT * FROM (
+SELECT
+a.taxonobservation_id,
+a.observation_type,
+a.plot_metadata_id,
+a.datasource_id,
+a.datasource,
+a.dataset,
+a.dataowner,
+a.country_verbatim,
+a.state_province_verbatim,
+a.county_verbatim,
+a.poldiv_full,
+a.country,
+a.state_province,
+a.county,
+a.locality,
+a.latlong_verbatim,
+a.latitude,
+a.longitude,
+a.geodeticdatum,
+a.coord_uncertainty_m,
+a.coord_uncertainty_verbatim,
+a.coord_max_uncertainty_km,
+a.georef_sources,
+a.georef_protocol,
+a.fk_centroid_id,
+a.is_centroid,
+a.centroid_likelihood,
+a.centroid_poldiv,
+a.centroid_type,
+a.is_in_country,
+a.is_in_state_province,
+a.is_in_county,
+a.is_geovalid,
+a.is_new_world,
+a.project_id,
+a.project_contributors,
+a.location_id,
+a.plot_name,
+a.subplot,
+a.is_location_cultivated,
+a.locationevent_id,
+a.event_date_verbatim,
+a.event_date,
+a.event_date_accuracy,
+a.elevation_verbatim,
+a.elevation_m,
+a.elevation_min_m,
+a.elevation_max_m,
+a.slope_aspect_deg,
+a.slope_gradient_deg,
+a.plot_area_ha,
+a.sampling_protocol,
+a.temperature_c,
+a.precip_mm,
+a.stratum_name,
+a.vegetation_verbatim,
+a.community_concept_name,
+a.observation_contributors,
+a.custodial_institution_codes,
+a.collection_code,
+a.catalog_number,
+a.occurrence_id,
+a.recorded_by,
+a.record_number,
+a.date_collected_verbatim,
+a.date_collected,
+a.date_collected_accuracy,
+a.identified_by,
+a.date_identified_verbatim,
+a.date_identified,
+a.date_identified_accuracy,
+a.identification_remarks,
+a.bien_taxonomy_id,
+a.taxon_id,
+a.family_taxon_id,
+a.genus_taxon_id,
+a.species_taxon_id,
+a.verbatim_family,
+a.verbatim_scientific_name,
+a.name_submitted,
+a.fk_tnrs_id,
+a.family_matched,
+a.name_matched,
+a.name_matched_author,
+a.tnrs_name_matched_score,
+a.tnrs_warning,
+a.matched_taxonomic_status,
+a.match_summary,
+a.scrubbed_taxonomic_status,
+a.higher_plant_group,
+a.scrubbed_family,
+a.scrubbed_genus,
+a.scrubbed_specific_epithet,
+a.scrubbed_species_binomial,
+a.scrubbed_taxon_name_no_author,
+a.scrubbed_taxon_canonical,
+a.scrubbed_author,
+a.scrubbed_taxon_name_with_author,
+a.scrubbed_species_binomial_with_morphospecies,
+a.growth_form,
+a.reproductive_condition,
+a.occurrence_remarks,
+a.taxon_observation_id,
+a.taxon_name_usage_concept_author_code,
+a.plantobservation_id,
+a.aggregate_organism_observation_id,
+a.individual_organism_observation_id,
+a.individual_id,
+a.individual_count,
+a.stem_height_m,
+a.cover_percent,
+a.cites,
+a.iucn,
+a.usda_federal,
+a.usda_state,
+a.is_embargoed_observation,
+a.geom,
+a.nsr_id,
+a.native_status_country,
+a.native_status_state_province,
+a.native_status_county_parish,
+a.native_status,
+a.native_status_reason,
+a.native_status_sources,
+a.isintroduced,
+a.is_cultivated_in_region,
+a.is_cultivated_taxon,
+a.is_cultivated_observation,
+a.is_cultivated_observation_basis,
+a.citation_verbatim,
+a.citation,
+a.is_new
+FROM view_full_occurrence_individual_dev a JOIN vfoi_dup b
+ON a.taxonobservation_id=b.taxonobservation_id
+LIMIT 50
+) AS a
+) AS b
+;
+-- RESULT: 25; difference is only due to fk_gnrs_id
+
+-- Full test without limit
+-- Expected result: 0, if only difference is fk_gnrs_id
+SELECT (unique_ids::integer-distinct_records::integer) AS diff FROM 
+(
+SELECT count(*)::integer AS unique_ids
+FROM vfoi_dup
+) AS a,
+(
+SELECT count(*) AS distinct_records FROM (
+SELECT DISTINCT * FROM (
+SELECT
+a.taxonobservation_id,
+a.observation_type,
+a.plot_metadata_id,
+a.datasource_id,
+a.datasource,
+a.dataset,
+a.dataowner,
+a.country_verbatim,
+a.state_province_verbatim,
+a.county_verbatim,
+a.poldiv_full,
+a.country,
+a.state_province,
+a.county,
+a.locality,
+a.latlong_verbatim,
+a.latitude,
+a.longitude,
+a.geodeticdatum,
+a.coord_uncertainty_m,
+a.coord_uncertainty_verbatim,
+a.coord_max_uncertainty_km,
+a.georef_sources,
+a.georef_protocol,
+a.fk_centroid_id,
+a.is_centroid,
+a.centroid_likelihood,
+a.centroid_poldiv,
+a.centroid_type,
+a.is_in_country,
+a.is_in_state_province,
+a.is_in_county,
+a.is_geovalid,
+a.is_new_world,
+a.project_id,
+a.project_contributors,
+a.location_id,
+a.plot_name,
+a.subplot,
+a.is_location_cultivated,
+a.locationevent_id,
+a.event_date_verbatim,
+a.event_date,
+a.event_date_accuracy,
+a.elevation_verbatim,
+a.elevation_m,
+a.elevation_min_m,
+a.elevation_max_m,
+a.slope_aspect_deg,
+a.slope_gradient_deg,
+a.plot_area_ha,
+a.sampling_protocol,
+a.temperature_c,
+a.precip_mm,
+a.stratum_name,
+a.vegetation_verbatim,
+a.community_concept_name,
+a.observation_contributors,
+a.custodial_institution_codes,
+a.collection_code,
+a.catalog_number,
+a.occurrence_id,
+a.recorded_by,
+a.record_number,
+a.date_collected_verbatim,
+a.date_collected,
+a.date_collected_accuracy,
+a.identified_by,
+a.date_identified_verbatim,
+a.date_identified,
+a.date_identified_accuracy,
+a.identification_remarks,
+a.bien_taxonomy_id,
+a.taxon_id,
+a.family_taxon_id,
+a.genus_taxon_id,
+a.species_taxon_id,
+a.verbatim_family,
+a.verbatim_scientific_name,
+a.name_submitted,
+a.fk_tnrs_id,
+a.family_matched,
+a.name_matched,
+a.name_matched_author,
+a.tnrs_name_matched_score,
+a.tnrs_warning,
+a.matched_taxonomic_status,
+a.match_summary,
+a.scrubbed_taxonomic_status,
+a.higher_plant_group,
+a.scrubbed_family,
+a.scrubbed_genus,
+a.scrubbed_specific_epithet,
+a.scrubbed_species_binomial,
+a.scrubbed_taxon_name_no_author,
+a.scrubbed_taxon_canonical,
+a.scrubbed_author,
+a.scrubbed_taxon_name_with_author,
+a.scrubbed_species_binomial_with_morphospecies,
+a.growth_form,
+a.reproductive_condition,
+a.occurrence_remarks,
+a.taxon_observation_id,
+a.taxon_name_usage_concept_author_code,
+a.plantobservation_id,
+a.aggregate_organism_observation_id,
+a.individual_organism_observation_id,
+a.individual_id,
+a.individual_count,
+a.stem_height_m,
+a.cover_percent,
+a.cites,
+a.iucn,
+a.usda_federal,
+a.usda_state,
+a.is_embargoed_observation,
+a.geom,
+a.nsr_id,
+a.native_status_country,
+a.native_status_state_province,
+a.native_status_county_parish,
+a.native_status,
+a.native_status_reason,
+a.native_status_sources,
+a.isintroduced,
+a.is_cultivated_in_region,
+a.is_cultivated_taxon,
+a.is_cultivated_observation,
+a.is_cultivated_observation_basis,
+a.citation_verbatim,
+a.citation,
+a.is_new
+FROM view_full_occurrence_individual_dev a JOIN vfoi_dup b
+ON a.taxonobservation_id=b.taxonobservation_id
+) AS a
+) AS b
+) AS c
+;
+-- RESULT: 0 (PASS). Difference is due to fk_gnrs_id only
+
+-- NEW HYPOTHESIS!
+-- 5. Duplication created by left join to table gnrs:
+-- FROM view_full_occurrence_individual_temp a LEFT JOIN gnrs b
+-- ON a.poldiv_full=b.poldiv_full
+-- in script gnrs/sql/gnrs_update_vfoi.sql
+
+-- 5a. Table gnrs candidate 'PK' poldiv_full not unique
+-- Expected result: 0
+SELECT count(*) FROM (
+SELECT poldiv_full, count(*)
+FROM gnrs
+GROUP BY poldiv_full
+HAVING count(*)>1
+) AS a
+;
+-- RESULT: 40 (FAIL): Hypothesis 5 is correct
+
+-- 5b. Redundant records are duplications only
+-- Expected result: 0
+SELECT count(*) FROM (
+SELECT poldiv_full, count(*)
+FROM gnrs
+GROUP BY poldiv_full
+HAVING count(*)>2
+) AS a
+;
+-- RESULT: 0 (PASS)
+
+-- Assumption: Pairs of records in table gnrs associated with the duplicated 
+-- records in table vfoi are identical except for their IDs 
+-- Test: 
+-- (a) make table of gnrs records associated with duplicate vfoi records
+-- (b) Total records is 2x unique records (w/o gnrs_id)
+
+DROP TABLE IF EXISTS gnrs_dup;
+CREATE TABLE gnrs_dup AS
+SELECT distinct g.*
+FROM view_full_occurrence_individual_dev a JOIN vfoi_dup b
+ON a.taxonobservation_id=b.taxonobservation_id
+JOIN gnrs g
+ON a.fk_gnrs_id=g.id
+;
+SELECT (tot_records::integer/distinct_records::integer) AS diff FROM 
+(
+SELECT count(*)::integer AS tot_records
+FROM gnrs_dup
+) AS a,
+(
+SELECT count(*) AS distinct_records FROM 
+(
+SELECT DISTINCT 
+poldiv_full,
+country_verbatim,
+state_province_verbatim,
+county_parish_verbatim,
+country,
+state_province,
+county_parish,
+country_id,
+state_province_id,
+county_parish_id,
+match_method_country,
+match_method_state_province,
+match_method_county_parish,
+match_score_country,
+match_score_state_province,
+match_score_county_parish,
+poldiv_submitted,
+poldiv_matched,
+match_status,
+user_id
+FROM gnrs_dup
+) AS a
+) AS b
+;
+-- RESULT: 5575 (FAIL). GNRS records are NOT identical. It appears that fuzzy 
+-- and exact matches for the same input are stored in separate records. However,  
+-- this doesn't matter because only the single canonical result is stored in
+-- vfoi, as confirmed by tests above.
+
+-- Long term remedy: fix the GNRS. 
+-- Short term remedy: delete one of each pair of duplicate records. 
+-- See: fix_duplicate_PK.sql

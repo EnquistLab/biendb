@@ -1,0 +1,32 @@
+##########################################################
+# Manual submission, processing and download using NSR ##########################################################
+
+# Log into nimoy and navigate to nsr directory
+cd /var/www/bien/apps/nsr/
+
+# if need to change db config files, they are in:
+# /var/www/config/bien/apps/nsr/
+
+# Copy the file to nsr data directory
+cd /var/www/bien/apps/nsr/data/
+sudo scp boyle@vegbiendev.nceas.ucsb.edu:bien3/nsr/data/nsr_submitted.csv.zip .
+unzip nsr_submitted.csv.zip
+
+# Test-process a small sample:
+head nsr_submitted.csv > nsr_submitted_sample.csv
+cd ..	# /var/www/bien/apps/nsr/
+sudo php nsr_batch.php -e=true -i=true -f=nsr_submitted_sample.csv -l=unix -t=csv -r=false
+
+# if results OK, process the file in interactive mode
+# Run from /var/www/bien/apps/nsr/
+sudo php nsr_batch.php -e=true -i=true -f=nsr_submitted.csv -l=unix -t=csv -r=false
+
+# Copy the results file back to vegbiendev
+cd data
+zip nsr_submitted_nsr_results.txt.zip nsr_submitted_nsr_results.txt
+scp nsr_submitted_nsr_results.txt.zip boyle@vegbiendev.nceas.ucsb.edu:bien3/nsr/data/
+
+
+
+
+

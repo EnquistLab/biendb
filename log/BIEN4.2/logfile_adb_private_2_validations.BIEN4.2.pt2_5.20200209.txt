@@ -1,0 +1,80 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_2_validations'' ------
+
+Start: Mon Feb  8 11:59:41 PST 2021
+ 
+-----------------------------------
+Importing results of CDS validations:
+Executing module 'cds_3_update'
+-- plot_metadata...done (48.03 sec)
+-----------------------------------
+Checking primary keys of main tables:
+-----------------------------------
+Executing module 'poldiv_tables'
+- Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien':
+-- Creating dumpfile:
+--- '/home/boyle/bien3/analytical_db/private/data/poldiv_tables.sql'...done (2943.46 sec)
+--- Editing dumpfile...done (20.44 sec)
+-- Dropping previous tables, if any...done (.22 sec)
+-- Importing tables from dumpfile...done (56.43 sec)
+-- Removing dumpfile...done (.01 sec)
+-- Altering tables...done (.37 sec)
+-----------------------------------
+Executing module 'is_new_world'
+- Updating column is_new_world in tables:
+- view_full_occurrence_individual...done (8498.25 sec)
+- agg_traits...done (622.92 sec)
+-----------------------------------
+Executing module 'is_geovalid'
+- Updating is_geovalid column in tables:
+- view_full_occurrence_individual...done (6334.30 sec)
+- agg_traits...done (589.50 sec)
+- plot_metadata...done (15.86 sec)
+-----------------------------------
+Checking primary keys of main tables:
+-----------------------------------
+Executing module 'fix_fia'
+ - Parameters:
+ -- $curr_db='vegbien'
+ -- $curr_sch='analytical_db_dev'
+- Creating temporary indexes on vfoi...done (5727.37 sec)
+- Creating table fia_plot_codes...done (1293.03 sec)
+- Creating table vfoi_dev with revised FIA plot codes...done (2411.30 sec)
+- Create new version of plot_metadata with updated plot codes...done (523.12 sec)
+- Update FK plot_metadata_id in table vfoi_dev...done (3953.61 sec)
+- Dropping temporary indexes...done (17.39 sec)
+-----------------------------------
+Executing module 'NSR'
+- Creating nsr_submitted tables...done (1.23 sec)
+- Extracting raw NSR input columns from table:
+-- vfoi...done (1144.60 sec)
+-- agg_traits...done (78.92 sec)
+- Extracting unique values to table nsr_submitted...done (8421.86 sec)
+- Exporting CSV file to application data directory...done (13.08 sec)
+-- File: bien_nsr_2021-02-08.csv
+-- Destination directory: /home/boyle/bien/nsr/data/user
+-----------------------------------
+Executing module 'cods_1_prepare'
+- Creating cods_submitted tables...done (.21 sec)
+- Clearing indexes from tables:
+-- view_full_occurrence_individual...done
+-- agg_traits...done
+- Preparing tables...done (7482.67 sec)
+- Extracting proximity data from tables...done (7934.62 sec)
+- Extracting description data from tables...done (3274.86 sec)
+- Exporting CSV files to application data directory:
+-- cods_prox_submitted...done (37.54 sec)
+-- cods_desc_submitted...done (274.52 sec)
+-- Files:
+--- cods_prox_submitted.csv
+--- cods_desc_submitted.csv
+-- Destination directory: /home/boyle/bien/cods/data
+
+Script completed. Next step:
+
+1. Submit CODS input for scrubbing
+2. Submit NSR input for scrubbing
+4. After steps 1-2 complete, continue with adb_private_3_import_validations_2.sh
+
+------ Process 'BIEN DB process: 'adb_private_2_validations'' completed in 61720.12 seconds ------
+

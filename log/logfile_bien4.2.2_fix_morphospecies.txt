@@ -1,0 +1,8 @@
+Executing module 'bien4.2.2_fix_morphospecies'
+ 
+Fixing morphospecies:
+Public database...done (70948.09 sec)
+Private database...done (71714.17 sec)
+
+------ Process 'bien4.2.2_fix_morphospecies' completed in 142662.63 seconds ------
+

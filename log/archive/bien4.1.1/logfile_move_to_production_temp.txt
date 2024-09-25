@@ -1,0 +1,7 @@
+Executing module 'move_to_production_temp'
+- Fixing public schema "analytical_db" in database "public_vegbien":
+-- Setting versions dates for new database...done (13.64 sec)
+-- Setting versions dates for old database...done (.08 sec)
+
+------ Operation 'Move to production' completed in 13.74 seconds ------
+

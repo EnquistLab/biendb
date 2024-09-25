@@ -1,0 +1,84 @@
+#!/bin/bash
+
+##############################################################
+# Application parameters
+# Check and change as needed
+##############################################################
+
+# Set to true to reuse existing bien_metadata from production schema. 
+# Will create new table if doesn't already exist.
+# If "false" will merely append new record to existing table in 
+# current schema
+replace_table="true"
+
+# Insert new record, in addition to creating new table
+insert_new="true"
+
+# New database version details
+# Complete these if $insert_new='true'
+db_version='4.1'
+version_comments="Complete refresh of source GBIF"
+
+# DB code version associated with this db release
+# Only add this tag after full build completed and moved
+# to production
+db_code_version='v4.2'
+
+# Latest rbien version associated with this 
+rbien_version='1.2.3'
+
+# Latest rtodobien version associated with this release
+rtodobien_version='1.2.3'
+
+# Version of TNRS used to scrub names for this release
+tnrs_version='4.0'
+
+# Which development schema to use ($dev_schema_adb_private from 
+# main params file)
+dev_schema=$dev_schema_adb_private
+
+# Database & schema where main current db version table lives
+# These parameters used only for determining current version.
+# May or may not be same as $sch
+# Private production DB
+dbv_db=$db_private
+dbv_user=$user
+dbv_sch=$prod_schema_adb_private
+## Public production DB
+#dbv_db="public_vegbien"
+#dbv_user=$user
+#dbv_sch="public"
+
+# Database & schema where version information in table bien_metadata
+# will be updated. Applies to process "db_version_update" only
+## Private production DB
+db_to_update=$db_private
+db_to_update_user=$user
+sch_to_update=$prod_schema_adb_private
+# Public production DB
+# db_to_update=$db_public
+# db_to_update_user=$user
+# sch_to_update=$prod_schema_adb_public
+
+# Short name for this operation, for screen echo and 
+# notification emails
+pname_local="BIEN Metadata"
+
+# Set process names, for notification and screen echo,
+# depending on which is being run
+if [ "$local_basename" == "bien_metadata" ]; then
+	pname_local="Create/update table bien_metadata"
+elif [ "$local_basename" == "db_version_update" ]; then
+	pname_local="Update database version"
+elif [ "$local_basename" == "bien_metadata_custom_bien4.1" ]; then
+	pname_local="Create/update table bien_metadata"
+else
+	echo "ERROR: \"$local_basename\" - Incorrect process name, check params file"; exit 1
+fi
+
+# General process name prefix for email notifications
+pname_local_header="BIEN notification: process '"$pname_local"'"
+
+# Main db on which operation will be performed
+# For display in messages and mails only
+db_main=$db_private

@@ -1,0 +1,34 @@
+
+------ Begin operation 'Build Private ADB - Step 4' ------
+
+-----------------------------------
+Executing module 'data_dictionary_2_update'
+- Creating revised results tables...done (.42 sec)
+- Updating table definitions:
+-- Importing revision file...done (.06 sec)
+-- Applying revisions...done (.07 sec)
+- Updating column definitions:
+-- Importing revision file...done (.08 sec)
+-- Applying revisions...done (.09 sec)
+- Updating constrained value definitions:
+-- Importing revision file...done (.07 sec)
+-- Applying revisions...done (.09 sec)
+- Adding comments to schema:
+-- Tables...done (5.28 sec)
+-- Columns...done (111.12 sec)
+-----------------------------------
+Executing module 'datasource_3_update'
+- Backing up table datasource as datasource_bak in schema analytical_db_dev...done (.54 sec)
+- Creating table datasource_update...done (.17 sec)
+- Importing datasource revisions file...done (.14 sec)
+- Updating datasource...done (.32 sec)
+
+Script completed. Next step:
+
+1. Set permissions to allow access by bien_private, etc. (see module users/)
+2. Inspect & validate private analytical_db_dev
+3. Run adb_public.sh to generate public version  
+of analytical database
+
+------ Operation 'Build Private ADB - Step 4' completed in 118.56 seconds ------
+

@@ -1,0 +1,115 @@
+
+------ Begin operation 'Build Private ADB - Step 3' ------
+
+-----------------------------------
+- Creating NSR results table...done (.47 sec)
+- Importing NSR validation results...done (104.07 sec)
+- Updating NSR results table...done (391.47 sec)
+- Updating NSR results columns in table:
+-- view_full_occurrence_individual_dev...done (8584.58 sec)
+-- agg_traits...done (1155.00 sec)
+- Removing temporary tables...done (.16 sec)
+-----------------------------------
+Executing module 'is_new_world'
+- Updating column is_new_world in tables:
+- view_full_occurrence_individual...done (5827.14 sec)
+- agg_traits...done (1202.72 sec)
+-----------------------------------
+Skipping centroids!
+-----------------------------------
+Executing module 'analytical_stem'
+- Transfering new columns from vfoi...done (28594.70 sec)
+-----------------------------------
+Executing module 'update_schema'
+- Updating schemas for tables:
+-- view_full_occurrence_individual...done (5096.28 sec)
+-- agg_traits...done (930.70 sec)
+-- analytical_stem...done (918.73 sec)
+-----------------------------------
+Executing module 'restore_indexes_dev'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (.18 sec)
+-- agg_traits...done (.06 sec)
+-- analytical_stem...done (.07 sec)
+-- bien_taxonomy...done (.72 sec)
+- Restoring indexes on tables:
+-- view_full_occurrence_individual...done (175543.35 sec)
+-- agg_traits...done (15680.86 sec)
+-- analytical_stem...done (12818.03 sec)
+-- bien_taxonomy...done (166.79 sec)
+- Creating index summary view...done (.56 sec)
+-----------------------------------
+Making final metadata tables:
+ 
+Executing module 'trait_metadata' with parameters db='vegbien' & dev_schema='analytical_db_dev'
+- Creating table 'taxon_trait'...done (2870.42 sec)
+- Creating table 'trait_summary'...done (978.94 sec)
+Executing module 'data_contributors'
+- Creating table data_contributors...done (.18 sec)
+- Inserting providers...done (.49 sec)
+- Populating additional metadata for herbaria...done (.71 sec)
+- Calculating observations...done (771.96 sec)
+- Fixing duplicate records...done (.20 sec)
+- Indexing table...done (.16 sec)
+Executing module 'species_by_political_division'
+- Creating table species_by_political_division...done (11684.18 sec)
+Executing module 'bien_species_all'
+-Creating table 'bien_species_all'...done (568.36 sec)
+Executing module 'bien_metadata'
+- Copying table bien_metadata from production schema...done (.88 sec)
+- Inserting new record...done (.07 sec)
+Executing module 'bien_summary'
+- Copying existing table bien_summary from schema 'analytical_db'...done (.21 sec)
+- Inserting new summary record.....done (.06 sec)
+- Counting observations...done (361.37 sec)
+- Counting geovalid observations...done (371.24 sec)
+- Counting specimen observations...done (339.65 sec)
+- Counting plot observations...done (439.79 sec)
+- Counting plots...done (25.68 sec)
+- Counting species...done (1.21 sec)
+Executing module 'data_dictionary_rbien'
+Creating table data_dictionary_rbien...done (1.09 sec)
+- Importing CSV...done (.09 sec)
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating & populating table species...done (708.97 sec)
+-- Creating temp table observations_all...done (1129.76 sec)
+-- Updating geometry column in observations_all...done (10893.39 sec)
+-- Creating & populating table observations_union...done (1358.86 sec)
+Executing module 'cp_ranges':
+- Copying table 'ranges' from db 'public_vegbien' to schema 'analytical_db_dev' in db 'vegbien':
+-- Creating dumpfile...done (37.82 sec)
+-- Editing dumpfile...done (53.14 sec)
+-- Importing table from dumpfile...done (98.31 sec)
+-- Removing dumpfile...done (.13 sec)
+-----------------------------------
+Executing module 'phylogeny'
+- Creating tables...done (.17 sec)
+- Importing metadata to temporary table...done
+- Inserting metadata...done (.26 sec)
+- Loading phylogenies...done (231.40 sec)
+- Indexing table phylogeny & adjusting ownership...done (.34 sec)
+-----------------------------------
+Skipping cleanup! Do manually
+ 
+-----------------------------------
+Executing module 'data_dictionary_1_create'
+- Creating data dictionary...done (2.65 sec)
+- Exporting CSV files to '/home/boyle/bien3/analytical_db/private/data/data_dictionary':
+-- Tables: 'dd_tables.csv'...done (.12 sec)
+-- Columns: 'dd_cols.csv'...done (.21 sec)
+-- Column values: 'dd_vals.csv'...done (.08 sec)
+
+Script completed. Next step:
+
+1. Complete manual edits to datasource.csv (see module datasource/)
+2. Complete manual edits to dd_tables.csv (see module data_dictionary/)
+3. Complete manual edits to dd_cols.csv (see module data_dictionary/)
+4. Complete manual edits to dd_vals.csv (see module data_dictionary/)
+5. Rename all revised manual edit files with suffix '_revised' (e.g.,  
+   'datasource_revised.csv' and place in the appropriate data directories.  
+6. Update database by running adb_private_4_final_update.sh
+7. Perform manual cleanup as needed
+
+------ Operation 'Build Private ADB - Step 3' completed in 289949.78 seconds ------
+

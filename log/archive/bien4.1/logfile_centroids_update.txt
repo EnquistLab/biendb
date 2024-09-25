@@ -1,0 +1,10 @@
+Executing module 'centroids_update'
+- Creating centroid results table...done (3.04 sec)
+- Importing centroid results to table centroid_raw...done (845.13 sec)
+- Inserting raw results to table centroid...done (988.52 sec)
+- Indexing centroid results table...done (6106.94 sec)
+- Updating centroid columns in tables:
+-- SKIPPING THIS STEP!
+
+------ Operation 'pname' completed in 7943.77 seconds ------
+

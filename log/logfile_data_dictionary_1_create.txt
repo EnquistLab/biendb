@@ -1,0 +1,8 @@
+Executing module 'data_dictionary_1_create'
+- Exporting CSV files to '/home/boyle/bien3/analytical_db/private/data/data_dictionary':
+-- Tables: 'dd_tables.csv'...done (20.27 sec)
+-- Columns: 'dd_cols.csv'...done (.07 sec)
+-- Column values: 'dd_vals.csv'...done (.06 sec)
+
+------ Process 'Data dictionary Step 1 - extract CSVs' completed in 20.43 seconds ------
+

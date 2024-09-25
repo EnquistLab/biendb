@@ -1,0 +1,127 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_3_update_metadata'' ------
+
+Start: Mon Mar  1 10:05:54 PST 2021
+ 
+-----------------------------------
+Executing module 'nsr_3_update'
+- Creating NSR results table...done (1.89 sec)
+- Creating temp file...done (3.81 sec)
+- Importing NSR validation results from temp file...done (61.67 sec)
+- Removing temp file...done (.01 sec)
+- Updating NSR results table...done (252.25 sec)
+- Checking candidate pkeys unique for NSR tables:
+-- table=nsr, cpkey=taxon_poldiv...done (15.10 sec)
+-- table=nsr_submitted_raw, cpkey=tbl_id, fktable=vfoi...done (3011.53 sec)
+-- table=nsr_submitted_raw, cpkey=tbl_id, fktable=agg_traits...done (152.92 sec)
+- Updating NSR results columns in table:
+-- view_full_occurrence_individual_dev...done (12844.03 sec)
+-- agg_traits...done (635.59 sec)
+-----------------------------------
+Checking primary keys of main tables:
+-----------------------------------
+Making last fixes to main tables before indexing:
+ 
+- Dropping indexes from tables:
+-- view_full_occurrence_individual...done
+-- agg_traits...done
+- Fixing negative plot areas...done (6295.45 sec)
+- Creating table taxon_status...done (70.99 sec)
+- Adding alias columns to bien_taxonomy...done (150.10 sec)
+- Adding column is_embargoed to table taxon...done (943.97 sec)
+- Adding column continent to table:
+-- vfoi...done (7020.19 sec)
+-- agg_traits...done (466.28 sec)
+-- plot_metadata...done (70.35 sec)
+-----------------------------------
+Executing module 'analytical_stem'
+- Transfering new columns from vfoi...done (8150.33 sec)
+-----------------------------------
+Executing module 'populate_geom':
+- Processing table: "view_full_occurrence_individual_dev":
+-- Clearing all indexes...done
+-- Enforcing geometric constraints...done (2204.86 sec)
+-- Building non-null index on latitude & longitude...done (644.78 sec)
+-- Adding temporary integer primary key...done (9898.39 sec)
+-- Processing 285513809 records in batches of 100000...done (1097.52 sec) 
+NOTE: THE ABOVE IS ALMOST CERTAINLY WAY TOO LOW   
+-- Dropping temporary indexes...done (.09 sec)
+-- Indexing geometry column...done (777.88 sec)
+-----------------------------------
+Executing module 'restore_indexes_dev'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (23.84 sec)
+-- agg_traits...done (3.37 sec)
+-- analytical_stem...done (.64 sec)
+-- bien_taxonomy...done (1.81 sec)
+- Restoring indexes on tables:
+-- view_full_occurrence_individual...done (190398.72 sec)
+-- agg_traits...done (3974.64 sec)
+-- analytical_stem...done (3142.47 sec)
+-- bien_taxonomy...done (33.52 sec)
+- Creating index summary view...done (.57 sec)
+-----------------------------------
+Making final metadata tables:
+ 
+Executing module 'trait_metadata' with parameters db='vegbien' & dev_schema='analytical_db_dev'
+- Creating table 'taxon_trait'...done (289.91 sec)
+- Creating table 'trait_summary'...done (161.49 sec)
+Executing module 'data_contributors'
+- Creating table data_contributors...done (.31 sec)
+- Inserting providers...done (.87 sec)
+- Populating additional metadata for herbaria...done (.59 sec)
+- Calculating observations...done (4459.19 sec)
+- Fixing duplicate records...done (.32 sec)
+- Indexing table...done (.15 sec)
+Executing module 'species_by_political_division'
+- Creating table species_by_political_division...done (3397.63 sec)
+Executing module 'bien_species_all'
+-Creating table 'bien_species_all'...done (3184.68 sec)
+Executing module 'bien_metadata'
+- Copying table bien_metadata from production schema...done (1.57 sec)
+- Inserting new record...done (.14 sec)
+Executing module 'bien_summary'
+- Copying existing table bien_summary from schema 'analytical_db'...done (.83 sec)
+- Inserting new summary record.....done (.10 sec)
+- Counting observations...done (1817.30 sec)
+- Counting geovalid observations...done (2955.23 sec)
+- Counting specimen observations...done (3094.66 sec)
+- Counting plot observations...done (541.80 sec)
+- Counting plots...done (11.31 sec)
+- Counting species...done (7.86 sec)
+Executing module 'data_dictionary_rbien'
+Creating table data_dictionary_rbien...done (.65 sec)
+- Importing CSV...done (.17 sec)
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating temp table observations_all...done (3754.95 sec)
+-- Updating geometry column in observations_all...done (939.56 sec)
+-- Creating & populating table observations_union...done (192.61 sec)
+-- Altering table observations_union (adding species_std, is_embargoed)...done (35.74 sec)
+-- Creating & populating table species...done (2.61 sec)
+Executing module 'cp_ranges':
+- Copying table 'ranges' from db 'public_vegbien' to schema 'analytical_db_dev' in db 'vegbien':
+-- Creating dumpfile...done (36.73 sec)
+-- Editing dumpfile...done (130.91 sec)
+-- Importing table from dumpfile...done (107.36 sec)
+-- Removing dumpfile...done (.56 sec)
+-----------------------------------
+Executing module 'phylogeny'
+- Creating tables...done (1.85 sec)
+- Importing metadata to temporary table...done
+- Inserting metadata...done (.42 sec)
+- Loading phylogenies...done (67.95 sec)
+- Indexing table phylogeny & adjusting ownership...done (.13 sec)
+-----------------------------------
+Skipping cleanup! Do manually
+ 
+-----------------------------------
+Executing module 'data_dictionary_1_create'
+- Saving table and column descriptions from previous version in schema="analytical_db"...done (1.45 sec)
+- Creating data dictionary...done (.80 sec)
+- Inserting table and column descriptions from previous version...done (.16 sec)
+- Inserting constrained column values...done (63612.04 sec)
+- Inserting table and column descriptions from previous version...done (.20 sec)
+- Dropping temp tables...done (.09 sec)
+- Exporting CSV files to '/home/boyle/bien3/analytical_db/private/data/data_dictionary':
+data_dir_local: /home/boyle/bien3/analytical_db/private/data/data_dictionary

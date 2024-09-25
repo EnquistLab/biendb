@@ -1,0 +1,12 @@
+
+Executing module 'backup_table'
+-- Creating dumpfile of schema 'analytical_db_dev' in db 'vegbien'...done (9518.70 sec)
+
+Dumpfile 'vfoi_dev_analytical_db_test_BIEN4.2_20210412_101540.pgd' created. To restore, run the following command:
+
+pg_restore -U [username] -d [database_to_restore_to] -n [schema_to_restore] vfoi_dev_analytical_db_test_BIEN4.2_20210412_101540.pgd
+
+'database_to_restore_to' does not need to be the same as original db. 'schema_to_restore' must be the same, unless also edit dumpfile to change schema references.
+
+------ Process 'Backup' completed in 9518.77 seconds ------
+

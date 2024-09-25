@@ -1,0 +1,72 @@
+
+------ Begin operation 'Build Public ADB' ------
+
+Executing module 'drop_indexes'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (29.10 sec)
+-- agg_traits...done (4.74 sec)
+-- analytical_stem...done (3.41 sec)
+-- bien_taxonomy...done (.34 sec)
+Executing module 'adb_public_embargoes'
+- Applying taxon embargoes...done (2131.00 sec)
+- Adding temporary indexes...done (5899.31 sec)
+- Applying dataset embargoes:
+-- Madidi...done (309.88 sec)
+-- REMIB...done (515.06 sec)
+-- NVS...done (78.47 sec)
+-- rainbio...done (498.37 sec)
+-- Non-public traits...done (34.81 sec)
+- Removing temporary indexes...done (.45 sec)
+- Removing traits with <300 species...done (8820.86 sec)
+- Updating metadata:
+-- Removing deleted datasources from metadata tables...done (2.55 sec)
+-- Updating taxon counts...done (2071.70 sec)
+Executing module 'restore_indexes'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (.11 sec)
+-- agg_traits...done (.05 sec)
+-- analytical_stem...done (.07 sec)
+-- bien_taxonomy...done (.07 sec)
+- Restoring indexes on tables:
+-- view_full_occurrence_individual...done (210856.92 sec)
+-- agg_traits...done (15430.14 sec)
+-- analytical_stem...done (13737.04 sec)
+-- bien_taxonomy...done (191.13 sec)
+- Creating index summary view...done (1.39 sec)
+Executing module 'adb_public_permissions'
+- Setting permissions...done (.19 sec)
+Executing module 'trait_metadata' with parameters db='public_vegbien' & dev_schema='analytical_db_dev'
+- Creating table 'taxon_trait'...done (3456.17 sec)
+- Creating table 'trait_summary'...done (919.07 sec)
+Executing module 'bien_species_all'
+-Creating table 'bien_species_all'...done (672.94 sec)
+Executing module 'bien_summary_public'
+- Copying existing table bien_summary_public from schema 'public'...done (.41 sec)
+- Inserting new summary record.....done (.10 sec)
+- Counting observations...done (861.74 sec)
+- Counting geovalid observations...done (744.68 sec)
+- Counting specimen observations...done (612.32 sec)
+- Counting plot observations...done (762.78 sec)
+- Counting plots...done (25.52 sec)
+- Counting species...done (10.09 sec)
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating & populating table species...
+------ Begin operation 'Build Public ADB' ------
+
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating & populating table species...done (942.55 sec)
+-- Creating temp table observations_all...done (1096.88 sec)
+-- Updating geometry column in observations_all...done (7163.52 sec)
+-- Creating & populating table observations_union...done (1148.89 sec)
+
+Script completed. 
+
+Next steps:
+
+1. Validate public analytical database
+2. Run adb_move_to_production.sh
+
+------ Operation 'Build Public ADB' completed in 10351.90 seconds ------
+

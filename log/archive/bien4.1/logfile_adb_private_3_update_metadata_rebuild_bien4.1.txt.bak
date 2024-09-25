@@ -1,0 +1,18 @@
+
+------ Begin operation 'Build Private ADB - Step 3 (rebuild)' ------
+
+-----------------------------------
+Executing module 'drop_indexes'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (17.93 sec)
+-- agg_traits...done (3.24 sec)
+-- analytical_stem...done (3.47 sec)
+-- bien_taxonomy...done (.32 sec)
+-----------------------------------
+Fixing missing/unknown families...done (1920.53 sec)
+-----------------------------------
+Applying taxonomic fixes from Rick Condit to table:
+- vfoi...done (1092.81 sec)
+- agg_traits...done (118.06 sec)
+- bien_taxonomy...done (6.32 sec)
+- taxon...

@@ -1,0 +1,18 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_2_validations'' ------
+
+Start: Thu Feb  4 10:05:02 PST 2021
+ 
+-----------------------------------
+Checking primary keys of main tables:
+-----------------------------------
+Importing results of CDS validations:
+Executing module 'cds_3_update'
+- Creating CDS results table...done (2380.41 sec)
+- Fixing errors in raw CDS validation result file:
+-- Extra header row...done (178.92 sec)
+-- Missing trailing delimiters for erroneous coordinates...done (172.54 sec)
+- Importing CDS validation results...done (236.40 sec)
+- Populating primary and foreign keys...done (2660.46 sec)
+- Indexing CDS results table...done (1124.27 sec)
+ - Verifying candidate primary key unique:

@@ -1,0 +1,23 @@
+
+------ Begin operation 'BIEN DB process: 'adb_private_1_load_data'' ------
+
+Start: Tue Dec  8 11:16:01 PST 2020
+ 
+-----------------------------------
+Finishing CDS export:
+-----------------------------------
+Executing module 'cds_1_prepare'
+- Extracting all verbatim geocoordinate to table cds_submitted...done (2876.88 sec)
+- Exporting CSV file of political divisions for scrubbing by CDS...done (13.10 sec)
+-- File: cds_submitted.csv
+-- Destination directory: /home/bien/cds2/data
+
+Script completed. Next steps:
+
+1. Submit TNRS input for scrubbing
+2. Submit GNRS input for scrubbing
+3. Submit CDS input for scrubbing
+4. After steps 1-3 complete, continue with adb_private_2_import_validations_1.sh
+
+------ Operation 'BIEN DB process: 'adb_private_1_load_data'' completed in 2890.03 seconds ------
+

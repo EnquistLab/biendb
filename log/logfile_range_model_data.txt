@@ -1,0 +1,8 @@
+Executing module 'range_model_data'
+ 
+Extracting table of common species...done (2729.47 sec)
+Inserting rare species...done (4213.85 sec)
+Creating metadata table...done (127.78 sec)
+
+------ Process 'range_model_data' completed in 7071.23 seconds ------
+

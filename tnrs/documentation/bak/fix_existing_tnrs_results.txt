@@ -1,0 +1,82 @@
+How to fix existing TNRS results without re-scrubbing
+
+1. Copy input and final results file to tempfiles, removing empty lines:
+cp tnrs_submitted.complete.csv names
+cp tnrs_scrubbed.complete.txt results
+
+2. Remove empty lines from results file
+sed -i '/^$/d' results
+
+2. Split off good names from results file
+grep -P '^[0-9]+\t.*\t[0-9]{1,2}$|^(?:[0-9]+,)+.*\t[0-9]{1,2}$' results > results.good
+
+3. Extract IDs of all good names:
+cut -f1 -d$'\t' results.good > good.ids
+
+4. Get rid of ID and results distinct values
+sort good.ids | uniq > good.ids.uniq
+
+5. Split lines with commas into multiple lines
+sed -i 's/,/\n/g' good.ids.uniq
+
+6. Join to the names file to get only unresolved names
+join -v 2 <(sort good.ids.uniq) <(sort names) -t '|' > names.bad
+
+7. Fix the bad names, replacing all except the first pipe with whitespace
+- Note that some names are fine, but output was screwed up by frameshift caused by preceding or nearby bad name
+sed -i 's/|/THISISAPIPE/1' names.bad ; sed -i 's/|/ /g' names.bad ; sed -i 's/THISISAPIPE/|/1' names.bad 
+
+Finish up:
+
+8. Submit names.bad to TNRSbatch, saving results as names.bad.scrubbed
+
+8.1 Fix failed batch from names.bad.scrubbed
+
+9. Check the results!
+
+10. Join results.good to names.bad.scrubbed, keeping header from names.bad.scrubbed
+cat names.bad.scrubbed results.good > tnrs_scrubbed.complete.final.txt
+
+11. VALIDATE!!!! 
+
+(a) The following should return 1 (the header)
+grep -vP '^[0-9]+\t.*\t[0-9]{1,2}$|^(?:[0-9]+,)+.*\t[0-9]{1,2}$' tnrs_scrubbed.complete.final.txt | wc -l
+
+(b) List all distinct counts of tabs per line in the entire file. Should return only one number, 44:
+while read line ; do echo "$line" | grep -Pon '\t' | wc -l ; done < tnrs_scrubbed.complete.final.txt | uniq
+
+(b*) Faster version of (b). Should be 0 (KEEP! this is awesome)
+perl -ne 'print if(tr/\t/\t/ != 44)'  tnrs_scrubbed.complete.final.txt | wc -l
+
+12. Export to BIEN
+tar -czf tnrs_scrubbed.complete.final.txt.tar.gz tnrs_scrubbed.complete.final.txt
+scp tnrs_scrubbed.complete.final.txt.tar.gz boyle@vegbiendev.nceas.ucsb.edu:bien3/tnrs/data/
+
+--> REMEMBER, still have to replicate records with compound indexes across multiple records, either in results file or in the database
+
+
+################################################
+# Test: Fix compound index records
+# Still not solved!
+################################################
+
+# make same file that mixes good and bad records
+rm test
+touch test
+cat <<EOT >> test
+1TABfld1TABfld2TABfld3
+2,3TABfld1TABfld2TABfld
+4,5,6,7TABfld1TABfld2TABfld3
+8TABfld1TABfld2TABfd3
+EOT
+sed $'s/TAB/\t/g' test > test2
+cut -f1 -d$'\t' test2 > ids 
+sed 's/,/\n/g' test3 > ids.uniq
+
+# Attempts at matching
+grep -F -w -f ids.uniq ids
+awk 'NR==FNR{pats[$0]; next} $1 in pats' ids.uniq ids
+awk -F, 'NR==FNR {a[$1 FS $2];next} {print $0 FS (($1 FS $2) in a?"yes":"no")}' ids ids.uniq
+awk -F, 'NR==FNR {a[$1 ];next} {print $0 FS (($1 ) in a?"yes":"no")}' ids ids.uniq
+awk -F, 'NR==FNR {a[$1 ];next} {print $0 }' ids ids.uniq
+

@@ -1,0 +1,74 @@
+-- 
+-- Insert data providers
+-- Note that only top-level (proximate) providers inserted for plots
+--
+
+SET search_path TO :dev_schema;
+
+-- Insert proximate providers
+INSERT INTO data_contributors (
+datasource_id,
+provider,
+sourcetype,
+observationtype,
+url,
+is_herbarium,
+url_ih,
+provider_name,
+city,
+state_province,
+country
+)
+SELECT
+datasource_id,
+source_name,
+CASE
+WHEN source_type LIKE '%data owner%' THEN 'primary database'
+ELSE 'aggregator'
+END,
+observation_type,
+source_url,
+is_herbarium,
+NULL,
+source_fullname,
+NULL,
+NULL,
+NULL
+FROM datasource
+WHERE source_type LIKE '%proximate provider%' 
+AND observation_type='plot'
+AND source_name IS NOT NULL
+;
+
+-- Insert indirect providers, specimens only
+INSERT INTO data_contributors (
+datasource_id,
+provider,
+sourcetype,
+observationtype,
+url,
+is_herbarium,
+url_ih,
+provider_name,
+city,
+state_province,
+country
+)
+SELECT
+datasource_id,
+CASE 
+WHEN source_name IS NULL THEN proximate_provider_name
+ELSE source_name
+END,
+'herbarium',
+'specimen',
+source_url,
+is_herbarium,
+NULL,
+source_fullname,
+NULL,
+NULL,
+NULL
+FROM datasource
+WHERE observation_type='specimen'
+;

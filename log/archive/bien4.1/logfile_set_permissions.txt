@@ -1,0 +1,19 @@
+Executing module 'set_permissions'
+- Granting select permission for users on schema 'analytical_db_dev':
+-- bien_private...done (2.24 sec)
+-- public_bien3...done (.09 sec)
+-- cmerow...done (.07 sec)
+-- casler...done (.10 sec)
+-- jmcgann...done (.07 sec)
+-- fengxiao...done (.09 sec)
+-- sckott...done (.10 sec)
+- Granting full permissions for user on schema 'analytical_db_dev':
+-- bien...done (.10 sec)
+- Revoking permissions for users on schema 'analytical_db_dev':
+-- boyle...done (.07 sec)
+-- boyleadmin...done (.06 sec)
+-- bien_read...done (.07 sec)
+-- public_bien...done (.08 sec)
+
+------ Operation 'Set permissions' completed in 3.24 seconds ------
+

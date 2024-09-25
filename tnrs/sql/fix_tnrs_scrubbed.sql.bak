@@ -1,0 +1,57 @@
+-- ---------------------------------------------------------
+-- Fixing issues specific to output of TNRSbatch
+-- ---------------------------------------------------------
+
+set search_path to :sch;
+
+DROP INDEX IF EXISTS tnrs_scrubbed_name_submitted_idx;
+CREATE INDEX tnrs_scrubbed_name_submitted_idx ON tnrs_scrubbed (name_submitted);
+
+-- Remove double-single quotes around name_submitted
+UPDATE tnrs_scrubbed
+SET name_submitted = TRIM(RIGHT( LEFT( name_submitted, LENGTH( name_submitted ) - 2 ), LENGTH( LEFT( name_submitted, LENGTH( name_submitted ) - 2 ) ) - 2 ))
+WHERE name_submitted LIKE '"''%' AND name_submitted LIKE '%''"'
+;
+
+-- Remove single quotes around name_submitted
+UPDATE tnrs_scrubbed
+SET name_submitted = TRIM(RIGHT( LEFT( name_submitted, LENGTH( name_submitted ) - 1 ), LENGTH( LEFT( name_submitted, LENGTH( name_submitted ) - 1 ) ) - 1 ))
+WHERE name_submitted LIKE '''%' AND name_submitted LIKE '%'''
+;
+
+-- Remove surrounding quotes from unmatched_terms
+-- Can come in various combinations, usually not symmetrical
+-- Most common is "'..."
+UPDATE tnrs_scrubbed
+SET unmatched_terms = TRIM(RIGHT( unmatched_terms, LENGTH( unmatched_terms ) - 2 ))
+WHERE unmatched_terms LIKE '"''%'
+;
+UPDATE tnrs_scrubbed
+SET unmatched_terms = TRIM(LEFT( unmatched_terms, LENGTH( unmatched_terms ) - 2 ))
+WHERE unmatched_terms LIKE '%"'''
+;
+UPDATE tnrs_scrubbed
+SET unmatched_terms = TRIM(LEFT( unmatched_terms, LENGTH( unmatched_terms ) - 1 ))
+WHERE unmatched_terms LIKE '%"'
+;
+-- Finally, remove symmetrical double quotes
+UPDATE tnrs_scrubbed
+SET unmatched_terms=TRIM(RIGHT( LEFT( name_submitted, LENGTH( name_submitted ) - 1 ), LENGTH( LEFT( name_submitted, LENGTH( name_submitted ) - 1 ) ) - 1 ))
+WHERE name_submitted LIKE '"%' AND name_submitted LIKE '%"'
+;
+
+
+-- Remove double quotes from taxonomic status
+UPDATE tnrs_scrubbed
+SET taxonomic_status=REPLACE(taxonomic_status,'"','')
+WHERE taxonomic_status LIKE '%"%'
+;
+
+-- Populate missing name ids
+UPDATE tnrs_scrubbed a
+SET name_id=b.name_id
+FROM tnrs_submitted b
+WHERE a.name_submitted=b.name_submitted
+AND a.name_id is NULL
+;
+

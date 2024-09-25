@@ -1,0 +1,8 @@
+
+Executing module 'backup_full'
+-- Creating raw dumpfile...done (34485.39 sec)
+-- Compressing dumpfile...done (59029.51 sec)
+-- Removing raw dumpfile...done (310.80 sec)
+
+------ Process 'Postgres full backup' completed in 93825.79 seconds ------
+

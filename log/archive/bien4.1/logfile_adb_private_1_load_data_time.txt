@@ -1,0 +1,284 @@
+Module	Task	Sec
+	Creating schema 'analytical_db_dev'	.15
+install_dependencies	Installing functions: f_empty2null	.08
+install_dependencies	Installing functions: geodistkm	.06
+install_dependencies	Installing functions: is_numeric	.07
+install_dependencies	Installing functions: is_date	.06
+install_dependencies	'view_full_occurrence_individual'	1241.46
+install_dependencies	'analytical_stem'	1356.06
+fix_missing_poldivs_1	Creating temporary indexes on vfoi	511.34
+fix_missing_poldivs_1	Populating political divisions	21.26
+fix_missing_poldivs_1	Dropping the temporary indexes	.19
+plot_provenance	Populating dataset for specimens and removing non-plot plot codes	4483.91
+plot_provenance	Indexing plot-related columns	4436.85
+plot_provenance	Creating table plot_provenance	49.18
+plot_provenance	Populating table plot_provenance: SALVIAS	.45
+plot_provenance	Populating table plot_provenance: TEAM	.67
+plot_provenance	Populating table plot_provenance: VegBank	5.38
+plot_provenance	Populating table plot_provenance: Remaining plot datasources	.36
+plot_provenance	Populating table plot_provenance: Final fixes	.53
+plot_provenance	Updating plot provenance in table 'view_full_occurrence_individual_dev'	4768.86
+plot_metadata	Creating table plot_metadata	8369.45
+plot_metadata	Updating existing metadata	919.39
+plot_metadata	Creating source-specific metadata tables	.24
+plot_metadata	Importing CVS metadata file	.14
+plot_metadata	Importing VegBank metadata file	.53
+plot_metadata	Importing BIEN2 metadata file	1.23
+plot_metadata	Updating CVS metadata	.65
+plot_metadata	Updating VegBank metadata	4.80
+plot_metadata	Updating BIEN2 metadata	25.04
+plot_metadata	Updating remaining metadata	6.00
+plot_metadata	Standardizing constrained vocabulary	7.07
+plot_metadata	Dropping temporary tables	.37
+plot_metadata	Building remaining indexes	14.84
+plot_metadata	Adding foreign key to table 'view_full_occurrence_individual': Indexing candidate key columns	8211.79
+plot_metadata	Adding foreign key to table 'view_full_occurrence_individual': Populating FK column 'plot_metadata_id'	3380.53
+plot_metadata	Adding foreign key to table 'analytical_stem'	16841.06
+datasource_1_load_legacy	Creating table datasource	5.80
+datasource_1_load_legacy	Inserting existing information for plots	4.94
+datasource_1_load_legacy	Inserting existing information for specimens	4196.01
+datasource_1_load_legacy	Extracting proximate data providers	.36
+datasource_1_load_legacy	Copying table 'ih' from schema 'herbaria' to 'analytical_db_dev'	.46
+datasource_1_load_legacy	Updating table 'ih'	.81
+datasource_1_load_legacy	Flagging herbarium data sources	.15
+datasource_1_load_legacy	Indexing	.12
+datasource_1_load_legacy	Adding FKs: Table plot_metadata	32.11
+datasource_1_load_legacy	Adding FKs: Table view_full_occurrence_individual: Indexing candidate keys	4959.17
+datasource_1_load_legacy	Adding FKs: Table view_full_occurrence_individual: Populating FK 'datasource_id'	5196.36
+datasource_1_load_legacy	Updating 'source_type'	.22
+datasource_1_load_legacy	Final fixes	.18
+fix_missing_poldivs_2	Creating temporary indexes on vfoi	121.51
+fix_missing_poldivs_2	Populating political divisions	97.14
+fix_missing_poldivs_2	Dropping the temporary indexes	1.07
+fix_missing_poldivs_2	Adding autoincrement primary key	1492.08
+Import traits	Creating tables: datasource_raw	1.71
+Import traits	Creating tables: traits_raw	.73
+Import traits	Creating tables: agg_traits	.69
+Import traits	Importing data: 'new_trait_table_8_29_2017_utf8.csv' --> traits_raw	484.25
+Import traits	Importing data: 'datasource_metadata.csv' --> datasource_raw	.38
+Import traits	Altering schema of table "traits_raw"	614.13
+Import traits	Correcting raw data: Setting empty strings to null	225.23
+Import traits	Correcting raw data: Correcting misc errors	224.49
+Import traits	Correcting raw data: Creating not null index on column: elevation_m	25.39
+Import traits	Correcting raw data: Creating not null index on column: visiting_date	49.21
+Import traits	Correcting raw data: Creating not null index on column: observation_date	306.50
+Import traits	Correcting raw data: Parsing and correcting "elevation_m"	317.00
+Import traits	Correcting raw data: Parsing and correcting dates: "visiting_date"	966.56
+Import traits	Correcting raw data: Parsing and correcting dates: "observation_date"	5364.19
+Import traits	Inserting raw data to main traits table	1683.98
+Import traits	Correcting name_submitted	155.98
+Import traits	Dropping not null indexes: elevation_m	.12
+Import traits	Dropping not null indexes: visiting_date	.06
+Import traits	Dropping not null indexes: observation_date	.09
+Import traits	Creating staging tables	.49
+Import traits	Loading staging tables: datasource_staging	.11
+Import traits	Loading staging tables: vfoi_staging	383.76
+Import traits	Loading main tables from staging: datasource	1.11
+Import traits	Loading main tables from staging: plot_metadata	.11
+Import traits	Loading main tables from staging: view_full_occurrence_individual: Inserting records	3580.30
+Import traits	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	3984.98
+Import traits	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	.01
+Import alaus	Creating raw data tables: Generic	1.89
+Import alaus	Creating raw data tables: Source-specific	.49
+Import alaus	Importing raw data to table: 'records-2017-08-31.csv' --> ala_raw	106.28
+Import alaus	Importing raw data to table: 'datasource_metadata.csv' --> datasource_raw	.10
+Import alaus	Creating staging tables	3.57
+Import alaus	Loading staging tables: datasource_staging	.07
+Import alaus	Loading staging tables: vfoi_staging	30.87
+Import alaus	Loading main tables from staging: datasource	1.94
+Import alaus	Loading main tables from staging: plot_metadata	1.13
+Import alaus	Loading main tables from staging: view_full_occurrence_individual: Inserting records	51.49
+Import alaus	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	369.31
+Import alaus	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	0
+Import chilesp	Creating raw data tables: Generic	.52
+Import chilesp	Creating raw data tables: Source-specific	.07
+Import chilesp	Importing raw data to table: 'Chileandatabase.csv' --> chilesp_raw	.30
+Import chilesp	Importing raw data to table: 'datasource_metadata.csv' --> datasource_raw	.07
+Import chilesp	Correcting raw data: Creating integer Y, M, D columns	.13
+Import chilesp	Correcting raw data: Setting empty strings to null	.18
+Import chilesp	Correcting raw data: Correcting dates	2.13
+Import chilesp	Creating staging tables	2.33
+Import chilesp	Loading staging tables: datasource_staging	.08
+Import chilesp	Loading staging tables: vfoi_staging	.31
+Import chilesp	Loading main tables from staging: datasource	.59
+Import chilesp	Loading main tables from staging: plot_metadata	.11
+Import chilesp	Loading main tables from staging: view_full_occurrence_individual: Inserting records	2.73
+Import chilesp	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	84.18
+Import chilesp	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	0
+Import dryflor	Creating raw data tables: Generic	.14
+Import dryflor	Creating raw data tables: Source-specific	.45
+Import dryflor	Importing raw data to table: 'Dryflor-download-Apr2017_utf8.csv' --> dryflor_raw	6.83
+Import dryflor	Importing raw data to table: 'datasource_metadata.csv' --> datasource_raw	.08
+Import dryflor	Correcting raw data: Setting empty strings to null	2.34
+Import dryflor	Creating staging tables	.19
+Import dryflor	Loading staging tables: datasource_staging	.07
+Import dryflor	Loading staging tables: vfoi_staging	3.07
+Import dryflor	Loading main tables from staging: datasource	.14
+Import dryflor	Loading main tables from staging: plot_metadata	.09
+Import dryflor	Loading main tables from staging: view_full_occurrence_individual: Inserting records	11.93
+Import dryflor	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	90.96
+Import dryflor	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	0
+Import gillespie	Creating raw data tables: Generic	.14
+Import gillespie	Creating raw data tables: Source-specific	.06
+Import gillespie	Importing raw data to table: 'gillespie_people_unix.csv' --> gillespie_people_raw	1.06
+Import gillespie	Importing raw data to table: 'gillespie_plot_descriptions_unix.csv' --> gillespie_plot_descriptions_raw	1.08
+Import gillespie	Importing raw data to table: 'gillespie_plot_data_unix.csv' --> gillespie_plot_data_raw	2.14
+Import gillespie	Importing raw data to table: 'datasource_metadata.csv' --> datasource_raw	.08
+Import gillespie	Correcting raw data: Adding index, primary keys and foreign keys	1.12
+Import gillespie	Correcting raw data: Setting empty strings to null: gillespie_people_raw	.10
+Import gillespie	Correcting raw data: Setting empty strings to null: gillespie_plot_descriptions_raw	.08
+Import gillespie	Correcting raw data: Setting empty strings to null: gillespie_plot_data_raw	.18
+Import gillespie	Creating staging tables	.16
+Import gillespie	Loading staging tables: datasource_staging	.08
+Import gillespie	Loading staging tables: plot_metadata_staging	.07
+Import gillespie	Loading staging tables: vfoi_staging	.17
+Import gillespie	Loading staging tables: analytical_stem_staging	1.53
+Import gillespie	Correcting staging tables: analytical_stem_staging...deleting null dbh records	.12
+Import gillespie	Loading main tables from staging: datasource	.16
+Import gillespie	Loading main tables from staging: plot_metadata	13.85
+Import gillespie	Loading main tables from staging: view_full_occurrence_individual: Inserting records	1.42
+Import gillespie	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	80.71
+Import gillespie	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	0
+Import gillespie	Loading main tables from staging: analytical_stem	3.62
+Import ntt	Creating raw data tables: Generic	.08
+Import ntt	Creating raw data tables: Source-specific	.08
+Import ntt	Extracting MS Access tables to CSVs (NeotropTree.accdb): Species --> 'species.csv'	.99
+Import ntt	Extracting MS Access tables to CSVs (NeotropTree.accdb): Areas --> 'areas.csv'	.32
+Import ntt	Extracting MS Access tables to CSVs (NeotropTree.accdb): TheSources --> 'sources.csv'	.05
+Import ntt	Extracting MS Access tables to CSVs (NeotropTree.accdb): Species-Area --> 'species_areas.csv'	.69
+Import ntt	Extracting MS Access tables to CSVs (NeotropTree.accdb): TheSources-Areas --> 'sources_areas.csv'	.01
+Import ntt	Importing raw data to table: 'species.csv' --> ntt_species_raw	.27
+Import ntt	Importing raw data to table: 'areas.csv' --> ntt_areas_raw	.22
+Import ntt	Importing raw data to table: 'sources.csv' --> ntt_sources_raw	.08
+Import ntt	Importing raw data to table: 'species_areas.csv' --> ntt_species_areas_raw	.87
+Import ntt	Importing raw data to table: 'sources_areas.csv' --> ntt_sources_areas_raw	.06
+Import ntt	Importing raw data to table: 'datasource_metadata.csv' --> datasource_raw	.08
+Import ntt	Correcting raw data: Creating indexes and foreign key constraints	2.98
+Import ntt	Correcting raw data: Setting empty strings to null: ntt_species_raw	.46
+Import ntt	Correcting raw data: Setting empty strings to null: ntt_areas_raw	.14
+Import ntt	Correcting raw data: Setting empty strings to null: ntt_sources_raw	.05
+Import ntt	Creating staging tables	.14
+Import ntt	Loading staging tables: datasource_staging	.07
+Import ntt	Loading staging tables: vfoi_staging	25.45
+Import ntt	Loading main tables from staging: datasource	.19
+Import ntt	Loading main tables from staging: plot_metadata	.08
+Import ntt	Loading main tables from staging: view_full_occurrence_individual: Inserting records	70.55
+Import ntt	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	181.76
+Import ntt	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	0
+Import rainbio	Creating raw data tables: Generic	.19
+Import rainbio	Creating raw data tables: Source-specific	.16
+Import rainbio	Importing raw data to table: 'extract_to_be_sent_SPARC.csv' --> rainbio_raw	26.53
+Import rainbio	Importing raw data to table: 'datasource_metadata.csv' --> datasource_raw	.05
+Import rainbio	Correcting raw data: Setting empty strings to null	19.94
+Import rainbio	Correcting raw data: Creating integer Y, M, D columns	20.57
+Import rainbio	Correcting raw data: Correcting collection dates	104.20
+Import rainbio	Correcting raw data: Correcting identification dates	117.77
+Import rainbio	Creating staging tables	1.34
+Import rainbio	Loading staging tables: datasource_staging	.08
+Import rainbio	Loading staging tables: vfoi_staging	13.72
+Import rainbio	Loading main tables from staging: datasource	.16
+Import rainbio	Loading main tables from staging: plot_metadata	.08
+Import rainbio	Loading main tables from staging: view_full_occurrence_individual: Inserting records	59.48
+Import rainbio	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	143.28
+Import rainbio	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	0
+Import schep	Creating raw data tables: Generic	.14
+Import schep	Creating raw data tables: Source-specific	.94
+Import schep	Importing raw data to table: 'Schp_PLOTDB_CompleteAndClean_utf8.csv' --> schep_plotdb_raw	.12
+Import schep	Importing raw data to table: 'Schp_TREEDB_CompleteAndClean_utf8.csv' --> schep_tree_db_raw	.30
+Import schep	Importing raw data to table: 'datasource_metadata.csv' --> datasource_raw	.08
+Import schep	Correcting raw data: Adding columns to harmonize table schemas	.06
+Import schep	Correcting raw data: Setting empty strings to null: schep_plotdb_raw	.07
+Import schep	Correcting raw data: Setting empty strings to null: schep_tree_db_raw	.10
+Import schep	Creating staging tables	.15
+Import schep	Loading staging tables: datasource_staging	.06
+Import schep	Loading staging tables: vfoi_staging from table: schep_plotdb_raw	.72
+Import schep	Loading staging tables: vfoi_staging from table: schep_tree_db_raw	.57
+Import schep	Loading main tables from staging: datasource	.19
+Import schep	Loading main tables from staging: plot_metadata	.10
+Import schep	Loading main tables from staging: view_full_occurrence_individual: Inserting records	2.46
+Import schep	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	95.08
+Import schep	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	0
+Import GBIF	Creating raw data tables: Generic	.16
+Import GBIF	Creating raw data tables: Source-specific	.05
+Import GBIF	Importing raw data to table: 'occurrence_cleaned.txt' --> gbif_occurrence_raw: Importing data	7288.41
+Import GBIF	Importing raw data to table: 'occurrence_cleaned.txt' --> gbif_occurrence_raw: Removing header	2330.77
+Import GBIF	Altering raw data table structure	.61
+Import GBIF	Processing dates: Populating integer Y, M, D columns	15054.89
+Import GBIF	Processing dates: Correcting dates from column "eventDate"	127903.17
+Import GBIF	Processing dates: Correcting dates from column "dateIdentified"	169779.47
+Import GBIF	Indexing raw data	84082.10
+Import GBIF	Creating staging tables	1.85
+Import GBIF	Loading staging tables: vfoi_staging	13885.38
+Import GBIF	Loading staging tables: datasource_staging	595.62
+Import GBIF	Populating FK to datasource_staging	15804.84
+Import GBIF	Dropping raw data indexes	.63
+Import GBIF	Loading main tables from staging: datasource	3.85
+Import GBIF	Loading main tables from staging: plot_metadata	.34
+Import GBIF	Loading main tables from staging: view_full_occurrence_individual: Inserting records	18607.57
+Import GBIF	Loading main tables from staging: view_full_occurrence_individual: Indexing foreign keys	23365.78
+Import GBIF	Loading main tables from staging: view_full_occurrence_individual: Dropping temporary foreign key column fk_vfoi_staging_id	.03
+remove_secondary_sources	Removing secondary records for primary sources: Adding indexes	14592.98
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: ARIZ	58.43
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: BRIT	32.44
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: HVAA	.20
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: MO	173.12
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: NCU	8.57
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: NY	44.07
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: TEX	3.37
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: U	4.63
+remove_secondary_sources	Removing secondary records for primary sources: Removing secondary records for source: UNCC	1.60
+remove_secondary_sources	Removing secondary records for primary sources: Dropping indexes	.26
+datasource_2_export	Exporting CSV dump of table datasource for manual editing	.12
+endangered_taxa_1_prepare	Creating tables	.43
+endangered_taxa_1_prepare	Importing data for 'cites', 'iucn', 'usda'	3.18
+endangered_taxa_1_prepare	Combining endangered taxon data into single table	.60
+tnrs_batch_1_prepare	Creating TNRS tables	.75
+tnrs_batch_1_prepare	Extracting verbatim names: view_full_occurrence_individual	737.56
+tnrs_batch_1_prepare	Extracting verbatim names: agg_traits	155.57
+tnrs_batch_1_prepare	Extracting verbatim names: endangered_taxa	.19
+tnrs_batch_1_prepare	Pre-processing names	111.60
+tnrs_batch_1_prepare	Extracting unique names and adding ID column	58.18
+tnrs_batch_1_prepare	Exporting CSV file of names for scrubbing by TNRS to: /home/boyle/bien3/tnrs/data/tnrs_submitted.csv	.85
+tnrs_batch_1_prepare	Deleting offending names from CSV	20.93
+gnrs_1_prepare	Dropping existing indexes on table: view_full_occurrence_individual	.14
+gnrs_1_prepare	Dropping existing indexes on table: agg_traits	.08
+gnrs_1_prepare	Populating FK poldivs_full in table: vfoi	21147.19
+gnrs_1_prepare	Populating FK poldivs_full in table: agg_traits	5386.11
+gnrs_1_prepare	Populating FK poldivs_full in table: ih	6.16
+gnrs_1_prepare	Extracting all political divisions to table poldivs	9165.26
+gnrs_1_prepare	Exporting CSV file of political divisions for scrubbing by GNRS	.60
+gnrs_1_prepare	Clearing raw table	.24
+gnrs_1_prepare	Importing raw data: 'gnrs_submitted.csv' --> user_data_raw	.84
+gnrs_1_prepare	Dropping indexes on user_data	.80
+gnrs_1_prepare	Loading user_data	43.85
+gnrs_1_prepare	Checking existing results in cache	9.74
+gnrs_1_prepare	exact	15.16
+gnrs_1_prepare	fuzzy	240.42
+gnrs_1_prepare	exact	14.15
+gnrs_1_prepare	fuzzy	613.31
+gnrs_1_prepare	exact	20.48
+gnrs_1_prepare	fuzzy	204.46
+gnrs_1_prepare	Summarizing results	148.09
+gnrs_1_prepare	Updating cache	7.68
+gnrs_1_prepare	Creating GNRS results table	2.42
+gnrs_1_prepare	Importing GNRS validation results	3.05
+gnrs_1_prepare	Indexing GNRS results table	53.76
+gnrs_1_prepare	Updating GNRS results columns in table: view_full_occurrence_individual_dev	9366.21
+gnrs_1_prepare	Updating GNRS results columns in table: agg_traits	596.51
+gnrs_1_prepare	Updating GNRS results columns in table: ih	3.71
+gnrs_1_prepare	Updating GNRS results columns in table: plot_metadata	2090.23
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Creating dumpfile: '/home/boyle/bien3/analytical_db/private/data/poldiv_tables.sql'	2.21
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Creating dumpfile: Editing dumpfile	22.68
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Dropping previous tables, if any	.11
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Importing tables from dumpfile	24.87
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Removing dumpfile	0
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Altering tables	.32
+fix_fia	Creating temporary indexes on vfoi	8218.55
+fix_fia	Creating table fia_plot_codes	4794.89
+fix_fia	Creating table vfoi_dev with revised FIA plot codes	2150.87
+fix_fia	Create new version of plot_metadata with updated plot codes	1565.76
+fix_fia	Update FK plot_metadata_id in table vfoi_dev	21860.15
+fix_fia	Dropping temporary indexes	2.58
+geovalid_1_prepare	Exporting CSV files of coordinates for geovalidation: view_full_occurrence_individual	1083.33
+geovalid_1_prepare	Exporting CSV files of coordinates for geovalidation: agg_traits	128.43
+geovalid_1_prepare	Concatenating all to file 'data_dir_local/geovalid_submitted.csv'	5.55

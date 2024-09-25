@@ -1,0 +1,16 @@
+Executing module 'query_species_sep'
+ 
+Table: view_full_occurrence_individual_dev
+Filter '1. Base filter'...done (1.74 sec)
+Filter:'2. is_geovalid'...done (.12 sec)
+Filter:'3. is_cultivated_observation'...done (.10 sec)
+Filter:'4. georef_protocol'...done (.10 sec)
+Filter:'5. is_centroid'...done (.09 sec)
+Filter:'6. '...done (.11 sec)
+Filter:'7. is_introduced'...done (.11 sec)
+Filter:'8. observation_type'...done (.11 sec)
+Creating crosstab...done (.16 sec)
+Indexing crosstab table...done (.63 sec)
+
+------ Process 'query_species_sep' completed in 3.38 seconds ------
+

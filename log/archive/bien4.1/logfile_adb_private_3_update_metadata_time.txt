@@ -1,0 +1,60 @@
+Module	Task	Sec
+	Creating NSR results table	.47
+	Importing NSR validation results	104.07
+	Updating NSR results table	391.47
+	Updating NSR results columns in table: view_full_occurrence_individual_dev	8584.58
+	Updating NSR results columns in table: agg_traits	1155.00
+	Removing temporary tables	.16
+is_new_world	view_full_occurrence_individual	5827.14
+is_new_world	agg_traits	1202.72
+analytical_stem	Transfering new columns from vfoi	28594.70
+update_schema	Updating schemas for tables: view_full_occurrence_individual	5096.28
+update_schema	Updating schemas for tables: agg_traits	930.70
+update_schema	Updating schemas for tables: analytical_stem	918.73
+restore_indexes_dev	Dropping existing indexes, if any, on tables: view_full_occurrence_individual	.18
+restore_indexes_dev	Dropping existing indexes, if any, on tables: agg_traits	.06
+restore_indexes_dev	Dropping existing indexes, if any, on tables: analytical_stem	.07
+restore_indexes_dev	Dropping existing indexes, if any, on tables: bien_taxonomy	.72
+restore_indexes_dev	Restoring indexes on tables: view_full_occurrence_individual	175543.35
+restore_indexes_dev	Restoring indexes on tables: agg_traits	15680.86
+restore_indexes_dev	Restoring indexes on tables: analytical_stem	12818.03
+restore_indexes_dev	Restoring indexes on tables: bien_taxonomy	166.79
+restore_indexes_dev	Creating index summary view	.56
+trait_metadata with parameters db=vegbien & dev_schema=analytical_db_dev	Creating table 'taxon_trait'	2870.42
+trait_metadata with parameters db=vegbien & dev_schema=analytical_db_dev	Creating table 'trait_summary'	978.94
+data_contributors	Creating table data_contributors	.18
+data_contributors	Inserting providers	.49
+data_contributors	Populating additional metadata for herbaria	.71
+data_contributors	Calculating observations	771.96
+data_contributors	Fixing duplicate records	.20
+data_contributors	Indexing table	.16
+species_by_political_division	Creating table species_by_political_division	11684.18
+bien_species_all	-Creating table 'bien_species_all'	568.36
+bien_metadata	Copying table bien_metadata from production schema	.88
+bien_metadata	Inserting new record	.07
+bien_summary	Copying existing table bien_summary from schema 'analytical_db'	.21
+bien_summary	Inserting new summary record..	.06
+bien_summary	Counting observations	361.37
+bien_summary	Counting geovalid observations	371.24
+bien_summary	Counting specimen observations	339.65
+bien_summary	Counting plot observations	439.79
+bien_summary	Counting plots	25.68
+bien_summary	Counting species	1.21
+data_dictionary_rbien	Creating table data_dictionary_rbien	1.09
+data_dictionary_rbien	Importing CSV	.09
+observations_union	Creating table observations_union in private database: Creating & populating table species	708.97
+observations_union	Creating table observations_union in private database: Creating temp table observations_all	1129.76
+observations_union	Creating table observations_union in private database: Updating geometry column in observations_all	10893.39
+observations_union	Creating table observations_union in private database: Creating & populating table observations_union	1358.86
+cp_ranges	Copying table 'ranges' from db 'public_vegbien' to schema 'analytical_db_dev' in db 'vegbien': Creating dumpfile	37.82
+cp_ranges	Copying table 'ranges' from db 'public_vegbien' to schema 'analytical_db_dev' in db 'vegbien': Editing dumpfile	53.14
+cp_ranges	Copying table 'ranges' from db 'public_vegbien' to schema 'analytical_db_dev' in db 'vegbien': Importing table from dumpfile	98.31
+cp_ranges	Copying table 'ranges' from db 'public_vegbien' to schema 'analytical_db_dev' in db 'vegbien': Removing dumpfile	.13
+phylogeny	Creating tables	.17
+phylogeny	Inserting metadata	.26
+phylogeny	Loading phylogenies	231.40
+phylogeny	Indexing table phylogeny & adjusting ownership	.34
+data_dictionary_1_create	Creating data dictionary	2.65
+data_dictionary_1_create	Exporting CSV files to '/home/boyle/bien3/analytical_db/private/data/data_dictionary': Tables: 'dd_tables.csv'	.12
+data_dictionary_1_create	Exporting CSV files to '/home/boyle/bien3/analytical_db/private/data/data_dictionary': Columns: 'dd_cols.csv'	.21
+data_dictionary_1_create	Exporting CSV files to '/home/boyle/bien3/analytical_db/private/data/data_dictionary': Column values: 'dd_vals.csv'	.08

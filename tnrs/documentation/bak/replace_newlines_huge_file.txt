@@ -1,0 +1,35 @@
+Replacing newlines in a huge file
+
+Several components to this solutions:
+
+1. Use of perl: https://unix.stackexchange.com/questions/137391/replace-string-containing-newline-in-huge-file
+
+2. Use of awk: https://unix.stackexchange.com/questions/172146/how-to-split-text-between-separator-into-multiple-files
+
+#################################################
+
+cd bien3/tnrs/data/
+mkdir temp
+cd temp
+
+# For repeat testing
+rm *	
+cp ../tnrs_scrubbed.complete.txt hugefile
+
+# For testing with sample only
+#head -1000 hugefile > hugefile2 && mv hugefile2 hugefile
+
+# This nicely replaces only the "good" newlines
+perl -i.bak -pe 's/\t[0-9]*[0-9]\n/TABdigitsNEWLINE/' hugefile
+
+# This removes all remaining newlines, leaving a file with no newlines
+tr -d '\n' < hugefile > hugefile2
+
+awk '{ print $0 >> "hugefile.final" }' RS='TABdigitsNEWLINE' hugefile2
+
+# Restore the final <tab><digits> at end of each line
+# Exact digits afterward doesn't matter, use zero for all
+sed 's/$/\t0/g' hugefile.final > final
+
+# Restore the header
+sed -i 's/Source,Warnings/Source,Warnings\n/' final

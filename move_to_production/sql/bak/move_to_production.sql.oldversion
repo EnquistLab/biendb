@@ -1,0 +1,11 @@
+-- 
+-- Drop current production schema and replaces with development schema
+-- OLD METHOD. NEW METHOD RENAMES CURRENT SCHEMA INSTEAD OF DELETING
+--
+
+BEGIN;
+
+DROP SCHEMA IF EXISTS :prod_schema CASCADE;
+ALTER SCHEMA :dev_schema RENAME TO :prod_schema;
+
+COMMIT;

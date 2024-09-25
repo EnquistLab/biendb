@@ -1,0 +1,10 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_3_update_metadata'' ------
+
+Start: Sat Feb 27 08:25:39 PST 2021
+ 
+-----------------------------------
+done (2670.68 sec)
+- Indexing tables...done (17249.53 sec)
+Checking candidate pkeys in CODS results tables:
+- cods_proximity...

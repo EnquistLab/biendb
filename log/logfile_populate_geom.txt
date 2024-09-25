@@ -1,0 +1,20 @@
+Executing module 'populate_geom':
+- Processing table: "view_full_occurrence_individual_dev":
+-- Enforcing geometric constraints...done (1.22 sec)
+-- Building non-null index on latitude & longitude...done (.12 sec)
+-- Adding temporary integer primary key...done (.32 sec)
+-- Processing 16942 records in batches of 100000:
+--- 1 of 1 (.78 sec; avg: .78 sec/batch)        --- 1 of 1 (avg: .78 sec/batch; total: .78 sec)       
+-- Dropping temporary indexes...done (.08 sec)
+-- Indexing geometry column...done (.23 sec)
+- Processing table: "agg_traits":
+-- Enforcing geometric constraints...done (.17 sec)
+-- Building non-null index on latitude & longitude...done (.09 sec)
+-- Adding temporary integer primary key...done (.14 sec)
+-- Processing 99 records in batches of 100000:
+--- 1 of 1 (.35 sec; avg: .35 sec/batch)        --- 1 of 1 (avg: .35 sec/batch; total: .35 sec)       
+-- Dropping temporary indexes...done (.08 sec)
+-- Indexing geometry column...done (.10 sec)
+
+------ Operation 'Add geometry columns to tables' completed in 3.80 seconds ------
+

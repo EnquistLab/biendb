@@ -1,0 +1,9 @@
+Executing module 'bien4.2.1_update_nsr_is_cultivated_columns'
+ 
+- Updating table:
+- agg_traits...done (371.90 sec)
+- analytical_stem...done (642.00 sec)
+- vfoi...done (118157.22 sec)
+
+------ Process 'bien4.2.1_update_nsr_is_cultivated_columns' completed in 119171.25 seconds ------
+

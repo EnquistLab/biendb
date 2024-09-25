@@ -1,0 +1,50 @@
+boyle@vegbiendev:~/bien3/repos/bien/analytical_db/private$ ./adb_private_2_update_taxa.sh -m
+Run process Build Private ADB - Step 2? with following options:
+
+Database:               vegbien
+Schema:                 analytical_db_dev
+Load phylogenies:       true
+DB build type:          full
+
+Continue? (Y/N): y
+
+------ Begin operation 'Build Private ADB - Step 2' ------
+
+-----------------------------------
+Executing module 'tnrs_batch_2_update.sh'
+- Creating TNRS results tables...done (.14 sec)
+- Preparing TNRS results file for import:
+-- Extracting tarball to '/home/boyle/bien3/tnrs/data/tnrs_scrubbed.txt'...done (5.30 sec)
+-- Removing all double quotes...done (21.60 sec)
+- Importing TNRS resolution results from file 'tnrs_scrubbed.txt'...done (27.14 sec)
+- Setting empty strings to null...done (7.60 sec)
+- Separating records with compound ids...done (22.51 sec)
+- Fixing additional issues caused by TNRSbatch...done (218.60 sec)
+- Preparing table tnrs_scrubbed...done (228.36 sec)
+- Selecting best match...done (731.01 sec)
+- Preparing table tnrs...done (730.89 sec)
+- Updating TNRS warnings...done (450.48 sec)
+-----------------------------------
+Executing module 'bien_taxonomy'
+- Checking required databases...done (3.26 sec)
+- Copying table 'genus_family' from db 'gf_lookup' to schema 'analytical_db_dev' in db 'vegbien':
+-- Creating dumpfile...done (2.58 sec)
+-- Editing dumpfile...done (1.02 sec)
+-- Importing table from dumpfile...done (.56 sec)
+- Creating table bien_taxonomy...done (.28 sec)
+- Loading table bien_taxonomy...done (34.34 sec)
+- Populating FK to bien_taxonomy in tnrs results table...done (991.82 sec)
+- Adding missing families...done (38.30 sec)
+- Populating taxon_rank...done (66.46 sec)
+- Copying table bien_taxonomy to tnrs database...done (43.70 sec)
+- Creating tables of APGIII higher taxa...using existing tables
+- Populating higher taxon columns in bien_taxonomy...done (195.97 sec)
+- Populating column higher_plant_group...done (98.83 sec)
+- Correcting errors in higher taxon columns...done (.39 sec)
+- Replacing original table bien_taxonomy in development schema...done (80.35 sec)
+- Building normalized taxon table:
+-- Creating table taxon...done (.48 sec)
+-- Loading table taxon...done (12.75 sec)
+-- Populating remaining columns and indexing...done (81.22 sec)
+-- Populating FKs in table bien_taxonomy...done (115.35 sec)
+- Transferring taxonomy results to table:

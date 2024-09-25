@@ -1,0 +1,28 @@
+vfoi & agg_traits processed separately.
+
+vfoi
+- Submitted file:
+geovalid_submitted.csv
+- Results file:
+geovalidation_returned_2_5_18.csv
+- Imported to table:
+geovalidation_raw
+- Final table:
+geovalidation
+
+agg_traits:
+- Submitted file:
+geovalidation_submitted.traits.csv
+- Results file:
+
+- Imported to table:
+geovalidation_raw
+- Final table:
+geovalidation
+
+
+
+
+How the traits file was extracted:
+
+\copy (select id as id, country, state_province, county, latitude, longitude from agg_traits where latitude is not null and longitude is not null) to /home/boyle/bien3/geovalid/data/geovalidation_submitted.traits.csv csv header

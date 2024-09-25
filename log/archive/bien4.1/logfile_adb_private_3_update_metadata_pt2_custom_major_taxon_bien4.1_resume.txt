@@ -1,0 +1,22 @@
+
+------ Begin operation 'Build Private ADB - Step 3, part 2 (resume)' ------
+
+-----------------------------------
+ 
+-----------------------------------
+Executing module 'data_dictionary_1_create_resume'
+- Inserting table and column descriptions from previous version...done (.30 sec)
+- Dropping temp tables...done (.07 sec)
+- Exporting CSV files to '/home/boyle/bien3/analytical_db/private/data/data_dictionary':
+-- Tables: 'dd_tables.csv'...done (.06 sec)
+-- Columns: 'dd_cols.csv'...done (.06 sec)
+-- Column values: 'dd_vals.csv'...done (.04 sec)
+
+Script completed. Next steps:
+
+1. Manually delete any unneeded tables or sequences
+2. Rebuild data dictionary
+3. Update data dictionary
+
+------ Operation 'Build Private ADB - Step 3, part 2 (resume)' completed in .59 seconds ------
+

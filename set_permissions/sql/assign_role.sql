@@ -1,0 +1,1 @@
+GRANT :rol TO :usr;

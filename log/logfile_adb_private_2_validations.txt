@@ -1,0 +1,30 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_2_validations'' ------
+
+Start: Wed Feb 10 16:09:14 PST 2021
+ 
+-----------------------------------
+Executing module 'cods_1_prepare'
+- Creating cods_submitted tables...done (.68 sec)
+- Clearing indexes from tables:
+-- view_full_occurrence_individual...done
+-- agg_traits...done
+- Preparing tables...done (1.72 sec)
+- Extracting proximity data from tables...done (.29 sec)
+- Extracting description data from tables...done (.10 sec)
+- Exporting CSV files to application data directory:
+-- cods_prox_submitted...done (.08 sec)
+-- cods_desc_submitted...done (.08 sec)
+-- Files:
+--- bien_cods_prox_2021-02-10.csv
+--- bien_cods_desc_2021-02-10.csv
+-- Destination directory: /home/boyle/bien/cods/data
+
+Script completed. Next step:
+
+1. Submit CODS input for scrubbing
+2. Submit NSR input for scrubbing
+4. After steps 1-2 complete, continue with adb_private_3_import_validations_2.sh
+
+------ Process 'BIEN DB process: 'adb_private_2_validations'' completed in 3.04 seconds ------
+

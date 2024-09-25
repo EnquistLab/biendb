@@ -1,0 +1,6 @@
+
+Executing module 'restore_db'
+-- Restoring dumpfile to database 'gnrs_2_1'...done (60.12 sec)
+
+------ Process 'Backup' completed in 60.13 seconds ------
+

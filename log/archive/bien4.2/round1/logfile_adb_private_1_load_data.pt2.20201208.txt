@@ -1,0 +1,53 @@
+
+------ Begin operation 'BIEN DB process: 'adb_private_1_load_data'' ------
+
+Start: Mon Dec  7 20:09:38 PST 2020
+ 
+-----------------------------------
+Finishing GBIF import:
+- Loading main tables from staging:
+--- Indexing foreign keys...done (23240.43 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (.03 sec)
+Dropping staging table fkey from table vfoi...done (10.29 sec)
+-----------------------------------
+Executing module 'remove_secondary_sources'
+- Removing secondary records for primary sources...SKIPPING!
+-----------------------------------
+Executing module 'datasource_2_export'
+- Exporting CSV dump of table datasource for manual editing...done (2.15 sec)
+-----------------------------------
+Executing module 'endangered_taxa_1_prepare'
+- Building endangered species tables:
+- Creating tables...done (1.03 sec)
+- Importing data for 'cites', 'iucn', 'usda'...done (2.27 sec)
+- Combining endangered taxon data into single table...done (.48 sec)
+-----------------------------------
+Executing module 'tnrs'
+- Creating TNRS tables...done (.17 sec)
+- Extracting verbatim names:
+-- view_full_occurrence_individual...done (915.75 sec)
+-- agg_traits...done (127.40 sec)
+-- endangered_taxa...done (.16 sec)
+- Pre-processing names...done (185.78 sec)
+- Extracting unique names and adding ID column...done (68.01 sec)
+- Exporting names file '/home/bien/tnrs/data/user/tnrs_submitted.csv'...done (1.42 sec)
+- Deleting offending names from CSV...done (25.45 sec)
+-----------------------------------
+Executing module 'gnrs_1_prepare'
+- Dropping existing indexes on table:
+-- view_full_occurrence_individual...done (2.84 sec)
+-- agg_traits...done (.11 sec)
+- Populating FK poldivs_full in table:
+-- vfoi...done (17805.05 sec)
+-- agg_traits...done (1736.95 sec)
+-- ih...done (1.39 sec)
+- Extracting all political divisions to table poldivs...done (3787.31 sec)
+- Exporting CSV file of political divisions for scrubbing by GNRS...done (1.34 sec)
+-- File: gnrs_submitted.csv
+-- Destination directory: /home/bien/gnrs/data/user
+-----------------------------------
+Executing module 'cds_1_prepare'
+- Dropping existing indexes on table:
+-- view_full_occurrence_individual...done (.38 sec)
+-- agg_traits...done (.10 sec)
+- Extracting all verbatim geocoordinate to table cds_submitted...

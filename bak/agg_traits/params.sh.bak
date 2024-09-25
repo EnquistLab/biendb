@@ -1,0 +1,58 @@
+#!/bin/bash
+
+##############################################################
+# Application parameters
+# Check and change as needed
+##############################################################
+
+# Name of the raw data file to be imported. 
+# Place in the designated data directory
+raw_traits_file="traits_3_21_2017_utf8.csv"
+
+# DB version & comment
+# For updating db version table at final step
+db_version="3.4.4"
+db_msg="New version of traits table (from file: traits_3_21_2017_utf8.csv)"
+
+# Parent directory for this application
+app_dir="agg_traits"
+
+# Path to db_config file
+# For production, keep outside app working directory & supply
+# absolute path
+# For development, if keep inside working directory, then supply
+# relative path
+# Omit trailing slash
+db_config_path="/home/boyle/bien3/"
+
+# Path to general function directory
+# If directory is outside app working directory, supply
+# absolute path, otherwise supply relative path
+# Omit trailing slash
+#functions_path=""
+functions_path="/home/boyle/functions/sh"
+
+# Path to data directory
+# If directory is outside app working directory, supply
+# absolute path, otherwise supply relative path
+# Recommend keeping outside app directory
+# Omit trailing slash
+data_dir="/home/boyle/bien3/"$app_dir
+
+# Name of public & development schemas
+prod_schema_private="public"				# Private database core schema
+analytical_schema_private="analytical_db"	# Private database analytical schema
+dev_schema_private="vegbien_dev"		# Private database development schema
+prod_schema_public="public"					# Public (analytical) schema
+dev_schema_public="public_vegbien_dev"		# Public development schema
+
+# You must supply a valid email if you used the -m option
+email="bboyle@email.arizona.edu"
+
+# Short name for this operation, for screen echo and 
+# notification emails
+pname_1="Refresh traits: Import"
+pname_3="Refresh traits: TNRS"
+pname_4="Refresh traits: replace original (private)"
+pname_5="Refresh traits: replace original (public)"
+pname_500species="Execute 500 species embargo on table agg_traits"

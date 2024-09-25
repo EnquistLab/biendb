@@ -1,0 +1,51 @@
+
+------ Begin process 'BIEN DB process: 'adb_public'' ------
+
+Executing module 'restore_indexes'
+-- analytical_stem...done (149.10 sec)
+-- bien_taxonomy...done (37.79 sec)
+- Creating index summary view...done (.58 sec)
+Executing module 'trait_metadata' with parameters db='public_vegbien' & dev_schema='analytical_db_dev'
+- Creating table 'taxon_trait'...done (294.00 sec)
+- Creating table 'trait_summary'...done (149.98 sec)
+Executing module 'bien_species_all'
+-Creating table 'bien_species_all'...done (1445.37 sec)
+Executing module 'bien_summary_public'
+- Copying existing table bien_summary_public from schema 'public'...done (.80 sec)
+- Inserting new summary record.....done (.13 sec)
+- Counting observations...done (344.73 sec)
+- Counting geovalid observations...done (547.94 sec)
+- Counting specimen observations...done (404.98 sec)
+- Counting plot observations...done (245.22 sec)
+- Counting plots...done (10.61 sec)
+- Counting species...done (9.25 sec)
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating temp table observations_all...done (2750.55 sec)
+-- Updating geometry column in observations_all...done (744.29 sec)
+-- Creating & populating table observations_union...done (134.35 sec)
+-- Altering table observations_union (adding species_std, is_embargoed)...done (27.72 sec)
+-- Creating & populating table species...done (2.21 sec)
+Executing module 'set_permissions'
+- Granting select permission for users on schema 'analytical_db_dev':
+-- bien_private...done (35036.52 sec)
+-- bien_read...done (.12 sec)
+-- public_bien3...done (.11 sec)
+-- public_bien...done (.11 sec)
+-- fengxiao...done (.12 sec)
+-- mcgill...done (.11 sec)
+- Granting full permissions for user on schema 'analytical_db_dev':
+-- bien...done (.13 sec)
+- Revoking permissions for users on schema 'analytical_db_dev':
+-- [No users specified]
+
+Script completed. 
+
+Next steps:
+
+1. Validate public analytical database
+2. Run adb_move_to_production.sh
+3. Run vacuum/vacuum.sh on public analytical database
+
+------ Process 'BIEN DB process: 'adb_public'' completed in 42337.15 seconds ------
+

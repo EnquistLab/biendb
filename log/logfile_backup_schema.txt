@@ -1,0 +1,12 @@
+
+Executing module 'backup_schema'
+-- Creating dumpfile of schema 'public_4_0_3' in db 'public_vegbien'...done (8233.87 sec)
+
+Dumpfile 'public_vegbien.public_4_0_3_v4.0.3_20220326_100702.pgd' created. To restore, run the following command:
+
+pg_restore -U [username] -d [database_to_restore_to] -n [schema_to_restore] public_vegbien.public_4_0_3_v4.0.3_20220326_100702.pgd
+
+'database_to_restore_to' does not need to be the same as original db. 'schema_to_restore' must be the same, unless also edit dumpfile to change schema references.
+
+------ Process 'Backup schema' completed in 8233.91 seconds ------
+

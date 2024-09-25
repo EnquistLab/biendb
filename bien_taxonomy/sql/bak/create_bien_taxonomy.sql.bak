@@ -1,0 +1,65 @@
+-- ----------------------------------------------------------------
+-- Creates table bien_taxonomy_dev of all final scrubbed taxon names 
+-- and morphospecies in view_full_occurrence_individual_dev
+-- NOTE LIMIT; remove for production!
+-- ----------------------------------------------------------------
+
+SET search_path TO :dev_schema;
+
+-- ----------------------------------------------------------------
+-- Create table bien_taxonomy_dev
+-- ----------------------------------------------------------------
+
+-- Create table bien_taxonom, extracting all distinct
+-- scrubbed taxa and morphospecies in vfoi
+-- Include counts of observations of each name
+DROP TABLE IF EXISTS bien_taxonomy_dev;
+CREATE TABLE bien_taxonomy_dev AS (
+SELECT 
+higher_plant_group,
+scrubbed_family, 
+scrubbed_genus,
+scrubbed_species_binomial, 
+scrubbed_taxon_name_no_author,
+scrubbed_author,
+scrubbed_species_binomial_with_morphospecies,
+COUNT(*) AS observations
+FROM view_full_occurrence_individual_dev
+GROUP BY
+higher_plant_group,
+scrubbed_family, 
+scrubbed_genus,
+scrubbed_species_binomial, 
+scrubbed_taxon_name_no_author,
+scrubbed_author,
+scrubbed_species_binomial_with_morphospecies
+)
+;
+
+-- Add autoincrement PK
+ALTER TABLE bien_taxonomy_dev 
+ADD COLUMN bien_taxonomy_id BIGSERIAL PRIMARY KEY;
+ALTER INDEX bien_taxonomy_dev_pkey 
+	RENAME TO bien_taxonomy_pkey;
+
+-- Add columns to be populated later
+ALTER TABLE bien_taxonomy_dev 
+ADD COLUMN "scrubbed_taxonomic_status" VARCHAR(40) DEFAULT NULL,
+ADD COLUMN "order" VARCHAR(40) DEFAULT NULL,
+ADD COLUMN "superorder" VARCHAR(40) DEFAULT NULL,
+ADD COLUMN "subclass" VARCHAR(40) DEFAULT NULL,
+ADD COLUMN "class" VARCHAR(40) DEFAULT NULL,
+ADD COLUMN "division" VARCHAR(40) DEFAULT NULL
+;
+
+-- Add indexes on all currently-populated columns
+CREATE INDEX bien_taxonomy_higher_plant_group_idx ON bien_taxonomy_dev(higher_plant_group);
+CREATE INDEX bien_taxonomy_scrubbed_family_idx ON bien_taxonomy_dev(scrubbed_family);
+CREATE INDEX bien_taxonomy_scrubbed_genus_idx ON bien_taxonomy_dev(scrubbed_genus);
+CREATE INDEX bien_taxonomy_scrubbed_species_binomial_idx ON bien_taxonomy_dev(scrubbed_species_binomial);
+CREATE INDEX bien_taxonomy_scrubbed_taxon_name_no_author_idx ON bien_taxonomy_dev(scrubbed_taxon_name_no_author);
+CREATE INDEX bien_taxonomy_scrubbed_author_idx ON bien_taxonomy_dev(scrubbed_author);
+CREATE INDEX bien_taxonomy_scrubbed_species_binomial_with_morphospecies_idx ON bien_taxonomy_dev(scrubbed_species_binomial_with_morphospecies);
+
+-- Adjust ownership and permissions
+ALTER TABLE bien_taxonomy_dev OWNER TO bien;

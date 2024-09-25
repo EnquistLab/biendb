@@ -1,0 +1,10 @@
+1. tnrs_batch_1_prepare.sh: 
+- Add integer id column
+- Remove pipes if any from name_submitted
+- make names file pipe-delimited with ID as first column
+- Scrub DOS line endings if any from names file (use sed or tr)
+
+2. tnrs_batch_2_update.sh:
+- Remove surrounding single quotes from name_submitted after import of tnrs_scrubbed; or can simply update from joining table "tnrs_submitted"
+- Revert SQL workflow to used ID instead of name_submitted as FK
+- Change schema of results files to include ID

@@ -1,0 +1,51 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_3_update_metadata'' ------
+
+Start: Mon Apr 12 20:55:06 PDT 2021
+ 
+-----------------------------------
+Making final metadata tables:
+ 
+Executing module 'trait_metadata' with parameters db='vegbien' & dev_schema='analytical_db_dev'
+- Creating table 'taxon_trait'...done (458.44 sec)
+- Creating table 'trait_summary'...done (251.61 sec)
+Executing module 'data_contributors'
+- Creating table data_contributors...done (2.19 sec)
+- Inserting providers...done (.44 sec)
+- Populating additional metadata for herbaria...done (.62 sec)
+- Calculating observations...done (6186.22 sec)
+- Fixing duplicate records...done (.26 sec)
+- Indexing table...done (.14 sec)
+Executing module 'species_by_political_division'
+- Creating table species_by_political_division...done (4184.40 sec)
+Executing module 'bien_species_all'
+-Creating table 'bien_species_all'...done (1587.36 sec)
+Executing module 'bien_metadata'
+- Copying table bien_metadata from production schema...done (1.79 sec)
+- Inserting new record...done (.14 sec)
+Executing module 'bien_summary'
+- Copying existing table bien_summary from schema 'analytical_db'...done (.50 sec)
+- Inserting new summary record.....done (.09 sec)
+- Counting observations...done (2063.59 sec)
+- Counting geovalid observations...done (5682.83 sec)
+- Counting specimen observations...done (5394.96 sec)
+- Counting plot observations...done (1293.92 sec)
+- Counting plots...done (14.10 sec)
+- Counting species...done (9.16 sec)
+Executing module 'data_dictionary_rbien'
+Creating table data_dictionary_rbien...done (1.22 sec)
+- Importing CSV...done (.15 sec)
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating temp table observations_all...done (4759.34 sec)
+-- Updating geometry column in observations_all...done (1057.94 sec)
+-- Creating & populating table observations_union...done (180.16 sec)
+-- Altering table observations_union (adding species_std, is_embargoed)...done (33.96 sec)
+-- Creating & populating table species...done (3.11 sec)
+-----------------------------------
+Executing module 'phylogeny'
+- Creating tables...done (1.38 sec)
+- Importing metadata to temporary table...done
+- Inserting metadata...done (.38 sec)
+- Loading phylogenies...done (74.19 sec)
+- Indexing table phylogeny & adjusting ownership...done (.11 sec)

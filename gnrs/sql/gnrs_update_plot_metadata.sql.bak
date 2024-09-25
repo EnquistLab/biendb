@@ -1,0 +1,54 @@
+-- ---------------------------------------------------------
+-- Update standard political division columns in table
+-- plot_metadata by transferring GNRS results from vfoi
+-- ---------------------------------------------------------
+
+SET search_path TO :sch;
+
+-- Create temporary partial index
+DROP INDEX IF EXISTS vfoi_dev_plot_metadata_id_notnull_idx;
+CREATE INDEX vfoi_dev_plot_metadata_id_notnull_idx ON view_full_occurrence_individual_dev (is_geovalid) 
+WHERE plot_metadata_id IS NOT NULL
+;
+
+-- Extract poldivs for all plot records
+DROP TABLE IF EXISTS plot_poldivs_temp;
+CREATE TABLE plot_poldivs_temp AS
+SELECT
+plot_metadata_id,
+country,
+state_province,
+county
+FROM view_full_occurrence_individual_dev
+WHERE plot_metadata_id IS NOT NULL
+;
+
+-- Drop the temporary partial index
+DROP INDEX IF EXISTS vfoi_dev_plot_metadata_id_notnull_idx;
+
+-- Extract unique plot poldivs
+DROP TABLE IF EXISTS plot_poldivs_uniq_temp;
+CREATE TABLE plot_poldivs_uniq_temp AS
+SELECT DISTINCT
+plot_metadata_id,
+country,
+state_province,
+county
+FROM plot_poldivs_temp
+;
+
+-- Drop intermediate temp table and index id of unique table
+DROP TABLE plot_poldivs_temp;
+CREATE INDEX ON plot_poldivs_uniq_temp (plot_metadata_id);
+
+-- Update plot_metadata and drop the remaining temp table
+UPDATE plot_metadata a
+SET 
+country=b.country,
+state_province=b.state_province,
+county=b.county
+FROM plot_poldivs_uniq_temp b
+WHERE a.plot_metadata_id=b.plot_metadata_id
+;
+
+DROP TABLE plot_poldivs_uniq_temp;

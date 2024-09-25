@@ -1,0 +1,22 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_3_update_metadata'' ------
+
+Start: Sun Feb 28 21:22:19 PST 2021
+ 
+-----------------------------------
+Checking candidate pkeys in CODS results tables:
+- cods_proximity...done (235.76 sec)
+- cods_keyword...done (288.78 sec)
+- Updating CODS results columns in table:
+-- view_full_occurrence_individual_dev:
+--- Proximity results...done (13922.95 sec)
+--- Keyword results...done (15395.71 sec)
+-- agg_traits...
+--- Proximity results...done (1230.43 sec)
+--- Keyword results...done (755.84 sec)
+-----------------------------------
+Checking primary keys of main tables:
+-----------------------------------
+Executing module 'nsr_3_update'
+- Creating NSR results table...done (6814.12 sec)
+- Importing NSR validation results...

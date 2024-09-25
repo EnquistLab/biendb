@@ -1,0 +1,70 @@
+Executing module 'validate_adb'
+Checking existence of required tables:
+- agg_traits...pass
+- analytical_stem...pass
+- bien_metadata...pass
+- bien_species_all...pass
+- bien_summary...pass
+- bien_taxonomy...pass
+- centroid...pass
+- cites...pass
+- country...pass
+- country_name...pass
+- county_parish...pass
+- county_parish_name...pass
+- cultobs...pass
+- data_contributors...pass
+- data_dictionary_columns...pass
+- data_dictionary_rbien...pass
+- data_dictionary_tables...pass
+- data_dictionary_values...pass
+- datasource...pass
+- endangered_taxa...pass
+- genus_family...pass
+- gnrs...pass
+- ih...pass
+- iucn...pass
+- ncbi_taxa...pass
+- nsr...pass
+- observations_union...pass
+- pdg...pass
+- phylogeny...pass
+- plot_metadata...pass
+- ranges...pass
+- species...pass
+- species_by_political_division...pass
+- state_province...pass
+- state_province_name...pass
+- taxon...pass
+- taxon_trait...pass
+- tnrs...pass
+- trait_summary...pass
+- usda...pass
+- view_full_occurrence_individual...pass
+- view_indexes...pass
+- world_geom...pass
+- world_geom_country...pass
+- world_geom_county...pass
+- world_geom_gnrs...pass
+- world_geom_state...pass
+Checking existence of required columns:
+- view_full_occurrence_individual.geom...pass
+- agg_traits.geom...pass
+- view_full_occurrence_individual.continent...pass
+- agg_traits.continent...pass
+- analytical_stem.continent...pass
+Embargo checks:
+- embargoes_taxa_vfoi...pass
+- embargoes_madidi_vfoi...pass
+- embargoes_madidi_astem...pass
+- embargoes_nvs_vfoi...pass
+- embargoes_nvs_astem...pass
+- embargoes_remib...pass
+- embargoes_traits_nonpublc...pass
+- embargoes_traits_species_count...pass
+
+------------------------------------------------
+No errors found
+
+------ Operation 'validate_adb' completed in 70.59 seconds ------
+

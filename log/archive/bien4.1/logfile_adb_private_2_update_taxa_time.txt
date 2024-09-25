@@ -1,0 +1,45 @@
+Module	Task	Sec
+populate_geom	Processing table: "view_full_occurrence_individual_dev": Enforcing geometric constraints	3129.44
+populate_geom	Processing table: "view_full_occurrence_individual_dev": Building non-null index on latitude & longitude	841.64
+populate_geom	Processing table: "view_full_occurrence_individual_dev": Adding temporary integer primary key	9294.80
+populate_geom	Processing table: "view_full_occurrence_individual_dev": Processing 208374115 records in batches of 100000: 2084 of 2084	avg: 4.14 sec/batch; total: 8640.46
+populate_geom	Processing table: "view_full_occurrence_individual_dev": Dropping temporary indexes	.09
+populate_geom	Processing table: "view_full_occurrence_individual_dev": Indexing geometry column	7688.53
+populate_geom	Processing table: "agg_traits": Adding column geom	.82
+populate_geom	Processing table: "agg_traits": Enforcing geometric constraints	175.27
+populate_geom	Processing table: "agg_traits": Building non-null index on latitude & longitude	57.64
+populate_geom	Processing table: "agg_traits": Adding temporary integer primary key	541.17
+populate_geom	Processing table: "agg_traits": Processing 26888342 records in batches of 100000: 269 of 269	avg: 3.81 sec/batch; total: 1025.74
+populate_geom	Processing table: "agg_traits": Dropping temporary indexes	.08
+populate_geom	Processing table: "agg_traits": Indexing geometry column	420.91
+pdg_1_prepare	Importing existing table world_geom from schema 'analytical_db'	47.15
+pdg_1_prepare	Altering table world_geom	89.51
+pdg_1_prepare	Extracting verbatim political divisions to table	1.41
+pdg_1_prepare	Exporting CSV file of political divisions for scrubbing by GNRS	.18
+pdg_1_prepare	Scrubbing political divisions with GNRS	.23
+pdg_1_prepare	Creating GNRS results table "world_geom_gnrs"	.35
+pdg_1_prepare	Importing GNRS validation results	.36
+pdg_1_prepare	Indexing "world_geom_gnrs"	7.62
+pdg_1_prepare	Updating political division columns in table "world_geom"	37.10
+pdg_1_prepare	Indexing "world_geom"	30.44
+pdg_1_prepare	Dropping temporary tables	.13
+pdg_1_prepare	Creating lookup tables of world_geom political divisions	1.28
+pdg_2_scrub_continue	Processing table: "view_full_occurrence_individual_dev": Indexing political division columns	15147.02
+pdg_2_scrub_continue	Processing table: "view_full_occurrence_individual_dev": Processing 208374115 records in batches of 100000: 1811	avg: 378.52 sec/batch; total: 685512.86
+pdg_2_scrub_continue	Processing table: "view_full_occurrence_individual_dev": Dropping temporary primary key	3.35
+pdg_2_scrub_continue	Processing table: "view_full_occurrence_individual_dev": Dropping temporary indexes	.63
+pdg_2_scrub_continue	Processing table: "agg_traits": Indexing political division columns	1484.01
+pdg_2_scrub_continue	Processing table: "agg_traits": Processing 26888342 records in batches of 100000: 269	avg: 153.80 sec/batch; total: 41373.95
+pdg_2_scrub_continue	Processing table: "agg_traits": Dropping temporary primary key	.99
+pdg_2_scrub_continue	Processing table: "agg_traits": Dropping temporary indexes	.38
+CULTOBS	Creating table cultobs	4190.30
+CULTOBS	Extracting input data from table: vfoi	8299.76
+CULTOBS	Extracting input data from table: agg_traits	1912.48
+CULTOBS	Preparing cultobs tables	1586.45
+CULTOBS	Preparing herbarium coordinates table	1.25
+CULTOBS	Flagging by keywords in locality	334.35
+CULTOBS	Flagging by proximity to herbarium: Exporting list of herbarium countries	.08
+CULTOBS	Flagging by proximity to herbarium: Processing 188832707 records in batches of 100000: Batch 1889 of 1889	total 968494.65
+CULTOBS	Transferring validation results to table cultobs	46278.22
+CULTOBS	Updating CULTOBS results columns in table: view_full_occurrence_individual_dev	12264.53
+CULTOBS	Updating CULTOBS results columns in table: agg_traits	720.83

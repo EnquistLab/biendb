@@ -1,0 +1,93 @@
+Module	Task	Sec
+tnrs_3_update.sh	Creating TNRS results tables	2244.98
+tnrs_3_update.sh	Preparing TNRS results file for import: Removing all double quotes	20.46
+tnrs_3_update.sh	Importing TNRS resolution results from file 'tnrs_submitted_scrubbed.tsv'	24.01
+tnrs_3_update.sh	Setting empty strings to null	4.21
+tnrs_3_update.sh	Separating records with compound ids	22.82
+tnrs_3_update.sh	Fixing additional issues caused by TNRSbatch	111.09
+tnrs_3_update.sh	Preparing table tnrs_scrubbed	57.45
+tnrs_3_update.sh	Selecting best match	264.64
+tnrs_3_update.sh	Preparing table tnrs	1058.83
+tnrs_3_update.sh	Updating TNRS warnings	617.65
+bien_taxonomy	Checking required databases	2045.78
+bien_taxonomy	Copying table 'genus_family' from db 'gf_lookup' to schema 'analytical_db_dev' in db 'vegbien': Creating dumpfile	.74
+bien_taxonomy	Copying table 'genus_family' from db 'gf_lookup' to schema 'analytical_db_dev' in db 'vegbien': Editing dumpfile	.89
+bien_taxonomy	Copying table 'genus_family' from db 'gf_lookup' to schema 'analytical_db_dev' in db 'vegbien': Importing table from dumpfile	.58
+bien_taxonomy	Creating table bien_taxonomy	.19
+bien_taxonomy	Loading table bien_taxonomy	31.56
+bien_taxonomy	Populating FK to bien_taxonomy in tnrs results table	843.69
+bien_taxonomy	Adding missing families	165.11
+bien_taxonomy	Populating taxon_rank	78.18
+bien_taxonomy	Copying table bien_taxonomy to tnrs database	46.48
+bien_taxonomy	Populating higher taxon columns in bien_taxonomy	144.11
+bien_taxonomy	Populating column higher_plant_group	119.07
+bien_taxonomy	Correcting errors in higher taxon columns	.78
+bien_taxonomy	Replacing original table bien_taxonomy in development schema	52.33
+bien_taxonomy	Building normalized taxon table: Creating table taxon	.54
+bien_taxonomy	Building normalized taxon table: Loading table taxon	15.45
+bien_taxonomy	Building normalized taxon table: Populating remaining columns and indexing	79.17
+bien_taxonomy	Building normalized taxon table: Populating FKs in table bien_taxonomy	107.06
+bien_taxonomy	Transferring taxonomy results to table: agg_traits	975.31
+bien_taxonomy	Transferring taxonomy results to table: vfoi	10332.00
+bien_taxonomy	Transferring taxonomy results to table: endangered_taxa_by_source	20.31
+major_taxon	Copying table 'ncbi_taxa' from db 'ncbi' to schema 'analytical_db_dev' in db 'vegbien': Creating dumpfile	3105.27
+major_taxon	Copying table 'ncbi_taxa' from db 'ncbi' to schema 'analytical_db_dev' in db 'vegbien': Editing dumpfile	45.99
+major_taxon	Copying table 'ncbi_taxa' from db 'ncbi' to schema 'analytical_db_dev' in db 'vegbien': Importing table from dumpfile	48.12
+major_taxon	Populating column "major_taxon" in table "tnrs": Adding columns	579.79
+major_taxon	Populating column "major_taxon" in table "tnrs": Updating "major_taxon"	386.43
+major_taxon	Populating column "major_taxon" in table "tnrs": Correcting "major_taxon"	240.54
+major_taxon	Making changes to related records in remaining tables: Indexing major tables	3297.29
+major_taxon	Making changes to related records in remaining tables: Deleting majority of non-embryophyte observations	1682.90
+major_taxon	Making changes to related records in remaining tables: Updating taxon information for remaining non-embryophytes	5758.14
+major_taxon	Making changes to related records in remaining tables: Dropping indexes on major tables	8.65
+endangered_species_2	Populating table endangered_taxa	1.25
+endangered_species_2	Extracting state-specific endangered species	.71
+endangered_species_2	Updating family embargoes	4063.65
+endangered_species_2	Updating genus embargoes	3133.18
+endangered_species_2	Updating species embargoes	3280.55
+endangered_species_2	Updating subspecies embargoes	2770.43
+gnrs_3_update	Creating GNRS results table	.49
+gnrs_3_update	Importing GNRS validation results	2.59
+gnrs_3_update	Removing duplicate values from GNRS results table	3.34
+gnrs_3_update	Indexing GNRS results table	14.41
+gnrs_3_update	Updating GNRS results columns in table: view_full_occurrence_individual_dev	7395.52
+gnrs_3_update	Updating GNRS results columns in table: agg_traits	769.71
+gnrs_3_update	Updating GNRS results columns in table: ih	3.17
+gnrs_3_update	Updating GNRS results columns in table: plot_metadata	40.02
+cds_3_update	Creating CDS results table	2380.41
+cds_3_update	Fixing errors in raw CDS validation result file: Extra header row	178.92
+cds_3_update	Fixing errors in raw CDS validation result file: Missing trailing delimiters for erroneous coordinates	172.54
+cds_3_update	Importing CDS validation results	236.40
+cds_3_update	Populating primary and foreign keys	2660.46
+cds_3_update	Indexing CDS results table	1124.27
+cds_3_update	Updating CDS results columns in table: view_full_occurrence_individual_dev	9616.52
+cds_3_update	Updating CDS results columns in table: agg_traits	60082.05
+cds_3_update	Updating CDS results columns in table: plot_metadata	48.03
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Creating dumpfile: '/home/boyle/bien3/analytical_db/private/data/poldiv_tables.sql'	2943.46
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Creating dumpfile: Editing dumpfile	20.44
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Dropping previous tables, if any	.22
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Importing tables from dumpfile	56.43
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Removing dumpfile	.01
+poldiv_tables	Copying political division tables from db 'gnrs' to schema 'analytical_db_dev' in db 'vegbien': Altering tables	.37
+is_new_world	view_full_occurrence_individual	8498.25
+is_new_world	agg_traits	622.92
+is_geovalid	view_full_occurrence_individual	6334.30
+is_geovalid	agg_traits	589.50
+is_geovalid	plot_metadata	15.86
+fix_fia	Creating temporary indexes on vfoi	5727.37
+fix_fia	Creating table fia_plot_codes	1293.03
+fix_fia	Creating table vfoi_dev with revised FIA plot codes	2411.30
+fix_fia	Create new version of plot_metadata with updated plot codes	523.12
+fix_fia	Update FK plot_metadata_id in table vfoi_dev	3953.61
+fix_fia	Dropping temporary indexes	17.39
+NSR	Creating nsr_submitted tables	1.23
+NSR	Extracting raw NSR input columns from table: vfoi	1144.60
+NSR	Extracting raw NSR input columns from table: agg_traits	78.92
+NSR	Extracting unique values to table nsr_submitted	8421.86
+NSR	Exporting CSV file to application data directory	13.08
+cods_1_prepare	Creating cods_submitted tables	.21
+cods_1_prepare	Preparing tables	7482.67
+cods_1_prepare	Extracting proximity data from tables	7934.62
+cods_1_prepare	Extracting description data from tables	3274.86
+cods_1_prepare	Exporting CSV files to application data directory: cods_prox_submitted	37.54
+cods_1_prepare	Exporting CSV files to application data directory: cods_desc_submitted	274.52

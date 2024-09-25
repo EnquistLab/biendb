@@ -1,0 +1,12 @@
+Executing module 'populate_geom':
+- Processing table: "pdg":
+-- Enforcing geometric constraints...done (16.39 sec)
+-- Building non-null index on latitude & longitude...done (.12 sec)
+-- Adding temporary integer primary key...done (.31 sec)
+-- Processing 6393 records in batches of 100000:
+--- 1 of 1 (.32 sec; avg: .32 sec/batch)        --- 1 of 1 (avg: .32 sec/batch; total: .32 sec)       
+-- Dropping temporary indexes...done (.05 sec)
+-- Indexing geometry column...done (.09 sec)
+
+------ Operation 'Add geometry columns to tables' completed in 17.33 seconds ------
+

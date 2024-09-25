@@ -1,0 +1,131 @@
+###################################################################
+# These examples work on small files but fail on large files with 
+# no line endings
+###################################################################
+
+# Fails silently
+sed -i 's/Name_submitted/HELLOWORLD/g' temp	
+
+# Hangs indefinitely:
+awk '{gsub("Name_submitted", "HELLOWORD", $0); print}' test > test2	
+awk '{gsub("@0\\|", "HELLOWORD", $0); print}' test > test2
+
+# Fails with error "Substitution loop at -e line 1, <> line 1."
+perl -0777 i.bak -pe 's/Name_submitted/HELLOWORLD/g' temp	
+perl -p -i -e 's/Warnings\Q|\E/WarningsLITERALNEWLINE/g' myfile
+
+###################################################################
+
+# Split file into chunks of at most 200 MB, ignoring line endings
+# be sure to do in separate directory, will create a ton of files
+split -C 200m temp
+
+##############################################
+Test splitting & merging using test file
+##############################################
+
+mkdir test
+cd test
+touch temp
+cat <<EOT >> temp
+this is line 1
+and this is line 2
+however this is line 3
+on the other hand this is line 4
+and this is the final line 5
+EOT
+# note how the following split at <= line size in bytes
+split -C 20 temp
+
+# Convert to file with no line endings, substituting unique delimiter
+# for LF
+tr '\n' '|' < temp > temp2
+# Note how the new file is split at *exactly 20b, except for last file
+split -C 20 temp2
+
+# Merge the split files
+cat x* > temp2_merged
+
+# Now compare original and split-merged. Identical!
+cat temp2 && echo
+cat temp2_merged && echo
+diff temp2 temp2_merged
+
+
+
+
+
+
+
+
+
+
+
+# Make a copy of the original file and work on this
+cp tnrs_scrubbed.complete.txt temp
+
+
+# Replace original ampersands so we can use a single-character 
+# substitute for <tab> (needed for tr)
+sed -i 's/@/ORIGINALAMPERSAND/g' temp
+
+# Replace original pipes so we can use a single-character 
+# substitute for <LF> (needed for tr)
+sed 's/|/ORIGINALPIPE/g' temp > temp
+
+# Transform tabs to ampersands
+tr '\t' '@' < temp > temp2 && mv temp2 temp
+
+# Transform line endings to pipes
+# Warning! File now has ZERO line endings. Must add line ending
+# at end of file to avoid crashing perl, awk or sed
+tr '\n' '|' < temp > temp2 && mv temp2 temp
+
+# Add newline at end of file
+# Essential! Otherwise all attempts to edit will fail
+tail -c1 temp | read -r _ || echo >> temp
+
+# Protect header line ending
+awk '{gsub("Source,Warnings\\|", "Source,WarningsLITERALNEWLINE", $0); print}' temp > temp2 && mv temp2 temp
+
+# Protect remaining line endings
+# All end in <tab>[0-10]<LF>
+awk '{gsub("@0\\|", "LITERALTAB0LITERALNEWLINE", $0); print}' temp > temp2 && mv temp2 temp
+
+perl -p -i -e 's/Source,Warnings\\|/Source,WarningsLITERALNEWLINE/g' temp2
+
+
+sed -i 's/\@0\|/LITERALTAB0LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB1|/LITERALTAB1LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB2|/LITERALTAB2LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB3|/LITERALTAB3LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB4|/LITERALTAB4LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB5|/LITERALTAB5LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB6|/LITERALTAB6LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB7|/LITERALTAB7LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB8|/LITERALTAB8LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB9|/LITERALTAB9LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+sed -i 's/LITERALTAB10|/LITERALTAB10LITERALNEWLINE/g' tnrs_scrubbed.complete.fixed.txt
+
+sed -i 's/|//g' tnrs_scrubbed.complete.fixed.txt
+
+sed -i 's/LITERALNEWLINE/\n/g' tnrs_scrubbed.complete.fixed.txt
+
+# Restore literal pipes and amphersands
+sed 's/ORIGINALPIPE/|/g' tnrs_scrubbed.complete.txt > tnrs_scrubbed.complete.fixed.txt
+sed 's/ORIGINALAMPERSAND/@/g' tnrs_scrubbed.complete.txt > tnrs_scrubbed.complete.fixed.txt
+
+
+
+sed ':a;N;$!ba;s/\n/|/g' tnrs_scrubbed.complete.txt > tnrs_scrubbed.complete.fixed.txt
+
+###########################
+References:
+
+https://stackoverflow.com/questions/11680815/removing-windows-newlines-on-linux-sed-vs-awk
+
+https://stackoverflow.com/questions/3569997/how-to-find-out-line-endings-in-a-text-file
+(see especially 3rd answer)
+
+Removing carriage returns inside Postgres:
+https://stackoverflow.com/questions/7836906/how-to-remove-carriage-returns-and-new-lines-in-postgresql

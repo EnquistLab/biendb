@@ -1,0 +1,59 @@
+
+------ Begin operation 'Build Private ADB - Step 3, part 2 (custom: major_taxon)' ------
+
+-----------------------------------
+Executing module 'restore_indexes_dev_temp_resume'
+- Restoring indexes on tables:
+-- view_full_occurrence_individual...done (24276.33 sec)
+-- agg_traits...done (16611.15 sec)
+-- analytical_stem...done (12332.79 sec)
+-- bien_taxonomy...done (167.25 sec)
+- Creating index summary view...done (.70 sec)
+-----------------------------------
+Making final metadata tables:
+ 
+Executing module 'trait_metadata' with parameters db='vegbien' & dev_schema='analytical_db_dev'
+- Creating table 'taxon_trait'...done (2867.14 sec)
+- Creating table 'trait_summary'...done (1095.73 sec)
+Executing module 'data_contributors'
+- Creating table data_contributors...done (.44 sec)
+- Inserting providers...done (.53 sec)
+- Populating additional metadata for herbaria...done (.59 sec)
+- Calculating observations...done (1343.80 sec)
+- Fixing duplicate records...done (.34 sec)
+- Indexing table...done (.14 sec)
+Executing module 'species_by_political_division'
+- Creating table species_by_political_division...done (10896.21 sec)
+Executing module 'bien_species_all'
+-Creating table 'bien_species_all'...done (693.53 sec)
+Executing module 'bien_metadata'
+- Copying table bien_metadata from production schema...done (.58 sec)
+- Inserting new record...done (.05 sec)
+Executing module 'bien_summary'
+- Copying existing table bien_summary from schema 'analytical_db'...done (.24 sec)
+- Inserting new summary record.....done (.06 sec)
+- Counting observations...done (623.48 sec)
+- Counting geovalid observations...done (625.29 sec)
+- Counting specimen observations...done (613.93 sec)
+- Counting plot observations...done (328.67 sec)
+- Counting plots...done (25.69 sec)
+- Counting species...done (1.73 sec)
+Executing module 'data_dictionary_rbien'
+Creating table data_dictionary_rbien...done (.34 sec)
+- Importing CSV...done (.08 sec)
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating & populating table species...done (732.79 sec)
+-- Creating temp table observations_all...done (1378.95 sec)
+-- Updating geometry column in observations_all...done (7896.62 sec)
+-- Creating & populating table observations_union...done (1185.54 sec)
+-----------------------------------
+Executing module 'cleanup':
+- Dropping raw data tables...done (1.46 sec)
+- Removing sequences...
+------ Begin operation 'Build Private ADB - Step 3, part 2 (custom: major_taxon)' ------
+
+-----------------------------------
+Executing module 'restore_indexes_dev_temp_resume'
+- Restoring indexes on tables:
+-- view_full_occurrence_individual...

@@ -1,0 +1,28 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_4_final_updates'' ------
+
+-----------------------------------
+Executing module 'data_dictionary_2_update'
+- Creating revised results tables...done (.15 sec)
+- Updating table definitions:
+-- Importing revision file...done (.08 sec)
+-- Applying revisions...done (.15 sec)
+- Updating column definitions:
+-- Importing revision file...done (.09 sec)
+-- Applying revisions...done (.17 sec)
+- Updating constrained value definitions:
+-- Importing revision file...done (.09 sec)
+-- Applying revisions...done (.22 sec)
+- Adding comments to schema:
+-- Tables...done (15.39 sec)
+-- Columns...done (16.08 sec)
+
+Script completed. Next step:
+
+1. Set permissions to allow access by bien_private, etc. (see module users/)
+2. Inspect & validate private analytical_db_dev
+3. Run adb_public.sh to generate public version  
+of analytical database
+
+------ Process 'BIEN DB process: 'adb_private_4_final_updates'' completed in 32.55 seconds ------
+

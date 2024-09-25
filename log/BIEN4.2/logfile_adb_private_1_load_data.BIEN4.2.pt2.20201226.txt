@@ -1,0 +1,78 @@
+
+
+------ Begin process 'BIEN DB process: 'adb_private_1_load_data'' ------
+
+Start: Tue Dec 15 16:39:44 PST 2020
+ 
+Executing module 'Import GBIF'
+-- Correcting dates from column "dateIdentified"...done (243903.40 sec)
+- Indexing raw data...done (436328.50 sec)
+- Creating staging tables...done (2.14 sec)
+- Loading staging tables:
+-- vfoi_staging...done (30161.93 sec)
+-- datasource_staging...done (437.88 sec)
+- Populating FK to datasource_staging...done (153201.80 sec)
+- Dropping raw data indexes...done (95.84 sec)
+- Loading main tables from staging:
+-- datasource...done (1.26 sec)
+-- plot_metadata...done (.29 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (10321.15 sec)
+--- Indexing foreign keys...done (10863.94 sec)
+Dropping staging table fkey from table vfoi...done (4.87 sec)
+-----------------------------------
+Checking row counts in table:
+- view_full_occurrence_individual_dev...285690756
+- agg_traits...26888342
+-----------------------------------
+Executing module 'datasource_2_export'
+- Exporting CSV dump of table datasource for manual editing...done (445.05 sec)
+-----------------------------------
+Executing module 'endangered_taxa_1_prepare'
+- Building endangered species tables:
+- Creating tables...done (.96 sec)
+- Importing data for 'cites', 'iucn', 'usda'...done (1.99 sec)
+- Combining endangered taxon data into single table...done (.45 sec)
+-----------------------------------
+Executing module 'tnrs'
+- Creating TNRS tables...done (.33 sec)
+- Extracting verbatim names:
+-- view_full_occurrence_individual...done (686.77 sec)
+-- agg_traits...done (41.61 sec)
+-- endangered_taxa...done (.19 sec)
+- Pre-processing names...done (156.98 sec)
+- Extracting unique names and adding ID column...done (45.71 sec)
+- Exporting names file '/home/bien/tnrs/data/user/tnrs_submitted.csv'...done (1.56 sec)
+- Deleting offending names from CSV...done (25.67 sec)
+-----------------------------------
+Executing module 'gnrs_1_prepare'
+- Dropping existing indexes on table:
+-- view_full_occurrence_individual...done (8.77 sec)
+-- agg_traits...done (.11 sec)
+- Populating FK poldivs_full in table:
+-- vfoi...done (15805.01 sec)
+-- agg_traits...done (2113.10 sec)
+-- ih...done (1.03 sec)
+- Extracting all political divisions to table poldivs...done (2781.56 sec)
+- Exporting CSV file of political divisions for scrubbing by GNRS...done (.98 sec)
+-- File: gnrs_submitted.csv
+-- Destination directory: /home/bien/gnrs/data/user
+-----------------------------------
+Executing module 'cds_1_prepare'
+- Dropping existing indexes on table:
+-- view_full_occurrence_individual...done (.31 sec)
+-- agg_traits...done (.11 sec)
+- Extracting all verbatim geocoordinate to table cds_submitted...done (2952.28 sec)
+- Exporting CSV file of political divisions for scrubbing by CDS...done (12.69 sec)
+-- File: cds_submitted.csv
+-- Destination directory: /home/bien/cds2/data
+
+Script completed. Next steps:
+
+1. Submit TNRS input for scrubbing
+2. Submit GNRS input for scrubbing
+3. Submit CDS input for scrubbing
+4. After steps 1-3 complete, continue with adb_private_2_import_validations_1.sh
+
+------ Process 'BIEN DB process: 'adb_private_1_load_data'' completed in 910406.70 seconds ------
+

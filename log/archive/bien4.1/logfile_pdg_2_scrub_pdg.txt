@@ -1,0 +1,10 @@
+Executing module 'pdg_2_scrub_pdg'
+- Processing table: "pdg":
+-- Indexing political division columns...done (62.61 sec)
+-- Processing 1214186 records in batches of 100000:
+--- 1 of 13 (23.47 sec; avg: 23.47 sec/batch)        --- 2 of 13 (.26 sec; avg: 11.86 sec/batch)        --- 3 of 13 (.22 sec; avg: 7.98 sec/batch)        --- 4 of 13 (.21 sec; avg: 6.04 sec/batch)        --- 5 of 13 (.18 sec; avg: 4.86 sec/batch)        --- 6 of 13 (.20 sec; avg: 4.09 sec/batch)        --- 7 of 13 (.21 sec; avg: 3.53 sec/batch)        --- 8 of 13 (.25 sec; avg: 3.12 sec/batch)        --- 9 of 13 (.22 sec; avg: 2.80 sec/batch)        --- 10 of 13 (.22 sec; avg: 2.54 sec/batch)        --- 11 of 13 (.25 sec; avg: 2.33 sec/batch)        --- 12 of 13 (.22 sec; avg: 2.15 sec/batch)        --- 13 of 13 (656.67 sec; avg: 52.50 sec/batch)        --- 14 of 13 (537.85 sec; avg: 87.17 sec/batch)        --- 15 of 13 (549.26 sec; avg: 117.97 sec/batch)        --- 16 of 13 (529.77 sec; avg: 143.71 sec/batch)        --- 17 of 13 (548.46 sec; avg: 167.52 sec/batch)        --- 18 of 13 (548.52 sec; avg: 188.69 sec/batch)        --- 19 of 13 (559.69 sec; avg: 208.21 sec/batch)        --- 20 of 13 (615.06 sec; avg: 228.55 sec/batch)        --- 21 of 13 (550.51 sec; avg: 243.89 sec/batch)        --- 22 of 13 (533.44 sec; avg: 257.05 sec/batch)        --- 23 of 13 (545.86 sec; avg: 269.60 sec/batch)        --- 24 of 13 (556.20 sec; avg: 281.55 sec/batch)        --- 25 of 13 (158.13 sec; avg: 276.61 sec/batch)        --- 25 of 13 (avg: 276.61 sec/batch; total: 6915.33 sec)       
+-- Dropping temporary primary key...done (.60 sec)
+-- Dropping temporary indexes...done (.32 sec)
+
+------ Operation 'Political division geovalidation: scrub (temp)' completed in 6979.13 seconds ------
+

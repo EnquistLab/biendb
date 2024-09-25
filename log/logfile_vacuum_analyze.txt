@@ -1,0 +1,6 @@
+Executing module 'vacuum_analyze'
+ 
+Running vacuum analyze on schema public in database public_vegbien...done (249681.99 sec)
+
+------ Process 'vacuum_analyze' completed in 249682.06 seconds ------
+

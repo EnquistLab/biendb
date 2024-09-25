@@ -1,0 +1,344 @@
+
+------ Begin operation 'BIEN DB process: 'adb_private_1_load_data'' ------
+
+Start: Fri Nov 20 13:45:44 PST 2020
+ 
+Creating schema 'analytical_db_dev'...done (4.47 sec)
+Executing module 'install_dependencies'
+- Installing functions:
+-- f_empty2null...done (.12 sec)
+-- geodistkm...done (.10 sec)
+-- is_numeric...done (.10 sec)
+-- is_date...done (.10 sec)
+-----------------------------------
+Executing module 'Copy legacy tables':
+- 'view_full_occurrence_individual'...done (528.37 sec)
+- 'analytical_stem'...done (1281.70 sec)
+-----------------------------------
+Executing module 'fix_missing_poldivs_1'
+ - Parameters:
+ -- $curr_db='vegbien'
+ -- $curr_sch='analytical_db_dev'
+- Creating temporary indexes on vfoi...done (122.75 sec)
+- Populating political divisions...done (145.19 sec)
+- Dropping the temporary indexes...done (.15 sec)
+-----------------------------------
+Executing module 'plot_provenance':
+- Populating dataset for specimens and removing non-plot plot codes...done (565.02 sec)
+- Indexing plot-related columns...done (339.74 sec)
+- Creating table plot_provenance...done (43.42 sec)
+- Populating table plot_provenance:
+-- SALVIAS...done (.24 sec)
+-- TEAM...done (.42 sec)
+-- VegBank...done (2.76 sec)
+-- Remaining plot datasources...done (.27 sec)
+-- Final fixes...done (.30 sec)
+- Updating plot provenance in table 'view_full_occurrence_individual_dev'...done (4775.97 sec)
+-----------------------------------
+Executing module 'plot_metadata'
+- Creating table plot_metadata...done (983.43 sec)
+- Updating existing metadata...done (122.92 sec)
+- Creating source-specific metadata tables...done (.12 sec)
+- Importing CVS metadata file...done (.89 sec)
+- Importing VegBank metadata file...done (.49 sec)
+- Importing BIEN2 metadata file...done (1.21 sec)
+- Updating CVS metadata...done (.71 sec)
+- Updating VegBank metadata...done (2.91 sec)
+- Updating BIEN2 metadata...done (10.55 sec)
+- Updating remaining metadata...done (1.68 sec)
+- Standardizing constrained vocabulary...done (3.22 sec)
+- Dropping temporary tables...done (6.21 sec)
+- Building remaining indexes...done (3.08 sec)
+- Adding foreign key to table 'view_full_occurrence_individual':
+-- Indexing candidate key columns...done (390.96 sec)
+-- Populating FK column 'plot_metadata_id'...done (2210.99 sec)
+- Adding foreign key to table 'analytical_stem'...done (55514.61 sec)
+-----------------------------------
+Executing module 'datasource_1_load_legacy'
+- Creating table datasource...done (.29 sec)
+- Inserting existing information for plots...done (1.47 sec)
+- Inserting existing information for specimens...done (166.48 sec)
+- Extracting proximate data providers...done (.15 sec)
+- Copying table 'ih' from schema 'herbaria' to 'analytical_db_dev'...done (.22 sec)
+- Updating table 'ih'...done (.50 sec)
+- Flagging herbarium data sources...done (.10 sec)
+- Indexing...done (.10 sec)
+- Adding FKs:
+-- Table plot_metadata...done (15.54 sec)
+-- Table view_full_occurrence_individual:
+--- Indexing candidate keys...done (175.35 sec)
+--- Populating FK 'datasource_id'...done (1661.68 sec)
+- Updating 'source_type'...done (.12 sec)
+- Final fixes...done (.10 sec)
+-----------------------------------
+Executing module 'fix_missing_poldivs_2'
+ - Parameters:
+ -- $curr_db='vegbien'
+ -- $curr_sch='analytical_db_dev'
+- Creating temporary indexes on vfoi...done (110.32 sec)
+- Populating political divisions...done (134.32 sec)
+- Dropping the temporary indexes...done (.11 sec)
+-----------------------------------
+Executing module 'Prepare vfoi for inserts':
+- Adding autoincrement primary key...done (389.68 sec)
+-----------------------------------
+Executing module 'Import traits'
+- Creating tables:
+-- datasource_raw...done (.16 sec)
+-- traits_raw...done (.20 sec)
+-- agg_traits...done (.17 sec)
+- Importing data:
+-- 'new_trait_table_8_29_2017_utf8.csv' --> traits_raw...done (460.19 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.09 sec)
+- Altering schema of table "traits_raw"...done (440.17 sec)
+- Correcting raw data:
+-- Setting empty strings to null...done (152.11 sec)
+-- Correcting misc errors...done (301.85 sec)
+-- Creating not null index on column:
+--- elevation_m...done (37.30 sec)
+--- visiting_date...done (39.94 sec)
+--- observation_date...done (99.52 sec)
+-- Parsing and correcting "elevation_m"...done (573.56 sec)
+-- Parsing and correcting dates:
+--- "visiting_date"...done (897.15 sec)
+--- "observation_date"...done (4323.54 sec)
+- Inserting raw data to main traits table (agg_traits)...done (617.53 sec)
+- Correcting name_submitted...done (147.84 sec)
+-- Dropping not null indexes:
+--- elevation_m...done (.12 sec)
+--- visiting_date...done (.10 sec)
+--- observation_date...done (.32 sec)
+- Creating staging tables...done (.19 sec)
+- Loading staging tables:
+-- datasource_staging...done (.09 sec)
+-- vfoi_staging...done (427.75 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...no corrections needed
+- Loading main tables from staging:
+-- datasource...done (.31 sec)
+-- plot_metadata...done (.12 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (588.29 sec)
+--- Indexing foreign keys...done (15473.87 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (.02 sec)
+-----------------------------------
+Executing module 'Import 'alaus''
+- Creating raw data tables:
+-- Generic...done (.41 sec)
+-- Source-specific...done (.13 sec)
+- Importing raw data to table:
+-- 'records-2017-08-31.csv' --> ala_raw...done (57.83 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.19 sec)
+- Creating staging tables...done (7.11 sec)
+- Loading staging tables:
+-- datasource_staging...done (.10 sec)
+-- vfoi_staging...done (35.84 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...under construction!
+- Loading main tables from staging:
+-- datasource...done (.30 sec)
+-- plot_metadata...done (.11 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (21.48 sec)
+--- Indexing foreign keys...done (277.23 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (0 sec)
+-----------------------------------
+Executing module 'Import chilesp'
+- Creating raw data tables:
+-- Generic...done (.21 sec)
+-- Source-specific...done (.13 sec)
+- Importing raw data to table:
+-- 'Chileandatabase.csv' --> chilesp_raw...done (.24 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.12 sec)
+- Correcting raw data:
+-- Creating integer Y, M, D columns...done (.15 sec)
+-- Setting empty strings to null...done (.18 sec)
+-- Correcting dates...done (1.03 sec)
+- Creating staging tables...done (.58 sec)
+- Loading staging tables:
+-- datasource_staging...done (.08 sec)
+-- vfoi_staging...done (.34 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...no corrections needed
+- Loading main tables from staging:
+-- datasource...done (.28 sec)
+-- plot_metadata...done (.11 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (.90 sec)
+--- Indexing foreign keys...done (128.03 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (0 sec)
+-----------------------------------
+Executing module 'Import dryflor'
+- Creating raw data tables:
+-- Generic...done (.19 sec)
+-- Source-specific...done (.13 sec)
+- Importing raw data to table:
+-- 'Dryflor-download-Apr2017_utf8.csv' --> dryflor_raw...done (1.73 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.12 sec)
+- Correcting raw data:
+-- Setting empty strings to null...done (1.86 sec)
+- Creating staging tables...done (.18 sec)
+- Loading staging tables:
+-- datasource_staging...done (.08 sec)
+-- vfoi_staging...done (2.73 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...no corrections needed
+- Loading main tables from staging:
+-- datasource...done (.19 sec)
+-- plot_metadata...done (.12 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (4.74 sec)
+--- Indexing foreign keys...done (145.54 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (0 sec)
+-----------------------------------
+Executing module 'Import gillespie'
+- Creating raw data tables:
+-- Generic...done (.19 sec)
+-- Source-specific...done (.14 sec)
+- Importing raw data to table:
+-- 'gillespie_people_unix.csv' --> gillespie_people_raw...done (.08 sec)
+-- 'gillespie_plot_descriptions_unix.csv' --> gillespie_plot_descriptions_raw...done (.09 sec)
+-- 'gillespie_plot_data_unix.csv' --> gillespie_plot_data_raw...done (.11 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.09 sec)
+- Correcting raw data:
+-- Adding index, primary keys and foreign keys...done (.18 sec)
+-- Setting empty strings to null:
+--- gillespie_people_raw...done (.09 sec)
+--- gillespie_plot_descriptions_raw...done (.09 sec)
+--- gillespie_plot_data_raw...done (.14 sec)
+- Creating staging tables...done (.32 sec)
+- Loading staging tables:
+-- datasource_staging...done (.09 sec)
+-- plot_metadata_staging...done (.09 sec)
+-- vfoi_staging...done (.24 sec)
+-- analytical_stem_staging...done (1.90 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...no corrections needed
+-- analytical_stem_staging...deleting null dbh records...done (.19 sec)
+- Loading main tables from staging:
+-- datasource...done (.18 sec)
+-- plot_metadata...done (.16 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (1.53 sec)
+--- Indexing foreign keys...done (134.26 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (0 sec)
+-- analytical_stem...done (.29 sec)
+-----------------------------------
+Executing module 'Import ntt'
+- Creating raw data tables:
+-- Generic...done (.11 sec)
+-- Source-specific...done (.10 sec)
+- Extracting MS Access tables to CSVs (NeotropTree.accdb):
+-- Species --> 'species.csv'...done (.64 sec)
+-- Areas --> 'areas.csv'...done (.35 sec)
+-- TheSources --> 'sources.csv'...done (.07 sec)
+-- Species-Area --> 'species_areas.csv'...done (.71 sec)
+-- TheSources-Areas --> 'sources_areas.csv'...done (.02 sec)
+- Importing raw data to table:
+-- 'species.csv' --> ntt_species_raw...done (.34 sec)
+-- 'areas.csv' --> ntt_areas_raw...done (.20 sec)
+-- 'sources.csv' --> ntt_sources_raw...done (.09 sec)
+-- 'species_areas.csv' --> ntt_species_areas_raw...done (.98 sec)
+-- 'sources_areas.csv' --> ntt_sources_areas_raw...done (.09 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.11 sec)
+- Correcting raw data:
+-- Creating indexes and foreign key constraints...done (2.67 sec)
+-- Setting empty strings to null:
+--- ntt_species_raw...done (.37 sec)
+--- ntt_areas_raw...done (.15 sec)
+--- ntt_sources_raw...done (.08 sec)
+- Creating staging tables...done (.22 sec)
+- Loading staging tables:
+-- datasource_staging...done (.08 sec)
+-- vfoi_staging...done (23.07 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...no corrections needed
+- Loading main tables from staging:
+-- datasource...done (.19 sec)
+-- plot_metadata...done (.12 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (46.10 sec)
+--- Indexing foreign keys...done (252.77 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (.01 sec)
+-----------------------------------
+Executing module 'Import rainbio'
+- Creating raw data tables:
+-- Generic...done (.20 sec)
+-- Source-specific...done (.10 sec)
+- Importing raw data to table:
+-- 'extract_to_be_sent_SPARC.csv' --> rainbio_raw...done (15.17 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.12 sec)
+- Correcting raw data:
+-- Setting empty strings to null...done (14.51 sec)
+-- Creating integer Y, M, D columns...done (14.57 sec)
+-- Correcting collection dates...done (81.60 sec)
+-- Correcting identification dates...done (99.87 sec)
+- Creating staging tables...done (1.38 sec)
+- Loading staging tables:
+-- datasource_staging...done (.09 sec)
+-- vfoi_staging...done (13.80 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...no corrections needed
+- Loading main tables from staging:
+-- datasource...done (.46 sec)
+-- plot_metadata...done (.11 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (14.09 sec)
+--- Indexing foreign keys...done (177.85 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (0 sec)
+-----------------------------------
+Executing module 'Import schep'
+- Creating raw data tables:
+-- Generic...done (.24 sec)
+-- Source-specific...done (.16 sec)
+- Importing raw data to table:
+-- 'Schp_PLOTDB_CompleteAndClean_utf8.csv' --> schep_plotdb_raw...done (.18 sec)
+-- 'Schp_TREEDB_CompleteAndClean_utf8.csv' --> schep_tree_db_raw...done (.21 sec)
+-- 'datasource_metadata.csv' --> datasource_raw...done (.11 sec)
+- Correcting raw data:
+-- Adding columns to harmonize table schemas...done (.09 sec)
+-- Setting empty strings to null:
+--- schep_plotdb_raw...done (.12 sec)
+--- schep_tree_db_raw...done (.11 sec)
+- Creating staging tables...done (.24 sec)
+- Loading staging tables:
+-- datasource_staging...done (.08 sec)
+-- vfoi_staging from table:
+--- schep_plotdb_raw...done (.66 sec)
+--- schep_tree_db_raw...done (.56 sec)
+- Correcting staging tables:
+-- view_full_occurrence_individual...no corrections needed
+- Loading main tables from staging:
+-- datasource...done (.20 sec)
+-- plot_metadata...done (.13 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (2.11 sec)
+--- Indexing foreign keys...done (141.43 sec)
+--- Dropping temporary foreign key column fk_vfoi_staging_id...done (0 sec)
+-----------------------------------
+Executing module 'Import GBIF'
+- Creating raw data tables:
+-- Generic...done (.22 sec)
+-- Source-specific...done (.11 sec)
+- Importing raw data to table:
+-- 'occurrence_cleaned.txt' --> gbif_occurrence_raw:
+--- Importing data...done (8855.43 sec)
+--- Removing header...done (2701.20 sec)
+- Altering raw data table structure...done (.13 sec)
+- Processing dates:
+-- Populating integer Y, M, D columns...done (31573.70 sec)
+-- Correcting dates from column "eventDate"...done (164477.23 sec)
+-- Correcting dates from column "dateIdentified"...done (221834.20 sec)
+- Indexing raw data...done (321420.16 sec)
+- Creating staging tables...done (2.14 sec)
+- Loading staging tables:
+-- vfoi_staging...done (23135.96 sec)
+-- datasource_staging...done (410.16 sec)
+- Populating FK to datasource_staging...done (151510.25 sec)
+- Dropping raw data indexes...done (15.55 sec)
+- Loading main tables from staging:
+-- datasource...done (1.07 sec)
+-- plot_metadata...done (.41 sec)
+-- view_full_occurrence_individual:
+--- Inserting records...done (7831.52 sec)
+--- Indexing foreign keys...

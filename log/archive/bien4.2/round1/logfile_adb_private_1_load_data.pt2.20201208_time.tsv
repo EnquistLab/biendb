@@ -1,0 +1,25 @@
+Module	Task	Sec
+	Loading main tables from staging: Indexing foreign keys	23240.43
+	Loading main tables from staging: Dropping temporary foreign key column fk_vfoi_staging_id	.03
+	Loading main tables from staging: Dropping staging table fkey from table vfoi	10.29
+datasource_2_export	Exporting CSV dump of table datasource for manual editing	2.15
+endangered_taxa_1_prepare	Creating tables	1.03
+endangered_taxa_1_prepare	Importing data for 'cites', 'iucn', 'usda'	2.27
+endangered_taxa_1_prepare	Combining endangered taxon data into single table	.48
+tnrs	Creating TNRS tables	.17
+tnrs	Extracting verbatim names: view_full_occurrence_individual	915.75
+tnrs	Extracting verbatim names: agg_traits	127.40
+tnrs	Extracting verbatim names: endangered_taxa	.16
+tnrs	Pre-processing names	185.78
+tnrs	Extracting unique names and adding ID column	68.01
+tnrs	Exporting names file '/home/bien/tnrs/data/user/tnrs_submitted.csv'	1.42
+tnrs	Deleting offending names from CSV	25.45
+gnrs_1_prepare	Dropping existing indexes on table: view_full_occurrence_individual	2.84
+gnrs_1_prepare	Dropping existing indexes on table: agg_traits	.11
+gnrs_1_prepare	Populating FK poldivs_full in table: vfoi	17805.05
+gnrs_1_prepare	Populating FK poldivs_full in table: agg_traits	1736.95
+gnrs_1_prepare	Populating FK poldivs_full in table: ih	1.39
+gnrs_1_prepare	Extracting all political divisions to table poldivs	3787.31
+gnrs_1_prepare	Exporting CSV file of political divisions for scrubbing by GNRS	1.34
+cds_1_prepare	Dropping existing indexes on table: view_full_occurrence_individual	.38
+cds_1_prepare	Dropping existing indexes on table: agg_traits	.10

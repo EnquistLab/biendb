@@ -1,0 +1,5 @@
+Executing module 'tnrs_2_scrub'
+-- Submitting names to TNRS...done (7.66 sec)
+
+------ Operation 'pname_1' completed in 7.67 seconds ------
+

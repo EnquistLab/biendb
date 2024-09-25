@@ -1,0 +1,62 @@
+-- ------------------------------------------------------------
+-- How to reload table agg_traits
+-- Date: 8 Feb. 2018
+-- Main copy corrupted, contents of some fields lost, including id
+-- Pre-TNRS backup copy also corrupted.
+-- 
+-- ------------------------------------------------------------
+
+Step 1. Backup
+* Backup entire schema [DONE]
+* Make backup copy of vfoi in current database [DONE]
+
+Step 2. Get latest version of raw traits file and prepare as needed [DONE]
+
+Step 3. Update agg_traits schema in all CREATE TABLE AS statements [DONE]
+
+Step 4. Load agg_traits only
+
+(a) Edit global params file: [DONE]
+** sources="traits" [only]
+** dev_schema_adb_private="analytical_db_dev"
+** load_phylo='false'
+** use_limit="false"
+** force_limit="false"
+
+(b) Edit import_traits/import.sh: [DONE]
+** Comment out creating and loading of datasource_raw
+** Comment out loading of datasource & vfoi staging tables
+*** i.e., comment out everything from:
+######################################################
+# Load raw data to staging tables
+######################################################
+to end of file (but keep time reporting)
+
+(c) Edit adb_private_1_load_data.sh [DONE]
+* Comment out everything except initial params and loading of new data
+* Also comment out: source "$DIR/import/load_from_staging.sh"
+  inside loading loop
+
+(d) RUN: adb_private_1_load_data.sh [DONE]
+* Restore commented-out sections afterward
+
+Step 5. Load gnrs results for agg_traits [DONE]
+* RUN: gnrs/sql/update_fk_agg_traits.sql
+* RUN: gnrs/sql/gnrs_update_traits.sql
+
+Step 6: Update TNRS & taxonomy results [DONE]
+* Prep:
+* RUN: bien_taxonomy/sql/update_agg_traits.sql
+
+Step 7. Update cultobs results [NO!! SKIP]
+*RUN: cultobs/sql/cultobs_update_agg_traits.sql
+* Skipped: can't update because id's of reloaded table not the same
+
+Step 8: Dump geovalidation data from traits only [DONE]
+\copy (select 'traits' as tbl, id as id, country, state_province, county, latitude, longitude from agg_traits where latitude is not null and longitude is not null and country is not null) to /home/boyle/bien3/geovalid/data/geovalidation_submitted.traits.csv csv
+zip geovalidation_submitted.traits.csv.zip geovalidation_submitted.traits.csv
+sudo cp geovalidation_submitted.traits.csv /var/www/html/bien/data/
+
+# Url of file: http://vegbiendev.nceas.ucsb.edu/bien/data/geovalidation_submitted.traits.csv.zip
+
+Step 9: Revert all the above comments

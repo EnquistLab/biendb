@@ -1,0 +1,9 @@
+Executing custom module 'bien4.2.2_GBIF_datasetkeys'
+ 
+- (TESTING ONLY) Creating table "vfoi_test"...done (1.68 sec)
+- Adding columns to table "vfoi_test"...done (.09 sec)
+-- Processing 824 records in batches of 100:
+--- 1 of 9 (3.56 sec; avg: 3.56 sec/batch)        --- 2 of 9 (3.07 sec; avg: 3.31 sec/batch)        --- 3 of 9 (3.25 sec; avg: 3.29 sec/batch)        --- 4 of 9 (3.50 sec; avg: 3.34 sec/batch)        --- 5 of 9 (3.54 sec; avg: 3.38 sec/batch)        --- 6 of 9 (5.52 sec; avg: 3.74 sec/batch)        --- 7 of 9 (5.71 sec; avg: 4.02 sec/batch)        --- 8 of 9 (10.41 sec; avg: 4.82 sec/batch)        --- 9 of 9 (1.91 sec; avg: 4.49 sec/batch)        --- 9 of 9 (avg: 4.49 sec/batch; total: 40.47 sec)       
+
+------ Process 'bien4.2.2_GBIF_datasetkeys' completed in 42.45 seconds ------
+

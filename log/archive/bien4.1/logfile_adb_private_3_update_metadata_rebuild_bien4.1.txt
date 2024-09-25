@@ -1,0 +1,120 @@
+
+------ Begin operation 'Build Private ADB - Step 3 (rebuild)' ------
+
+-----------------------------------
+Executing module 'drop_indexes'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (17.93 sec)
+-- agg_traits...done (3.24 sec)
+-- analytical_stem...done (3.47 sec)
+-- bien_taxonomy...done (.32 sec)
+-----------------------------------
+Fixing missing/unknown families...done (1920.53 sec)
+-----------------------------------
+Applying taxonomic fixes from Rick Condit to table:
+- vfoi...done (1092.81 sec)
+- agg_traits...done (118.06 sec)
+- bien_taxonomy...done (6.32 sec)
+- taxon...done (3.01 sec)
+-----------------------------------
+Executing module 'populate_geom':
+- Processing table: "agg_traits":
+-- Adding column geom...done (.56 sec)
+-- Enforcing geometric constraints...done (176.24 sec)
+-- Building non-null index on latitude & longitude...done (68.88 sec)
+-- Adding temporary integer primary key...done (585.60 sec)
+-- Processing 26888329 records in batches of 100000:
+--- 269 of 269 (avg: 4.65 sec/batch; total: 1251.94 sec)       
+-- Dropping temporary indexes...done (.08 sec)
+-- Indexing geometry column...done (393.37 sec)
+-----------------------------------
+
+------ Begin operation 'Build Private ADB - Step 3 (rebuild)' ------
+
+-----------------------------------
+Executing module 'drop_indexes'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (.16 sec)
+-- agg_traits...done (.06 sec)
+-- analytical_stem...done (.07 sec)
+-- bien_taxonomy...done (.05 sec)
+-----------------------------------
+Executing module 'update_schema_bien4.1'
+- Updating schemas for tables:
+-- view_full_occurrence_individual...done (15230.50 sec)
+-- agg_traits...done (1358.48 sec)
+
+------ Begin operation 'Build Private ADB - Step 3 (rebuild)' ------
+
+-----------------------------------
+Executing module 'update_schema_bien4.1_resume'
+- Updating schemas for tables:
+-- analytical_stem...done (1101.16 sec)
+-----------------------------------
+Executing module 'restore_indexes'
+- Dropping existing indexes, if any, on tables:
+-- view_full_occurrence_individual...done (6.66 sec)
+-- agg_traits...done (.07 sec)
+-- analytical_stem...done (1.17 sec)
+-- bien_taxonomy...done (.16 sec)
+- Restoring indexes on tables:
+-- view_full_occurrence_individual...done (206968.85 sec)
+-- agg_traits...done (16332.15 sec)
+-- analytical_stem...done (35912.01 sec)
+-- bien_taxonomy...done (160.72 sec)
+- Creating index summary view...done (.59 sec)
+Restoring '_dev' suffix to tables...done (.09 sec)
+-----------------------------------
+Making final metadata tables:
+ 
+Executing module 'trait_metadata' with parameters db='vegbien' & dev_schema='analytical_db_dev'
+- Creating table 'taxon_trait'...done (2782.14 sec)
+- Creating table 'trait_summary'...done (946.67 sec)
+Executing module 'data_contributors'
+- Creating table data_contributors...done (.45 sec)
+- Inserting providers...done (.54 sec)
+- Populating additional metadata for herbaria...done (.56 sec)
+- Calculating observations...done (1222.81 sec)
+- Fixing duplicate records...done (.32 sec)
+- Indexing table...done (.17 sec)
+Executing module 'species_by_political_division'
+- Creating table species_by_political_division...done (11175.12 sec)
+Executing module 'bien_species_all'
+-Creating table 'bien_species_all'...done (524.30 sec)
+Executing module 'bien_metadata_custom_bien4.1'
+- Copying table bien_metadata from production schema...done (.27 sec)
+- Adding column tnrs_version to table bien_metadata...done (.07 sec)
+- Inserting new record...done (.07 sec)
+Executing module 'bien_summary'
+- Copying existing table bien_summary from schema 'analytical_db'...done (.37 sec)
+- Inserting new summary record.....done (.09 sec)
+- Counting observations...done (409.91 sec)
+- Counting geovalid observations...done (436.24 sec)
+- Counting specimen observations...done (412.41 sec)
+- Counting plot observations...done (395.93 sec)
+- Counting plots...done (27.87 sec)
+- Counting species...done (3.98 sec)
+Executing module 'data_dictionary_rbien'
+Creating table data_dictionary_rbien...done (1.67 sec)
+- Importing CSV...done (.08 sec)
+
+------ Begin operation 'Build Private ADB - Step 3 (rebuild)' ------
+
+Executing module 'observations_union'
+- Creating table observations_union in private database:
+-- Creating & populating table species...done (723.57 sec)
+-- Creating temp table observations_all...done (949.72 sec)
+-- Updating geometry column in observations_all...done (11845.43 sec)
+-- Creating & populating table observations_union...done (852.53 sec)
+-----------------------------------
+Skipping cleanup! Do manually
+ 
+
+Script completed. Next steps:
+
+1. Manually delete any unneeded tables or sequences
+2. Rebuild data dictionary
+3. Update data dictionary
+
+------ Operation 'Build Private ADB - Step 3 (rebuild)' completed in 14371.31 seconds ------
+

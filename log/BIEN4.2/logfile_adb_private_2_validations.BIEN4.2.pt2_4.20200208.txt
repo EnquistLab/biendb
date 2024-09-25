@@ -1,0 +1,13 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_2_validations'' ------
+
+Start: Sat Feb  6 19:49:14 PST 2021
+ 
+-----------------------------------
+Importing results of CDS validations:
+Executing module 'cds_3_update'
+Verifying candidate primary key unique:
+- Updating CDS results columns in table:
+-- view_full_occurrence_individual_dev...done (9616.52 sec)
+-- agg_traits...done (60082.05 sec)
+-- plot_metadata...

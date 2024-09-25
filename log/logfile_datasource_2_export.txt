@@ -1,0 +1,5 @@
+Executing module 'datasource_2_export'
+- Exporting tab-delimitted dump of table datasource for manual editing...done (.12 sec)
+
+------ Process 'Datasource Step 2 - export datasource' completed in .13 seconds ------
+

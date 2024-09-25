@@ -1,0 +1,10 @@
+Executing module 'centroids_table_update_part2'
+- Creating second centroid results table...done (10.92 sec)
+- Importing centroid update file to table centroid_2...done (1047.53 sec)
+- Merging results to table centroid...done (4038.77 sec)
+- Indexing centroid table...done (9505.79 sec)
+- Updating centroid columns in tables:
+-- SKIPPING THIS STEP!
+
+------ Operation 'Import centroid validation results (part 2)' completed in 14603.08 seconds ------
+

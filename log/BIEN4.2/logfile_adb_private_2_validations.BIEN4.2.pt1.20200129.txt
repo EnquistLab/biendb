@@ -1,0 +1,82 @@
+
+------ Begin process 'BIEN DB process: 'adb_private_2_validations'' ------
+
+Start: Thu Jan 28 08:52:38 PST 2021
+ 
+
+Checking primary keys...view_full_occurrence_individual_dev...agg_traits...done
+
+-----------------------------------
+Importing results of TNRS validations:
+Executing module 'tnrs_3_update.sh'
+- Creating TNRS results tables...done (2244.98 sec)
+- Preparing TNRS results file for import:
+-- Removing all double quotes...done (20.46 sec)
+- Importing TNRS resolution results from file 'tnrs_submitted_scrubbed.tsv'...done (24.01 sec)
+- Setting empty strings to null...done (4.21 sec)
+- Separating records with compound ids...done (22.82 sec)
+- Fixing additional issues caused by TNRSbatch...done (111.09 sec)
+- Preparing table tnrs_scrubbed...done (57.45 sec)
+- Selecting best match...done (264.64 sec)
+- Preparing table tnrs...done (1058.83 sec)
+- Updating TNRS warnings...done (617.65 sec)
+
+Checking primary keys...view_full_occurrence_individual_dev...agg_traits...done
+
+Executing module 'bien_taxonomy'
+- Checking required databases...done (2045.78 sec)
+- Copying table 'genus_family' from db 'gf_lookup' to schema 'analytical_db_dev' in db 'vegbien':
+-- Creating dumpfile...done (.74 sec)
+-- Editing dumpfile...done (.89 sec)
+-- Importing table from dumpfile...done (.58 sec)
+- Creating table bien_taxonomy...done (.19 sec)
+- Loading table bien_taxonomy...done (31.56 sec)
+- Populating FK to bien_taxonomy in tnrs results table...done (843.69 sec)
+- Adding missing families...done (165.11 sec)
+- Populating taxon_rank...done (78.18 sec)
+- Copying table bien_taxonomy to tnrs database...done (46.48 sec)
+- Creating tables of APGIII higher taxa...using existing tables
+- Populating higher taxon columns in bien_taxonomy...done (144.11 sec)
+- Populating column higher_plant_group...done (119.07 sec)
+- Correcting errors in higher taxon columns...done (.78 sec)
+- Replacing original table bien_taxonomy in development schema...done (52.33 sec)
+- Building normalized taxon table:
+-- Creating table taxon...done (.54 sec)
+-- Loading table taxon...done (15.45 sec)
+-- Populating remaining columns and indexing...done (79.17 sec)
+-- Populating FKs in table bien_taxonomy...done (107.06 sec)
+- Transferring taxonomy results to table:
+-- agg_traits...done (975.31 sec)
+-- vfoi...done (10332.00 sec)
+-- endangered_taxa_by_source...done (20.31 sec)
+
+Checking primary keys...view_full_occurrence_individual_dev...agg_traits...done
+
+-----------------------------------
+Executing module 'major_taxon'
+- Copying table 'ncbi_taxa' from db 'ncbi' to schema 'analytical_db_dev' in db 'vegbien':
+-- Creating dumpfile...done (3105.27 sec)
+-- Editing dumpfile...done (45.99 sec)
+-- Importing table from dumpfile...done (48.12 sec)
+- Populating column "major_taxon" in table "tnrs":
+-- Adding columns...done (579.79 sec)
+-- Updating "major_taxon"...done (386.43 sec)
+-- Correcting "major_taxon"...done (240.54 sec)
+- Making changes to related records in remaining tables:
+-- Indexing major tables...done (3297.29 sec)
+-- Deleting majority of non-embryophyte observations...done (1682.90 sec)
+-- Updating taxon information for remaining non-embryophytes...done (5758.14 sec)
+-- Dropping indexes on major tables...done (8.65 sec)
+-----------------------------------
+Executing module 'endangered_species_2'
+- Populating table endangered_taxa...done (1.25 sec)
+- Extracting state-specific endangered species...done (.71 sec)
+- Updating family embargoes...done (4063.65 sec)
+- Updating genus embargoes...done (3133.18 sec)
+- Updating species embargoes...done (3280.55 sec)
+- Updating subspecies embargoes...done (2770.43 sec)
+-----------------------------------
+Importing results of GNRS validations:
+Executing module 'gnrs_3_update'
+- Creating GNRS results table...done (.31 sec)
+- Importing GNRS validation results...

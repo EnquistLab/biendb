@@ -1,0 +1,95 @@
+
+------ Begin operation 'Build Private ADB - Step 2' ------
+
+-----------------------------------
+Executing module 'populate_geom':
+- Processing table: "view_full_occurrence_individual_dev":
+-- Enforcing geometric constraints...
+------ Begin operation 'Build Private ADB - Step 2' ------
+
+-----------------------------------
+Executing module 'populate_geom':
+- Processing table: "view_full_occurrence_individual_dev":
+-- Enforcing geometric constraints...done (3129.44 sec)
+-- Building non-null index on latitude & longitude...done (841.64 sec)
+-- Adding temporary integer primary key...done (9294.80 sec)
+-- Processing 208374115 records in batches of 100000:
+--- 2084 of 2084 (avg: 4.14 sec/batch; total: 8640.46 sec)       
+-- Dropping temporary indexes...done (.09 sec)
+-- Indexing geometry column...done (7688.53 sec)
+- Processing table: "agg_traits":
+-- Adding column geom...done (.82 sec)
+-- Enforcing geometric constraints...done (175.27 sec)
+-- Building non-null index on latitude & longitude...done (57.64 sec)
+-- Adding temporary integer primary key...done (541.17 sec)
+-- Processing 26888342 records in batches of 100000:
+--- 269 of 269 (avg: 3.81 sec/batch; total: 1025.74 sec)       
+-- Dropping temporary indexes...done (.08 sec)
+-- Indexing geometry column...done (420.91 sec)
+-----------------------------------
+Executing module 'pdg_1_prepare'
+- Importing existing table world_geom from schema 'analytical_db'...done (47.15 sec)
+- Altering table world_geom...done (89.51 sec)
+- Extracting  verbatim political divisions to table ...done (1.41 sec)
+- Exporting CSV file of political divisions for scrubbing by GNRS...done (.18 sec)
+- Scrubbing political divisions with GNRS...done (.23 sec)
+- Creating GNRS results table "world_geom_gnrs"...done (.35 sec)
+- Importing GNRS validation results...done (.36 sec)
+- Indexing "world_geom_gnrs"...done (7.62 sec)
+- Updating political division columns in table "world_geom"...done (37.10 sec)
+- Indexing "world_geom"...done (30.44 sec)
+- Dropping temporary tables...done (.13 sec)
+- Creating lookup tables of world_geom political divisions...done (1.28 sec)
+Executing module 'pdg_2_scrub'
+- Processing table: "view_full_occurrence_individual_dev":
+-- Processing 208374115 records in batches of 100000:
+--- 281 of 2084 (3.40 sec; avg: 439.09 sec/batch)
+------ Begin operation 'Build Private ADB - Step 2' ------
+
+
+------ Begin operation 'Build Private ADB - Step 2' ------
+
+Executing module 'pdg_2_scrub_continue'
+- Processing table: "view_full_occurrence_individual_dev":
+-- Indexing political division columns...done (15147.02 sec)
+-- Processing 208374115 records in batches of 100000:
+--- 1811 (274) of 2084 (avg: 378.52 sec/batch; total: 685512.86 sec)       
+-- Dropping temporary primary key...done (3.35 sec)
+-- Dropping temporary indexes...done (.63 sec)
+- Processing table: "agg_traits":
+-- Indexing political division columns...done (1484.01 sec)
+-- Processing 26888342 records in batches of 100000:
+--- 269 (1) of 269 (avg: 153.80 sec/batch; total: 41373.95 sec)       
+-- Dropping temporary primary key...done (.99 sec)
+-- Dropping temporary indexes...done (.38 sec)
+
+Checking primary keys...view_full_occurrence_individual_dev...agg_traits...done
+
+-----------------------------------
+Executing module 'CULTOBS'
+- Creating table cultobs...done (4190.30 sec)
+- Extracting input data from table:
+-- vfoi...done (8299.76 sec)
+-- agg_traits...done (1912.48 sec)
+- Preparing cultobs tables...done (1586.45 sec)
+- Preparing herbarium coordinates table...done (1.25 sec)
+- Flagging by keywords in locality...done (334.35 sec)
+- Flagging by proximity to herbarium:
+-- Exporting list of herbarium countries...done (.08 sec)
+-- Processing 188832707 records in batches of 100000:
+--- Batch 1889 of 1889...done (total 968494.65 sec)       
+- Transferring validation results to table cultobs...done (46278.22 sec)
+- Updating CULTOBS results columns in table:
+-- view_full_occurrence_individual_dev...done (12264.53 sec)
+-- agg_traits...done (720.83 sec)
+
+Checking primary keys...view_full_occurrence_individual_dev...agg_traits...done
+
+-----------------------------------
+
+Script completed. Next step:
+
+1. Scrub NSR input file using NSR and place results in NSR data directory
+
+------ Operation 'Build Private ADB - Step 2 (_TEMP_restart)' completed in 1031753.57 seconds ------
+

@@ -1,0 +1,12 @@
+
+Executing module 'backup_db'
+-- Creating dumpfile of database 'geombien'...done (979.73 sec)
+
+Dumpfile 'geombien_20220124_152100.pgd' created. To restore, run the following command as user postgres:
+
+pg_restore -d [database_to_restore_to] geombien_20220124_152100.pgd
+
+'database_to_restore_to' does not need to be the same as original db. 
+
+------ Process 'Backup' completed in 979.78 seconds ------
+

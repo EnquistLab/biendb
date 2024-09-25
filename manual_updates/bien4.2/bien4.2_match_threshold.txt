@@ -1,0 +1,3 @@
+* All names with tnrs_name_matched_score<0.53 removed from tables view_full_occurrence_individual, analytical_stem and agg_traits
+* Code in custom/bien4.2_match_threshold.sh
+* One-time fix. In future BIEN DB versions, this problem addressed by changes to TNRS
