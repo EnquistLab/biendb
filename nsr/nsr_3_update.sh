@@ -75,7 +75,7 @@ echoi $i -n "- Importing NSR validation results from temp file..."
 #sql="\COPY nsr FROM '${validation_app_data_dir}/${results_filename}' DELIMITER E'\t' CSV HEADER;"
 # The next one is crash proof.
 # See: https://stackoverflow.com/a/20402913/2757825
-# Plus this: https://stackoverflow.com/a/47087496/2757825 (see preceding step)
+# Also see: https://stackoverflow.com/a/47087496/2757825 (see preceding step)
 sql="\COPY nsr FROM '${validation_app_data_dir}/${results_filename}.temp.tsv' WITH CSV HEADER DELIMITER E'\t' QUOTE E'\b' NULL AS '';"
 PGOPTIONS='--client-min-messages=warning' psql $db_private $user -q << EOF
 \set ON_ERROR_STOP on

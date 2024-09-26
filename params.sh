@@ -5,6 +5,14 @@
 # Check and change as needed
 ##############################################################
 
+# Application base directory
+# CRITICAL! Most paths depend on this parameter.
+# Absolute path to base directory containing all components 
+# of the application (except submodules). Generally equals
+# parent directory of repo, not the repo itself.
+# Omit trailing slash
+APP_BASE_DIR="/home/boyle/bien/biendb"
+
 # Code of each new source to import
 # The code MUST be the same as:
 # a) suffix of the import directors (e.g., import_<source_code>) AND
@@ -57,15 +65,13 @@ UNCC
 "
 
 # Schema names
-dev_schema_core_private="vegbien_dev"	# Currently not used
-prod_schema_core_private="public"
-dev_schema_adb_private="analytical_db_dev"
-#dev_schema_adb_private="analytical_db_test"
-prod_schema_adb_private="analytical_db"
-dev_schema_adb_public=$dev_schema_adb_private	# these two must be identical!
+# CRITICAL! 
+dev_schema_adb_private="analytical_db_dev" 	# Schema of the new DB you will build
+prod_schema_adb_private="analytical_db"		# Schema of the existing DB
+dev_schema_adb_public=$dev_schema_adb_private	# Must be identical (WHY???)
 prod_schema_adb_public="public"
 prod_schema_geom="public"
-postgis_schema="postgis"	# Main postgis schema
+postgis_schema="postgis"	# Main postgis schema, may be different from adb schema
 dev_schema_users="users_dev"
 prod_schema_users="users"
 
@@ -75,27 +81,26 @@ load_phylo='true'
 
 # Set to true to force replacement of table higher_taxa 
 # This happens in step 2 during TNRS updates
+# Slow, set to false during development to recycle old version
+# Set=true for production run to rebuild from latest TNRS database
 higher_taxa_force_replace="false"
 
 # Set to 'true' to move raw data tables to their own schemas
-# named after each source. Otherwise, set to false to just drop
-# raw data tables.
+# named after each source. Set to false to delete raw data.
 archive_raw='false'
 
-# Path to db_config.sh
-# For production, keep outside app working directory & supply
-# absolute path
-# For development, if keep inside working directory, then supply
-# relative path
+# Path to database configuration file (db_config.sh)
+# Recommend keep outside app working directory
+# Use absolute path
 # Omit trailing slash
-db_config_path="/home/boyle/bien3/analytical_db"
+db_config_path=$APP_BASE_DIR"/config"
 
 # Path to general function directory
 # If directory is outside app working directory, supply
 # absolute path, otherwise supply relative path
 # Omit trailing slash
-#functions_path="includes"
-functions_path="/home/boyle/includes/"
+#functions_path="/home/boyle/includes"
+functions_path="includes"
 
 # Path to data directory
 # Recommend call this "data"
@@ -104,8 +109,8 @@ functions_path="/home/boyle/includes/"
 # forward slash at start).
 # Recommend keeping outside app directory
 # Omit trailing slash
-#data_base_dir="/home/boyle/bien3/analytical_db/private/data"
-data_base_dir="data"		 # Relative path
+#data_base_dir="data"		 # Relative path
+data_base_dir=$APP_BASE_DIR"/data"
 
 # Global record limit, for testing
 # Applied if use_limit="true"
@@ -116,10 +121,10 @@ recordlimit=100
 # Limit records imported to large tables, for testing only
 # Set 'true' for testing, 'false' for production
 # CRITICAL! Make sure this is set to false for production run!
-use_limit="false"	# true,false; use sql_limit_global
+use_limit="true"	# true,false; use sql_limit_global
 
 # Use these options to over-ride limit settings
-force_limit="false"	# true,false; enforces global use_limit setting, 
+force_limit="true"	# true,false; enforces global use_limit setting, 
 					# over-riding local settings if any
 if [[ $use_limit == "true" ]]; then
 	sql_limit_global=" LIMIT "$recordlimit" "

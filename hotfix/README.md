@@ -2,7 +2,7 @@
 
 ## Overview
 
-This directory contains scripts for between-major-version changes and updates to the BIEN database. In most cases, these updates are run as hotfixes on the live database, either by altering/updating the live production tables, or by altering/updating copy tables, which are then swapped out for the production tables inside a transaction block.
+This directory contains htofixes only: changes and updates to the BIEN database executed on the live database. In most cases, hotfix updates are executed by altering/updating the live production tables, or by altering/updating copy tables, which are then swapped out for the production tables inside a transaction block.
 
 Updates are of two types: 
 

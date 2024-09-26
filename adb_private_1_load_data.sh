@@ -93,6 +93,9 @@ startup_msg_opts="$(cat <<-EOF
 	Use record limit?:	$limit_disp
 	Logfile:		$glogfile
 	Replace logfile:	$replacelog
+	\$user:			$user
+	\$db_private: 	$db_private
+	\$pwd: 	$pwd
 EOF
 )"		
 source "$DIR/includes/confirm.sh"	
