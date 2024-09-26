@@ -1,1 +1,28 @@
 
+
+------ Begin process 'BIEN DB process: 'adb_private_1_load_data'' ------
+
+Start: Thu 26 Sep 2024 04:45:58 PM PDT
+ 
+Creating schema 'analytical_db_dev'...done (.26 sec)
+Executing module 'install_dependencies'
+- Installing functions:
+-- f_empty2null...done (.14 sec)
+-- geodistkm...done (.12 sec)
+-- is_numeric...done (.12 sec)
+-- is_date...done (.11 sec)
+-----------------------------------
+Executing module 'Copy legacy tables':
+- 'view_full_occurrence_individual'...done (3.31 sec)
+- 'analytical_stem'...done (1.49 sec)
+-----------------------------------
+Executing module 'fix_missing_poldivs_1'
+ - Parameters:
+ -- $curr_db='vegbien'
+ -- $curr_sch='analytical_db_dev'
+- Creating temporary indexes on vfoi...done (.18 sec)
+- Populating political divisions...done (.13 sec)
+- Dropping the temporary indexes...done (.30 sec)
+-----------------------------------
+Executing module 'plot_provenance':
+- Populating dataset for specimens and removing non-plot plot codes...

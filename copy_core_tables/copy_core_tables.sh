@@ -68,12 +68,12 @@ echoi $e "Executing module 'Copy legacy tables':"
 
 # Copy view_full_occurrence
 echoi $e -n "- 'view_full_occurrence_individual'..."
-PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v target_schema=$dev_schema_adb_private -v src_schema=$prod_schema_adb_private -v limit="$sql_limit" -v where="$sql_where_vfoi" -f $DIR_LOCAL/sql/copy_table_vfoi.sql
+PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v target_schema=$dev_schema_adb_private -v src_schema=$prod_schema_adb_private -v limit="$sql_limit" -v where="$sql_where_vfoi" -f $DIR_LOCAL/sql/copy_table_vfoi_exact.sql
 source "$DIR/includes/check_status.sh"	# check and report status of query
 
 # Copy analytical_stem
 echoi $e -n "- 'analytical_stem'..."
-PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v target_schema=$dev_schema_adb_private -v src_schema=$prod_schema_adb_private -v limit="$sql_limit"  -v where="$sql_where_astem" -f $DIR_LOCAL/sql/copy_table_analytical_stem.sql
+PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v target_schema=$dev_schema_adb_private -v src_schema=$prod_schema_adb_private -v limit="$sql_limit"  -v where="$sql_where_astem" -f $DIR_LOCAL/sql/copy_table_analytical_stem_exact.sql
 source "$DIR/includes/check_status.sh"	# check and report status of query
 
 ######################################################
