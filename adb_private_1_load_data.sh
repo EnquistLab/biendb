@@ -135,13 +135,18 @@ source "$DIR/install_dependencies/install_dependencies.sh"
 echoi $e "-----------------------------------"
 source "$DIR/copy_core_tables/copy_core_tables.sh"
 
-# Populate country for legacy datasources 'CVS', 'NVS' and 'Madidi'
-echoi $e "-----------------------------------"
-source "$DIR/fix_missing_poldivs/fix_missing_poldivs_1.sh"
 
-# Extract table plot_metadata from legacy data
-echoi $e "-----------------------------------"
-source "$DIR/data_provenance/data_provenance.sh"
+
+
+
+
+CONTINUE
+
+
+
+
+
+
 
 echoi $e "-----------------------------------"
 source "$DIR/plot_metadata/plot_metadata.sh"
