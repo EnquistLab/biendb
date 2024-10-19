@@ -1,12 +1,4 @@
 Executing module 'nsr_1_prepare'
-- Creating nsr_submitted tables...done (.72 sec)
+- Creating nsr_submitted tables...done (3.52 sec)
 - Extracting raw NSR input columns from table:
--- vfoi...done (4083.53 sec)
--- agg_traits...done (378.39 sec)
-- Extracting unique values to table nsr_submitted...done (6451.93 sec)
-- Exporting CSV file to application data directory...done (10.38 sec)
--- File: bien_nsr_2021-02-22.csv
--- Destination directory: /home/boyle/bien/nsr/data/user
-
------- Process 'pname_1' completed in 10925.01 seconds ------
-
+-- vfoi...

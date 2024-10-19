@@ -5,13 +5,25 @@
 # Check and change as needed
 ##############################################################
 
-# Application base directory
+# BIEN base directory 
+# CRITICAL! Most paths depend on this parameter.
+# Absolute path to base directory for all BIEN applications
+# Omit trailing slash
+BIEN_BASE_DIR="/home/boyle/bien"
+
+# BIENDB application base directory
 # CRITICAL! Most paths depend on this parameter.
 # Absolute path to base directory containing all components 
-# of the application (except submodules). Generally equals
-# parent directory of repo, not the repo itself.
-# Omit trailing slash
-APP_BASE_DIR="/home/boyle/bien/biendb"
+# of the biendb application (except submodules). Equals
+# parent directory of repo, not the repo subdirectory.
+APP_BASE_DIR=$BIEN_BASE_DIR"/biendb"
+
+# Main analytical table name as variable: development and production versions
+VFOI_PROD="view_full_occurrence_individual"
+VFOI_DEV=$VFOI_PROD"_dev"
+
+# Set which of the above names to use
+VFOI=$VFOI_PROD
 
 # Code of each new source to import
 # The code MUST be the same as:
@@ -135,6 +147,7 @@ fi
 # Destination email for process notifications
 # You must supply a valid email if you used the -m option
 email="bboyle@email.arizona.edu"
+email="ojalaquellueva@gmail.com"
 
 # Set process names, for notification and screen echo
 if [ -n "$master" ]; then 
@@ -180,28 +193,28 @@ dd_src_sch=$prod_schema_adb_private
 ##############################################################
 
 # Absolute path to TNRS root application & data directories
-tnrs_dir="/home/bien/tnrs/TNRSbatch/src"
-tnrs_data_dir="/home/bien/tnrs/data/user"
+tnrs_dir=$BIEN_BASE_DIR"/tnrs/TNRSbatch/src"
+tnrs_data_dir=$BIEN_BASE_DIR"/tnrs/data/user"
 
 # Absolute path to GNRS root application & data directories
 # Path to GNRS DB required for extracting political division tables
 #gnrs_dir="/home/boyle/bien3/repos/gnrs/gnrs"
 #gnrs_data_dir="/home/boyle/bien3/gnrs/user_data"
-gnrs_dir="/home/bien/gnrs/src"
-gnrs_data_dir="/home/bien/gnrs/data/user"
+gnrs_dir=$BIEN_BASE_DIR"/gnrs/src"
+gnrs_data_dir=$BIEN_BASE_DIR"/gnrs/data/user"
 db_gnrs="gnrs"
 
 # Absolute path to CDS root application & data directories
-CDS_DIR="/home/bien/cds/src"
-CDS_DATA_DIR="/home/bien/cds/data"
+CDS_DIR=$BIEN_BASE_DIR"/cds/src"
+CDS_DATA_DIR=$BIEN_BASE_DIR"/cds/data"
 
 # Absolute path to CODS root application & data directories
-CODS_DIR="/home/boyle/bien/cods/src"
-CODS_DATA_DIR="/home/boyle/bien/cods/data"
+CODS_DIR=$BIEN_BASE_DIR"/cods/src"
+CODS_DATA_DIR=$BIEN_BASE_DIR"/cods/data"
 
 # Absolute path to NSR root application & data directories
-NSR_DIR="/home/boyle/bien/nsr/repo"
-NSR_DATA_DIR="/home/boyle/bien/nsr/data/user"
+NSR_DIR=$BIEN_BASE_DIR"/nsr/repo"
+NSR_DATA_DIR=$BIEN_BASE_DIR"/nsr/data/user"
 
 # Replace NSR cache?
 # Should be set to false unless the NSR database or algorithm
@@ -216,7 +229,7 @@ NSR_CACHE_REPLACE="false"
 
 # New database version details
 # Complete these if $insert_new='true'
-BIEN_METADATA_DB_VERSION_NEW='4.2'
+BIEN_METADATA_DB_VERSION_NEW='4.3'
 BIEN_METADATA_VERSION_COMMENTS="Update major validations & GBIF refresh"
 
 # DB code version associated with this db release

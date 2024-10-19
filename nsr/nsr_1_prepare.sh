@@ -8,6 +8,10 @@
 
 # Comment-block tags - Use for all temporary comment blocks
 
+# Simple comment block
+: <<'COMMENT_BLOCK_x'
+COMMENT_BLOCK_x
+
 #### TEMP ####
 # echo "WARNING: portions of script `basename "$BASH_SOURCE"` commented out!"
 ## Other temporary code to be executed before comment block
@@ -21,7 +25,6 @@
 
 ## Exit all scripts
 # echo "EXITING script `basename "$BASH_SOURCE"`"; exit 0
-
 
 ######################################################
 # Set parameters, load functions & confirm operation
@@ -49,10 +52,37 @@ fi
 # Load startup script for local files
 # Sets remaining parameters and options, and issues confirmation
 # and startup messages
-source "$DIR/includes/startup_local.sh"	
+source "$DIR/includes/startup_local_simple.sh"	
 
-: <<'COMMENT_BLOCK_x'
-COMMENT_BLOCK_x
+# Override selected parameters if requested
+if [[ "$params_override" == "t" ]]; then
+	source "$DIR_LOCAL/params_override.sh"
+fi 
+
+######################################################
+# Custom confirmation message. 
+# Will only be displayed if running as
+# standalone script and -s (silent) option not used.
+######################################################
+
+if [[ "$i" == "true" && -z ${master+x} ]]; then 
+
+	# Reset confirmation message
+	msg_conf="$(cat <<-EOF
+
+	Process '$pname' will use following parameters: 
+	
+	Database:	$db
+	Schema:		$sch
+	User:		$user
+	vfoi:		$VFOI
+	limit:		$SQL_LIMIT_LOCAL
+	NSR data dir: 	${validation_app_data_dir}
+	NSR data file: 	${submitted_filename}
+EOF
+	)"		
+	confirm "$msg_conf"
+fi
 
 #########################################################################
 # Main
@@ -65,28 +95,28 @@ else
 fi
 
 echoi $e -n "- Creating nsr_submitted tables..."
-PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v sch=$dev_schema -f $DIR_LOCAL/sql/create_nsr_submitted.sql
+PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db --set ON_ERROR_STOP=1 -q -v sch=$sch -f $DIR_LOCAL/sql/create_nsr_submitted.sql
 source "$DIR/includes/check_status.sh"	
 
 echoi $e "- Extracting raw NSR input columns from table:"
 
 echoi $e -n "-- vfoi..."
-PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v sch=$dev_schema -f $DIR_LOCAL/sql/nsr_extract_vfoi.sql
+PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db --set ON_ERROR_STOP=1 -q -v sch=$sch -v vfoi="$VFOI" -v sql_limit="$SQL_LIMIT_LOCAL" -f $DIR_LOCAL/sql/nsr_extract_vfoi.sql
 source "$DIR/includes/check_status.sh"	
 
 echoi $e -n "-- agg_traits..."
-PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v sch=$dev_schema -f $DIR_LOCAL/sql/nsr_extract_agg_traits.sql
+PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db --set ON_ERROR_STOP=1 -q -v sch=$sch -v sql_limit="$SQL_LIMIT_LOCAL" -f $DIR_LOCAL/sql/nsr_extract_agg_traits.sql
 source "$DIR/includes/check_status.sh"	
 
 echoi $e -n "- Extracting unique values to table nsr_submitted..."
-PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db_private --set ON_ERROR_STOP=1 -q -v sch=$dev_schema -f $DIR_LOCAL/sql/prepare_nsr_submitted.sql
+PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db --set ON_ERROR_STOP=1 -q -v sch=$sch -f $DIR_LOCAL/sql/prepare_nsr_submitted.sql
 source "$DIR/includes/check_status.sh"	
 
 echoi $e -n "- Exporting CSV file to application data directory..."
 sql="\copy (select taxon, country, state_province, county_parish, user_id from nsr_submitted) to ${validation_app_data_dir}/${submitted_filename} csv header"
-PGOPTIONS='--client-min-messages=warning' psql  -U $user -d $db_private -q << EOF
+PGOPTIONS='--client-min-messages=warning' psql  -U $user -d $db -q << EOF
 \set ON_ERROR_STOP on
-SET search_path TO $dev_schema;
+SET search_path TO $sch;
 $sql
 EOF
 source "$DIR/includes/check_status.sh"
