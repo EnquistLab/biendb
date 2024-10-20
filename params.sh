@@ -213,7 +213,7 @@ CODS_DIR=$BIEN_BASE_DIR"/cods/src"
 CODS_DATA_DIR=$BIEN_BASE_DIR"/cods/data"
 
 # Absolute path to NSR root application & data directories
-NSR_DIR=$BIEN_BASE_DIR"/nsr/repo"
+NSR_DIR=$BIEN_BASE_DIR"/nsr/src"
 NSR_DATA_DIR=$BIEN_BASE_DIR"/nsr/data/user"
 
 # Replace NSR cache?

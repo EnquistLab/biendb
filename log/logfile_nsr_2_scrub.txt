@@ -1,0 +1,5 @@
+Executing module 'nsr_2_scrub'
+- Scrubbing observations with NSR...done (4.87 sec)
+
+------ Process 'NSR: prepare extract' completed in 4.88 seconds ------
+

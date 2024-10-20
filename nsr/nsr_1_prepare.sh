@@ -54,8 +54,8 @@ fi
 # and startup messages
 source "$DIR/includes/startup_local_simple.sh"	
 
-# Override selected parameters if requested
-if [[ "$params_override" == "t" ]]; then
+# Override selected parameters if requested & running standalone
+if [[ "$params_override" == "t" && -z ${master+x} ]]; then
 	source "$DIR_LOCAL/params_override.sh"
 fi 
 
@@ -124,6 +124,11 @@ source "$DIR/includes/check_status.sh"
 # Echo file and destination directory
 echoi $e "-- File: "$submitted_filename
 echoi $e "-- Destination directory: "$validation_app_data_dir
+
+# Restore overridden parameters if applicable
+if [[ "$params_override" == "t" && -z ${master+x} ]]; then
+	source "$DIR_LOCAL/params_override.sh"
+fi 
 
 ######################################################
 # Report total elapsed time and exit if running solo

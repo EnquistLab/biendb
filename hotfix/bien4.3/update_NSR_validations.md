@@ -58,4 +58,60 @@ CREATE INDEX nsr_cols_agg_traits_bien4_2_8_nsr_id_idx ON nsr_cols_agg_traits_bie
 
 ## Step 2. Prepare observation extract
 
+Carefully check parameters in:
+
+```
+/home/bien/biendb/params.sh
+/home/bien/biendb/nsr/params.sh
+/home/bien/biendb/nsr/params_override.sh
+/home/bien/biendb/nsr/params_restore.sh
+```
+
+Then: 
+
+```
+cd /home/bien/biendb/nsr
+screen
+./nsr_1_prepare.sh -m
+```
+
+Note: `-m` option: send notification emails. Be sure to set parameter `email` in main params file.
+
+## Step 3. Scrub observations with NSR
+
+### Test scrub using small subset from main nsr_submitted file
+
+(1) Extract small test dataset `bien_nsr_2024-10-18_test.csv`
+
+```
+cd /home/bien/nsr/data/user
+head -11 bien_nsr_2024-10-18.csv > bien_nsr_2024-10-18_test.csv
+```
+
+(2) Temporarily set NSR input filename to `bien_nsr_2024-10-18_test.csv` by adding the following line to `params_override.sh`:
+
+```
+submitted_filename="bien_nsr_2024-10-18_test.csv"
+```
+
+(3) Scrub the test file with the NSR:
+
+```
+cd /home/bien/biendb/nsr
+./nsr_2_scrub.sh
+```
+
+(4) Reset NSR input filename by deleting the line to `params_override.sh` in step 2 above.
+
+(5) Scrub the full input file with the NSR:
+
+```
+cd /home/bien/biendb/nsr
+screen
+./nsr_2_scrub.sh -m
+```
+
+
+
+
 
