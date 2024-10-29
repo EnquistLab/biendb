@@ -13,3 +13,5 @@
 db=$db_orig
 sch=$sch_orig
 submitted_filename=$submitted_filename_orig
+results_filename=$results_filename_orig
+#check_pks=$check_pks_orig

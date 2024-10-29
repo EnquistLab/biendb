@@ -1,5 +1,6 @@
 -- ---------------------------------------------------------
--- Update nsr results columns in table vfoi
+-- Update nsr results columns to copy of table agg_traits
+-- For use on live production database
 -- ---------------------------------------------------------
 
 BEGIN;
@@ -57,6 +58,7 @@ a.state_province_verbatim,
 a.county_verbatim,
 a.poldiv_full,
 a.fk_gnrs_id,
+a.continent,
 a.country,
 a.state_province,
 a.county,
@@ -133,7 +135,7 @@ c.native_status_reason,
 c.native_status_sources,
 c.isintroduced::smallint as is_introduced,
 c.is_cultivated_in_region,
-c.is_cultivated_taxon,
+a.is_cultivated_taxon,
 a.cods_proximity_id,
 a.cods_keyword_id,
 a.is_cultivated_observation,

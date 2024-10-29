@@ -29,6 +29,9 @@ DROP INDEX IF EXISTS nsr_submitted_raw_tbl_name_tbl_id_idx;
 CREATE UNIQUE INDEX nsr_submitted_raw_tbl_name_tbl_id_idx ON nsr_submitted_raw (tbl_name,tbl_id);
 DROP INDEX IF EXISTS nsr_submitted_raw_tbl_id_idx;
 CREATE INDEX nsr_submitted_raw_tbl_id_idx ON nsr_submitted_raw (tbl_id);
+DROP INDEX IF EXISTS nsr_submitted_raw_tbl_name_idx;
+CREATE INDEX nsr_submitted_raw_tbl_name_idx ON nsr_submitted_raw (tbl_name);
+
 --
 -- Insert unique values into nsr_submitted & index the text
 -- candidate PK 

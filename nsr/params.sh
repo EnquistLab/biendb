@@ -15,7 +15,14 @@
 params_override="t"
 
 # SQL LIMIT for testing with smaller amounts of data
-SQL_LIMIT_LOCAL=" "
+# Set to empty string or space to remove limit
+SQL_LIMIT_LOCAL=""
+#SQL_LIMIT_LOCAL=" LIMIT 100 "
+
+# Check primary keys unique in target tables? (t|f)
+# Alway set to 't' (TRUE) for production run, but
+# you may want to set to 'f' during test run to save time
+check_pks='t'
 
 # Replace NSR cache?
 # Should be set to false, unless the NSR database has changed

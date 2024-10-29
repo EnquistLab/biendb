@@ -19,4 +19,10 @@ sch_orig=$sch
 sch=$prod_schema_adb_private
 
 submitted_filename_orig=$submitted_filename
-submitted_filename="bien_nsr_2024-10-18_test.csv"
+submitted_filename="bien_nsr_2024-10-18.csv"
+
+results_filename_orig=$results_filename
+results_filename="bien_nsr_2024-10-18_nsr_results.tsv"
+
+# check_pks_orig=$check_pks
+# check_pks='f'

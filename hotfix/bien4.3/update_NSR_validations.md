@@ -103,13 +103,61 @@ cd /home/bien/biendb/nsr
 
 (4) Reset NSR input filename by deleting the line to `params_override.sh` in step 2 above.
 
-(5) Scrub the full input file with the NSR:
+(5) Scrub the full NSR input file:
 
 ```
 cd /home/bien/biendb/nsr
 screen
 ./nsr_2_scrub.sh -m
 ```
+
+## Step 4. Import NSR results and update unindexed duplicate database tables
+
+* Run version of nsr update script for use on live database
+* Create duplicate copies of vfoi, analytical_stem and agg_traits instead of replacing tables
+* Test first with a small sample of each table by setting SQL_LIMIT_LOCAL=" LIMIT 100 "
+* If everything looks good, run at scale
+
+```
+./nsr_3_update_live.sh -m
+
+```
+
+## Step 5. Add minimum required indexes to updated vfoi and extract range model data
+
+
+
+
+
+## Step 6. Fully index the new tables
+
+
+## Step 7. Validate the tables
+
+
+## Step 8. Activate new tables by renaming
+
+* Rename the original tables by adding version suffix to each
+* Remove "_new" suffix from new tables, thereby making them the current live tables
+
+```
+
+```
+
+## Step. 9. Tidy up
+
+* Drop temporary NSR tables
+
+```
+DROP TABLE IF EXISTS nsr_submitted; 
+DROP TABLE IF EXISTS nsr_submitted_raw;
+```
+
+## Step 10. Update metadata
+
+See separate script `update_metadata.sql`.
+
+
 
 
 

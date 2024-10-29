@@ -15,6 +15,9 @@ db_code_version TEXT DEFAULT NULL,
 rbien_version TEXT DEFAULT NULL,
 rtodobien_version TEXT DEFAULT NULL,
 tnrs_version TEXT DEFAULT NULL,
+nsr_version TEXT DEFAULT NULL,
+gnrs_version TEXT DEFAULT NULL,
+gvs_version TEXT DEFAULT NULL,
 version_comments TEXT DEFAULT NULL
 );
 

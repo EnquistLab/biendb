@@ -1,0 +1,9 @@
+Executing module 'nsr_3_update_live'
+- Creating NSR results table...done (5.61 sec)
+- Creating temp file...done (41.36 sec)
+- Importing NSR validation results from temp file...done (82.33 sec)
+- Removing temp file...done (.17 sec)
+- Updating NSR results table...done (233.15 sec)
+- Checking candidate pkeys unique for NSR tables:
+-- table=nsr, cpkey=taxon_poldiv...done (17.67 sec)
+-- table=nsr_submitted_raw, cpkey=tbl_id, fktable=vfoi...

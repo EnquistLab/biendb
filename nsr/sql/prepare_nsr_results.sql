@@ -8,12 +8,17 @@ SET search_path TO :sch;
 -- Make unique copy of nsr results
 --
 
-ALTER TABLE nsr RENAME TO nsr_orig;
+-- Backup original nsr table by renaming, if it exists
+ALTER TABLE IF EXISTS nsr RENAME TO nsr_orig;
 DROP TABLE IF EXISTS nsr;
+
+-- Create new table by copying schema of original and reset integer pkey
 CREATE TABLE nsr (LIKE nsr_orig);
 CREATE SEQUENCE nsr_id_seq;
 ALTER TABLE nsr ALTER COLUMN id SET DEFAULT nextval('nsr_id_seq'); 
 ALTER SEQUENCE nsr_id_seq OWNED BY nsr.id;
+
+-- Insert new results
 INSERT INTO nsr (
 family,
 genus,

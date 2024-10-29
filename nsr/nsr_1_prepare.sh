@@ -8,10 +8,6 @@
 
 # Comment-block tags - Use for all temporary comment blocks
 
-# Simple comment block
-: <<'COMMENT_BLOCK_x'
-COMMENT_BLOCK_x
-
 #### TEMP ####
 # echo "WARNING: portions of script `basename "$BASH_SOURCE"` commented out!"
 ## Other temporary code to be executed before comment block
@@ -89,8 +85,10 @@ fi
 #########################################################################
 
 if [ -z ${master+x} ]; then
+	# Only echo progress messages if running standalone
 	echoi $e "Executing module '$local_basename'"
 else
+	# Only echo module message for first script in module pipeline
 	echoi $e "Executing module 'NSR'"
 fi
 
