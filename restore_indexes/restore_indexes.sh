@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #########################################################################
-# Purpose: Restores all indexes
+# Purpose: Restores all indexes on live database
 #
 # NOTE: parameters $db and $dev_sch MUST be set prior to calling this script!
 #
@@ -89,12 +89,18 @@ echoi $e -n "-- bien_taxonomy..."
 PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db --set ON_ERROR_STOP=1 -q -v sch=$sch -f $DIR_LOCAL/sql/bien_taxonomy_drop_indexes.sql
 source "$DIR/includes/check_status.sh"
 
+
+
+# End comment block
+COMMENT_BLOCK_2
+### TEMP ####
+
+
 #
 # Restore indexes
 #
 
 echoi $e "- Restoring indexes on tables:"
-
 
 echoi $e -n "-- view_full_occurrence_individual..."
 PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db --set ON_ERROR_STOP=1 -q -v sch=$sch -f $DIR_LOCAL/sql/vfoi_restore_indexes.sql
@@ -103,12 +109,6 @@ source "$DIR/includes/check_status.sh"
 echoi $e -n "-- agg_traits..."
 PGOPTIONS='--client-min-messages=warning' psql -U $user -d $db --set ON_ERROR_STOP=1 -q -v sch=$sch -f $DIR_LOCAL/sql/agg_traits_restore_indexes.sql
 source "$DIR/includes/check_status.sh"
-
-
-# End comment block
-COMMENT_BLOCK_2
-### TEMP ####
-
 
 
 echoi $e -n "-- analytical_stem..."

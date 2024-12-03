@@ -65,7 +65,6 @@ fi
 # and startup messages
 source "$DIR/includes/startup_local_simple.sh"	
 
-
 # Override selected parameters if requested & running standalone
 if [[ "$params_override" == "t" && -z ${master+x} ]]; then
 	source "$DIR_LOCAL/params_override.sh"

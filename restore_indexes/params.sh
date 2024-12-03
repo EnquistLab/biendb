@@ -15,3 +15,7 @@ pname_local_header="BIEN notification: process '"$pname_local"'"
 # Main db on which operation will be performed
 # For display in messages and mails only
 db_main=$db_private
+db=$db_main
+
+# Schema
+sch="analytical_db"

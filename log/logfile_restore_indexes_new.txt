@@ -1,0 +1,6 @@
+Executing module 'restore_indexes_new'
+- Restoring indexes on tables:
+-- analytical_stem_new...done (1778.52 sec)
+
+------ Process 'Restore all indexes' completed in 1778.56 seconds ------
+

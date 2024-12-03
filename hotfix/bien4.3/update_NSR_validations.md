@@ -16,47 +16,10 @@ SET search_path TO analytical_db;
 ALTER TABLE nsr RENAME TO nsr_bien4_2_8;
 ```
 
-### NSR columns
 
-* Dump these to separate tables, along with pkeys
+## Step 2. Extract observations for scrubbing with NSR
 
-
-#### vfoi
-* Separate table for analytical_stem not needed; it shares pkey with vfoi
-
-```
-DROP TABLE IF EXISTS nsr_cols_vfoi_bien4_2_8;
-CREATE TABLE nsr_cols_vfoi_bien4_2_8 AS 
-SELECT taxonobservation_id, nsr_id, 
-native_status_country, native_status_state_province, native_status_county_parish,
-native_status, native_status_reason, native_status_sources, is_introduced,
-is_cultivated_in_region, is_cultivated_taxon
-FROM view_full_occurrence_individual
-;
-
--- Add the minimum required indexes
-ALTER TABLE nsr_cols_vfoi_bien4_2_8 ADD PRIMARY KEY (taxonobservation_id);
-CREATE INDEX nsr_cols_vfoi_bien4_2_8_nsr_id_idx ON nsr_cols_vfoi_bien4_2_8 (nsr_id);
-```
-
-#### agg_traits
-
-```
-DROP TABLE IF EXISTS nsr_cols_agg_traits_bien4_2_8;
-CREATE TABLE nsr_cols_agg_traits_bien4_2_8 AS 
-SELECT id, nsr_id, 
-native_status_country, native_status_state_province, native_status_county_parish,
-native_status, native_status_reason, native_status_sources, is_introduced,
-is_cultivated_in_region, is_cultivated_taxon
-FROM agg_traits
-;
-
--- Add the minimum required indexes
-ALTER TABLE nsr_cols_agg_traits_bien4_2_8 ADD PRIMARY KEY (id);
-CREATE INDEX nsr_cols_agg_traits_bien4_2_8_nsr_id_idx ON nsr_cols_agg_traits_bien4_2_8 (nsr_id);
-```
-
-## Step 2. Prepare observation extract
+### (i) Setup
 
 Carefully check parameters in:
 
@@ -67,7 +30,15 @@ Carefully check parameters in:
 /home/bien/biendb/nsr/params_restore.sh
 ```
 
-Then: 
+Important: in `params_override.sh`, set a custom name for the NSR input file by appending the date (bien\_nsr\_<TODAYS_DATE>.csv) as follows: 
+
+```
+submitted_filename_orig=$submitted_filename
+submitted_filename="bien_nsr_2024-10-18.csv"
+```
+
+### (ii) Extract the observations
+* Best sure to run in screen
 
 ```
 cd /home/bien/biendb/nsr
@@ -79,31 +50,45 @@ Note: `-m` option: send notification emails. Be sure to set parameter `email` in
 
 ## Step 3. Scrub observations with NSR
 
-### Test scrub using small subset from main nsr_submitted file
+### (i) Test scrub using small subset from main nsr_submitted file
 
-(1) Extract small test dataset `bien_nsr_2024-10-18_test.csv`
+***(a) Extract small test dataset `bien_nsr_2024-10-18_test.csv`***
 
 ```
 cd /home/bien/nsr/data/user
 head -11 bien_nsr_2024-10-18.csv > bien_nsr_2024-10-18_test.csv
 ```
 
-(2) Temporarily set NSR input filename to `bien_nsr_2024-10-18_test.csv` by adding the following line to `params_override.sh`:
+***(b) Temporarily set NSR input and output filenames to `bien_nsr_2024-10-18_test.csv` in`params_override.sh`:***
 
 ```
+submitted_filename_orig=$submitted_filename
 submitted_filename="bien_nsr_2024-10-18_test.csv"
+
+results_filename_orig=$results_filename
+results_filename="bien_nsr_2024-10-18_test_nsr_results.tsv"
 ```
 
-(3) Scrub the test file with the NSR:
+***(c) Scrub the test file with the NSR:***
 
 ```
 cd /home/bien/biendb/nsr
 ./nsr_2_scrub.sh
 ```
 
-(4) Reset NSR input filename by deleting the line to `params_override.sh` in step 2 above.
+***(d) Reset NSR input & output filenames in `params_override.sh`***
 
-(5) Scrub the full NSR input file:
+```
+submitted_filename_orig=$submitted_filename
+submitted_filename="bien_nsr_2024-10-18.csv"
+
+results_filename_orig=$results_filename
+results_filename="bien_nsr_2024-10-18_nsr_results.tsv"
+```
+
+### (ii) Scrub the full NSR input file
+* Run in screen
+* Include notification option `-m`.
 
 ```
 cd /home/bien/biendb/nsr
@@ -111,40 +96,132 @@ screen
 ./nsr_2_scrub.sh -m
 ```
 
-## Step 4. Import NSR results and update unindexed duplicate database tables
 
-* Run version of nsr update script for use on live database
-* Create duplicate copies of vfoi, analytical_stem and agg_traits instead of replacing tables
-* Test first with a small sample of each table by setting SQL_LIMIT_LOCAL=" LIMIT 100 "
-* If everything looks good, run at scale
+## Step 4. Import NSR results to unindexed *duplicate* database tables
+
+* Run version of nsr update script for use on live database (`nsr_3_update_live.sh`).
+* This creates duplicate copies of vfoi, analytical\_stem and agg\_traits instead of replacing tables, by adding `_new` suffix, as follows:
+
+  `view_full_occurrence_individual_new`  
+  `agg_traits_new`  
+  `analytical_stem_new`  
+  
+### (i) Test run
+* Use small sample of each table by setting the following parameter in `params.sh`:
+  
+  ```
+  SQL_LIMIT_LOCAL=" LIMIT 100 "
+  ```
+* Run the update:
+  
+  ```
+  ./nsr_3_update_live.sh
+  ```
+* Check results in BIEN database. Should see the three new tables shown above, with 100 records each.
+* If everything looks good, execute full production run.
+
+###(ii) Production run
+* Set SQL limit parameters in `params.sh`:
+  
+  ```
+  SQL_LIMIT_LOCAL=" "
+  ```
+  
+* Run the full update:
+
+	```
+	screen
+	./nsr_3_update_live.sh -m
+	```
+
+## Step 5. Fully index the new tables
+* Run custom indexing script `restore_indexes_new.sh` in biendb module directory `restore_indexes`
+* Adds indexes to the three new tables (with suffix "_new") created in Step 4.
+* This operation takes a long time; be sure to run in screen with email notification
 
 ```
-./nsr_3_update_live.sh -m
+cd /home/bien/biendb/src/restore_indexes
+screen
+./restore_indexes_new.sh -m
+```
+
+
+## Step 6. Adjust ownership of updated tables
+* Uses scripts in biendb module `set_permissions`
+* Currently tables are owned by user bien but do not have explicit access permissions
+* Run from Postgres SQL command line, in production BIEN schema
+* Goals:
+  * Make sure user `bien` has all privileges on all tables, including tables, views and sequences created in future
+  * Grant select on all tables to roles `bien_private` and `public_bien3`, including future tables, views and sequences.
+
+### (i) Setup
+* Make sure the following parameters in `set_permissions/params.sh` are set as shown below:
+
+
+```
+db=$db_private
+sch="analytical_db"
+
+users_select="
+bien_private
+public_bien3
+"
+
+users_full="
+bien
+"
+```
+
+### (ii) Execute
+* Just run as your regular user, script will execute under postgres user 'bien', which as adequate permissions
+* Do NOT run as postgres (will throw errors)
+
+```
+cd /home/bien/biendb/src/set_permissions
+./set_permissions.sh
+```
+
+## Step 7. Move updated tables to production
+* Archive the original tables by adding version suffix to each
+* Make the new tables available by restoring the original names (i.e., renaming by removing "_new" suffix)
+* Run from Postgres SQL command line, in production BIEN schema
+* Run the renames for each pair of tables together, to minimize downtime for the production table.
+* Wrap each pair of name changes in a transaction to avoid conflicts with other processes
+
+```
+-- vfoi
+BEGIN;
+ALTER TABLE view_full_occurrence_individual RENAME TO view_full_occurrence_individual_4_2_8;
+ALTER TABLE view_full_occurrence_individual_new RENAME TO view_full_occurrence_individual;
+COMMIT;
+
+-- agg_traits
+BEGIN;
+ALTER TABLE agg_traits RENAME TO agg_traits_4_2_8;
+ALTER TABLE agg_traits_new RENAME TO agg_traits;
+COMMIT;
+
+-- astem
+BEGIN;
+ALTER TABLE analytical_stem RENAME TO analytical_stem_4_2_8;
+ALTER TABLE analytical_stem_new RENAME TO analytical_stem;
+COMMIT;
 
 ```
 
-## Step 5. Add minimum required indexes to updated vfoi and extract range model data
-
-
-
-
-
-## Step 6. Fully index the new tables
-
-
-## Step 7. Validate the tables
-
-
-## Step 8. Activate new tables by renaming
-
-* Rename the original tables by adding version suffix to each
-* Remove "_new" suffix from new tables, thereby making them the current live tables
+## Step 8. Rename indexes in updated tables
+* Indexes on the updated tables incude suffix "_new". This should be removed so that the index names are as inspected
+* If do not rename, any future operations that involved dropping and rebuilding indexes will fail
+* Run the following scripts in the `manual_operations` folder of biendb module `restore_indexes`:
 
 ```
-
+cd /home/bien/biendb/src/restore_indexes/manual_operations 
+sudo -u postgres psql -f analytical_stem_new_rename_indexes.sql
+sudo -u postgres psql -f agg_traits_new_rename_indexes.sql
+sudo -u postgres psql -f vfoi_new_rename_indexes.sql
 ```
 
-## Step. 9. Tidy up
+## Step. 7. Tidy up
 
 * Drop temporary NSR tables
 
@@ -153,9 +230,12 @@ DROP TABLE IF EXISTS nsr_submitted;
 DROP TABLE IF EXISTS nsr_submitted_raw;
 ```
 
-## Step 10. Update metadata
+## Step 8. Update metadata
 
 See separate script `update_metadata.sql`.
+
+## Notes
+* After database has been working satisfactorily for a while, you may wish to drop the old (archived) tables, as these are very large.
 
 
 

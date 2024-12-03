@@ -79,7 +79,7 @@ echoi $e -n "- Scrubbing observations with NSR..."
 # # Save current working directory
 # DIR_BAK=$(pwd)
 
-# Run NSR with echo and interactove modes off
+# Run NSR with echo and interactive modes off
 #cd $app_dir
 php ${app_dir}/nsr_batch.php -e=false -i=false -f="${submitted_filename}" -l=unix -t=csv -r="$local_nsr_cache_replace"
 

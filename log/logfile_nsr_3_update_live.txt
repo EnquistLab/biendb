@@ -6,4 +6,12 @@ Executing module 'nsr_3_update_live'
 - Updating NSR results table...done (233.15 sec)
 - Checking candidate pkeys unique for NSR tables:
 -- table=nsr, cpkey=taxon_poldiv...done (17.67 sec)
--- table=nsr_submitted_raw, cpkey=tbl_id, fktable=vfoi...
+-- table=nsr_submitted_raw, cpkey=tbl_id, fktable=vfoi...done (117469.54 sec)
+-- table=nsr_submitted_raw, cpkey=tbl_id, fktable=agg_traits...done (41.19 sec)
+- Updating NSR results columns in table:
+-- view_full_occurrence_individual_new...done (14208.66 sec)
+-- analytical_stem_new...done (3088.36 sec)
+-- agg_traits_new...done (1350.54 sec)
+
+------ Process 'NSR: prepare extract' completed in 136538.86 seconds ------
+

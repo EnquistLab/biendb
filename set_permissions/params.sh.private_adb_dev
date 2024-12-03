@@ -22,7 +22,6 @@ sch="analytical_db_dev"
 users_select="
 bien_private
 public_bien3
-fengxiao
 "
 
 # postgres user names (roles) of users to which you will be granting
@@ -44,6 +43,9 @@ bien_read
 public_bien
 jmcgann
 cmerow
+casler
+sckott
+fengxiao
 "
 
 # postgres user names (roles) of users to which you will be revoking

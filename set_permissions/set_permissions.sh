@@ -42,8 +42,12 @@ fi
 # Load startup script for local files
 # Sets remaining parameters and options, and issues confirmation
 # and startup messages
-source "$DIR/includes/startup_local.sh"	
+source "$DIR/includes/startup_local_simple.sh"	
 
+# # Override selected parameters if requested & running standalone
+# if [[ "$params_override" == "t" && -z ${master+x} ]]; then
+# 	source "$DIR_LOCAL/params_override.sh"
+# fi 
 ######################################################
 # Custom confirmation message, showing parameters
 # to be used. Will only be displayed if running as

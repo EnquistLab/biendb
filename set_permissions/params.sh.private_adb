@@ -22,11 +22,6 @@ sch="analytical_db"
 users_select="
 bien_private
 public_bien3
-cmerow
-casler
-jmcgann
-fengxiao
-sckott
 "
 
 # postgres user names (roles) of users to which you will be granting
@@ -46,6 +41,11 @@ boyle
 boyleadmin
 bien_read
 public_bien
+jmcgann
+cmerow
+casler
+sckott
+fengxiao
 "
 
 # postgres user names (roles) of users to which you will be revoking
@@ -72,6 +72,9 @@ bwalker
 javierfajnolla
 conditr
 mcgill
+casler
+jmcgann
+sckott
 "
 
 # Users to assign or revoke to roles
